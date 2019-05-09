@@ -1,2 +1,2 @@
 # DoAnCuoiKiWeb2
-# ai vào thì nhớ comit cái cho biet nha 
+# Hoàng Chính Trung thích màu hường và ghét sự giả dối
