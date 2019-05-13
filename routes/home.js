@@ -3,6 +3,8 @@ const fs = require('fs');
 
 
 const router = new Router();
-router.get('/',function(req,res){
+router.use('/',function(req,res){
 	res.render('home');
 });
+
+module.exports =router;
