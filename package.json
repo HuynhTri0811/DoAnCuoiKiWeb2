@@ -17,6 +17,10 @@
   },
   "homepage": "https://github.com/HuynhTri0811/DoAnCuoiKiWeb2#readme",
   "dependencies": {
-    "pg": "^7.10.0"
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-session": "^1.16.1",
+    "pg": "^7.11.0",
+    "sequelize": "^5.8.6"
   }
 }
