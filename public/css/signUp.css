@@ -1,11 +1,4 @@
-    @import url('https://fonts.googleapis.com/css?family=Numans');
-    html,body{
-        background-image: url('https://i.ibb.co/vsnjYtF/coast-aerial-view-wallpaper-1366x768.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: 100%;
-    font-family: 'Numans', sans-serif;
-    }
+
     #wrap{
     background-image: -ms-linear-gradient(top, #FFFFFF 0%, #D3D8E8 100%);
     /* Mozilla Firefox */ 
