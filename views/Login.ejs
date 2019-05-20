@@ -2,13 +2,15 @@
 <html>
     <head>
         <title>Đăng nhập</title>
+        <link rel="stylesheet" type="text/css" href="./css/login.css"/>
     </head>
     <body>
-        <form action="" method="POST">
+        <form action="" method="POST" id="box_login">
             <h1> Đăng nhập</h1>
-            <label>Email :</label> <input type="email" placeholder="Nhập vào Email " name="user_email" id="user_email"/>
-            <label>Mật khẩu :</label><input type="password" placeholder="Nhập vào password" name="user_password" id="user_password" />
+            <label>Email :</label> <input class="box" type="email" placeholder="Nhập vào Email " name="user_email" id="user_email"/>
+            <label>Mật khẩu :</label><input class="box" type="password" placeholder="Nhập vào password" name="user_password" id="user_password" />
             <input type="submit" value="Đăng nhập">
+            <a href="/forgotPassword">Quên mật khẩu</a>
         </form>
     </body>
 </html>
