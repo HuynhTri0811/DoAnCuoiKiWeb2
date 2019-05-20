@@ -13,5 +13,20 @@ const CinemaTimeShow = db.difine('CinemaTimeShow' ,{
 	CinemaTimeShow_TimeEnd :{
 		type : Sequelize.DATE ,
 		allowNull : true ,
-	}
+	},
+	Cinema_ID :{
+		type : Sequelize.INTEGER ,
+		allowNull : false ,
+		primarykey : true ,
+	},
+	Film_ID :{
+		type : Sequelize.INTEGER ,
+		allowNull :false ,
+		primarykey : true,
+	},
 });
+
+Cinema.belongsTo(CinemaTimeShow);
+Fiml.belongsTo(CinemaTimeShow);
+
+module.exports = CinemaTimeShow;
