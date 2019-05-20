@@ -1,3 +1,7 @@
+body{
+    padding: 0 5% 5% 5%;
+}
+
 .signin{
     padding: 0 15px 0 0;
     text-align: right;
@@ -5,6 +9,10 @@
 
 #logo{
     color: tomato;
+}
+
+#header{
+    background-image: url("../image/background-header.jpg");
 }
 
 
