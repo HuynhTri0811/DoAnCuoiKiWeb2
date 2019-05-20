@@ -15,6 +15,8 @@ app.set('views','./views');
 //Router
 
 app.use('/',require('./routes/home'));
+app.use('/login',require('./routes/Login'));
+app.use('/signup',require('./routes/signUp'));
 
 //Connect database 
 app.listen(port);
