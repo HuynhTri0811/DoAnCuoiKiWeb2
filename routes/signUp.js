@@ -7,4 +7,5 @@ router.get('/',function(req,res){
 	res.render('signUp.ejs');
 });
 
+
 module.exports = router;
