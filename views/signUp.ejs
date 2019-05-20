@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sign Up</title>
+    <script src="/public/js/signup.js" type="text/javascript"></script>
     <style type="text/css">
     #wrap{
 background-image: -ms-linear-gradient(top, #FFFFFF 0%, #D3D8E8 100%);
@@ -90,12 +91,12 @@ legend{
           <div class="col-md-6 col-md-offset-3">
               <form action="r" method="post" accept-charset="utf-8" class="form" role="form">   <legend>Sign Up</legend>
                       <h4>It's free and always will be.</h4>
-                      <input type="text" name="email" value="" class="form-control input-lg" placeholder="Your Email"/>
-                      <input type="text" name="name" value="" class="form-control input-lg" placeholder="Name"/>
-                      <input type="text" name="numberPhone" value="" class="form-control input-lg" placeholder="Number Phone"/>
-
-                      <input type="password" name="password" value="" class="form-control input-lg" placeholder="Password"/>
-                      <input type="password" name="confirm_password" value="" class="form-control input-lg" placeholder="Confirm Password"/>                    <label>Birth Date</label>                    <div class="row">
+                      <input type="text" name="txtemail" id="txtemail" value="" class="form-control input-lg" placeholder="Your Email"/>
+                      <input type="text" name="txtname" id="txtname" value="" class="form-control input-lg" placeholder="Name"/>
+                      <input type="text" name="txtnumberPhone" id="txtnumberPhone" value="" class="form-control input-lg" placeholder="Number Phone"/>
+                    
+                      <input type="password" name="txtpassword" id="txtpassword" value="" class="form-control input-lg" placeholder="Password"/>
+                      <input type="password" name="txtconfirm_password" id="txtconfirm_password" value="" class="form-control input-lg" placeholder="Confirm Password"/>                    <label>Birth Date</label>                    <div class="row">
                           <div class="col-xs-4 col-md-4">
                               <select name="month" class = "form-control input-lg">
   <option value="01">Jan</option>
