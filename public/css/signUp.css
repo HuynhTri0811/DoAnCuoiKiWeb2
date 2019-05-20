@@ -1,4 +1,11 @@
-#wrap{
+    @import url('https://fonts.googleapis.com/css?family=Numans');
+    html,body{
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    font-family: 'Numans', sans-serif;
+    }
+    #wrap{
     background-image: -ms-linear-gradient(top, #FFFFFF 0%, #D3D8E8 100%);
     /* Mozilla Firefox */ 
     background-image: -moz-linear-gradient(top, #FFFFFF 0%, #D3D8E8 100%);
