@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
 
-const Cineplex = fb.define('Cineplex' ,{
+const Cineplex = db.define('Cineplex' ,{
     Cineplex_ID : {
         type : Sequelize.UUID ,
         primarykey : true ,
