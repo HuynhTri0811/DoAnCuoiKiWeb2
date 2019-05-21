@@ -1,14 +1,14 @@
 function CheckSubmit() {
-    var username = document.getElementById("txtusername");
-    if (username.value == "")
+    var user_email = document.getElementById("user_Email");
+    if (user_email.value == "")
     {
         alert("Yêu cầu nhập tên đăng nhập!");
         username.focus();
         return false;
     }
 
-    var password = document.getElementById("txtpassword");
-    if (password.value == "")
+    var user_password = document.getElementById("user_Password");
+    if (user_password.value == "")
     {
         alert("Yêu cầu nhập mật khẩu!");
         password.focus();

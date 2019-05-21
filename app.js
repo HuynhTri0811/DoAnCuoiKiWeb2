@@ -1,5 +1,6 @@
 const express = require('express');
 const db = require('./models/db');
+const bodyParser = require('body-parser');
 const session = require('express-session');
 
 
@@ -11,7 +12,15 @@ const port = process.env.PORT || 3000 ;
 app.set('view engine' , 'ejs');
 app.set('views','./views');
 app.use(express.static(__dirname + '/public'));
-
+app.use(bodyParser.urlencoded({
+	extended: true,
+  }));
+  app.use(session({
+	secret: 'keyboard cat',
+	resave: false,
+	saveUninitialized: true,
+  }));
+  
 
 //Router
 
@@ -20,5 +29,10 @@ app.use('/login',require('./routes/Login'));
 app.use('/signup',require('./routes/signUp'));
 
 //Connect database 
-app.listen(port);
-console.log(`Connect server online with port ${port}`);
+db.sync().then(function(){
+	app.listen(port);
+	console.log(`Server is listening on port ${port}`);
+}).catch(function(err){
+	console.log(err);
+	process.exit(1);
+});

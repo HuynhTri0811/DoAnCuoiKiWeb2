@@ -39,5 +39,13 @@ function CheckSubmit() {
         return false;
     }
 
+
+    if (password.value != confirm_password.value)
+    {
+        alert("Mật khẩu và mật khẩu nhập lại phải giống nhau ");
+        confirm_password.focus();
+        password.focus();
+        return false
+    }
     return true;
 }

@@ -3,25 +3,26 @@ const db = require('./db');
 
 
 const User = db.define('User', {
-	User_ID : {
-		type : Sequelize.UUID ,
+	user_ID : {
+		type : Sequelize.INTEGER ,
 		primaryKey : true ,
 		allowNull : false,
+		autoIncrement :true ,
 	},
-	User_Email : {
+	user_Email : {
 		type : Sequelize.STRING ,
 		allowNull : false,
 		unique : true,
 	},
-	User_PassWord : {
+	user_PassWord : {
 		type : Sequelize.STRING ,
 		allowNull : false ,
 	},
-	User_Name : {
+	user_Name : {
 		type : Sequelize.STRING ,
 		allowNull : false ,
 	},
-	User_numberPhone : {
+	user_numberPhone : {
 		type : Sequelize.STRING ,
 		allowNull : false ,		
 	}
