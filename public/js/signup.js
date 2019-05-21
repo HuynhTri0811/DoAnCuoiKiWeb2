@@ -1,5 +1,5 @@
 function CheckSubmit() {
-    var email = document.getElementById("txtemail");
+    var email = document.getElementById("user_Email");
     if (email.value == "")
     {
         alert("Yêu cầu nhập email!");
@@ -7,7 +7,7 @@ function CheckSubmit() {
         return false;
     }
 
-    var name = document.getElementById("txtname");
+    var name = document.getElementById("user_Name");
     if (name.value == "")
     {
         alert("Yêu cầu nhập tên!");
@@ -15,7 +15,7 @@ function CheckSubmit() {
         return false;
     }
 
-    var numberPhone= document.getElementById("txtnumberPhone");
+    var numberPhone= document.getElementById("user_NumberPhone");
     if (numberPhone.value == "")
     {
         alert("Yêu cầu nhập số điện thoại!");
@@ -23,7 +23,7 @@ function CheckSubmit() {
         return false;
     }
     
-    var password = document.getElementById("txtpassword");
+    var password = document.getElementById("user_Password");
     if (password.value == "")
     {
         alert("Yêu cầu nhập mật khẩu!");
@@ -31,7 +31,7 @@ function CheckSubmit() {
         return false;
     }
 
-    var confirm_password = document.getElementById("txtconfirm_password");
+    var confirm_password = document.getElementById("user_ConfirmPassword");
     if (confirm_password.value == "")
     {
         alert("Yêu cầu nhập kiểm tra mật khẩu!");

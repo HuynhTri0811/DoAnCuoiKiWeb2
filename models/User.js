@@ -22,7 +22,7 @@ const user = db.define('User', {
 		type : Sequelize.STRING ,
 		allowNull : false ,
 	},
-	user_numberPhone : {
+	user_NumberPhone : {
 		type : Sequelize.STRING ,
 		allowNull : false ,		
 	}
