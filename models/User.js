@@ -24,7 +24,7 @@ const user = db.define('User', {
 	user_NumberPhone : {
 		type : Sequelize.STRING ,
 		allowNull : false ,		
-	}
+	},
 
 });
 
