@@ -6,7 +6,7 @@ router.get('/',function(req,res){
 	res.render('Login.ejs');
 });
 
-router.post('/',async function(req,res){
+router.post('/login',async function(req,res){
 	var { user_Email , user_Password } =req.body;
 	const User =  await user.findOne({
 		where : { user_Email },
@@ -14,7 +14,7 @@ router.post('/',async function(req,res){
 	if(!User){
 		throw Error('Wrong email/password');
 	}
-	if(user_Password != User.user_PassWord){
+	if(user_Password != User.user_Password){
 		throw Error('2 Wrond email/password');
 	}
 	res.render('signUp',{User});

@@ -1,28 +1,29 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
 
-const Film = db.define('Film',{
-    Film_ID : {
-        type : Sequelize.UUID,
+const film = db.define('Film',{
+    film_ID : {
+        type : Sequelize.INTEGER,
         allowNull : false ,
         unique : true ,
+        autoIncrement :true ,
     },
-    Film_name :{ 
+    film_Name :{ 
         type : Sequelize.STRING ,
         allowNull : false,
     },
-    Film_datePublic :{
+    film_DatePublic :{
         type : Sequelize.DATE ,
         allowNull : true ,
     },
-    Film_image :{
+    film_Image :{
         type : Sequelize.STRING ,
         allowNull : true ,
     },
-    Film_time :{
+    film_Time :{
         type : Sequelize.INTEGER ,
         allowNull : true ,
     }
 });
 
-module.exports = Film ;
+module.exports = film ;

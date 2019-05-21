@@ -2,34 +2,34 @@ const Sequelize = require('sequelize');
 const db = require('./db');
 const cineplex =  require('./Cineplex.js');
 
-const Cinema = db.define('Cinema',{
-	Cinema_ID : {
-		type : Sequelize.UUID ,
+const cinema = db.define('Cinema',{
+	cinema_ID : {
+		type : Sequelize.INTEGER,
 		primarykey :true ,
 		allowNull :false,
+		autoIncrement :true ,
 	},
-	Cinema_Name :{
+	cinema_Name :{
 		type : Sequelize.STRING ,
 		allowNull : false,
 	},
-	Cinema_Type :{
+	cinema_Type :{
 		type : Sequelize.STRING ,
 		allowNull : false,
 	},
-	Cinema_Length :{
+	cinema_Length :{
 		type : Sequelize.INTEGER ,
 		allowNull : false,
 	},
-	Cinema_Width :{
+	cinema_Width :{
 		type : Sequelize.INTEGER ,
 		allowNull : false,
 	},
-	Cinema_Cinelex_ID :{
+	cinema_Cinelex_ID :{
 		type : Sequelize.INTEGER ,
 		allowNull : false ,
 	},
 });
 
-cineplex.belongsTo(Cinema);
-
-module.exports = Cinema;
+cinema.belongsTo(cineplex);
+module.exports = cinema;

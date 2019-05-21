@@ -1,20 +1,21 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
 
-const Cineplex = db.define('Cineplex' ,{
-    Cineplex_ID : {
-        type : Sequelize.UUID ,
+const cineplex = db.define('Cineplex' ,{
+    cineplex_ID : {
+        type : Sequelize.INTEGER ,
         primarykey : true ,
         allowNull : false ,
+        autoIncrement :true ,
     },
-    Cineplex_name : {
+    cineplex_Name : {
         type : Sequelize.STRING ,
         allowNull : false ,
     },
-    Cineplex_Adress : {
+    cineplex_Adress : {
         type : Sequelize.STRING ,
         allowNull : false ,
     }
 });
 
-module.exports = Cineplex ;
+module.exports = cineplex ;

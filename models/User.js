@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('./db');
 
 
-const User = db.define('User', {
+const user = db.define('User', {
 	user_ID : {
 		type : Sequelize.INTEGER ,
 		primaryKey : true ,
@@ -14,7 +14,7 @@ const User = db.define('User', {
 		allowNull : false,
 		unique : true,
 	},
-	user_PassWord : {
+	user_Password : {
 		type : Sequelize.STRING ,
 		allowNull : false ,
 	},
@@ -29,4 +29,4 @@ const User = db.define('User', {
 
 });
 
-module.exports = User ;
+module.exports = user ;

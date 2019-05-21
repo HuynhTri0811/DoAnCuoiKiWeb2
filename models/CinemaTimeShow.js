@@ -1,32 +1,36 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
-const Cinema = require('./Cinema.js');
-const Film = require('./Film.js');
+const cinema = require('./Cinema.js');
+const film = require('./Film.js');
 
 
-const CinemaTimeShow = db.difine('CinemaTimeShow' ,{
-	CinemaTimeShow_TimeStart :{
+const cinemaTimeShow = db.difine('CinemaTimeShow' ,{
+	cinemaTimeShow_TimeStart :{
 		type : Sequelize.DATE,
 		allowNull : true,
 		defaultValue : null,
 	},
-	CinemaTimeShow_TimeEnd :{
+	cinemaTimeShow_TimeEnd :{
 		type : Sequelize.DATE ,
 		allowNull : true ,
 	},
-	Cinema_ID :{
+	cinema_ID :{
 		type : Sequelize.INTEGER ,
 		allowNull : false ,
 		primarykey : true ,
 	},
-	Film_ID :{
+	film_ID :{
 		type : Sequelize.INTEGER ,
 		allowNull :false ,
 		primarykey : true,
 	},
+	cinemaTimeShow_PriceTicket :{
+		type :  Sequelize.INTEGER ,
+		allowNull :false ,
+	},
 });
 
-Cinema.belongsTo(CinemaTimeShow);
-Fiml.belongsTo(CinemaTimeShow);
+cinema.belongsTo(cinemaTimeShow);
+film.belongsTo(cinemaTimeShow);
 
 module.exports = CinemaTimeShow;
