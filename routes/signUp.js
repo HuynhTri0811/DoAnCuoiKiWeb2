@@ -8,10 +8,6 @@ router.get('/',function(req,res){
 });
 router.post('/',async function(req,res){
 	var {user_Email ,user_Password ,user_Name,user_NumberPhone } = req.body ;
-	console.log(user_Email);
-	console.log(user_Password);
-	console.log(user_Name);
-	console.log(user_NumberPhone);
 	await user.create({
 		user_Email ,
 		user_Password,
@@ -22,6 +18,6 @@ router.post('/',async function(req,res){
 	}).catch(function(err){
 		console.log(err,req.body);
 	});
-	res.render('Login.ejs');
+	res.redirect('/');
 });
 module.exports = router;

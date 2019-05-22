@@ -4,9 +4,8 @@ const db = require('./db');
 const film = db.define('Film',{
     film_ID : {
         type : Sequelize.INTEGER,
+        primarykey : true,
         allowNull : false ,
-        unique : true ,
-        autoIncrement :true ,
     },
     film_Name :{ 
         type : Sequelize.STRING ,
@@ -23,6 +22,13 @@ const film = db.define('Film',{
     film_Time :{
         type : Sequelize.INTEGER ,
         allowNull : true ,
+    },
+    film_ViewCount :{
+        type : Sequelize.INTEGER ,
+        allowNull : false,
+        get(){
+            return 0;
+        }
     }
 });
 
