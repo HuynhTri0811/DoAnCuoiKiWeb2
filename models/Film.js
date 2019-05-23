@@ -4,7 +4,8 @@ const db = require('./db');
 const film = db.define('Film',{
     film_ID : {
         type : Sequelize.INTEGER,
-        primarykey : true,
+        primaryKey : true,
+        autoIncrement : true,
         allowNull : false ,
     },
     film_Name :{ 
