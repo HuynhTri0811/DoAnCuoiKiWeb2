@@ -22,6 +22,7 @@ router.get('/film/:id',async function(req,res){
 			film_ID : id ,
 		}
 	});
+	console.log(filmID);
 	res.render('home.ejs',{filmID});
 });
 

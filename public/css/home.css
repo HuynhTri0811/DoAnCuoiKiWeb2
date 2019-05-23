@@ -71,6 +71,7 @@ header{
     left: 0;
     width: 100%;
     text-align: center;
+    position: static;
 }
 
 footer div div div ul h1{

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="./css/home.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/home.css">
 </head>
 
 <body>
@@ -60,6 +60,9 @@
     <div class="content-area">
         <div class="tab-movies">
             <div class="tab-movies-line">
+                            <% if (typeof filmID !== 'undefined') { %>
+                            <% include content/filmID.ejs %>
+                            <% } %>
                 <ul class="nav nav-tabs movie-home">
                     <li class="active"><a href="#tab_default_1" data-toggle="tab" aria-expanded="true">Phim đang chiếu</a>
                     </li>
@@ -101,7 +104,7 @@
     <!--======================================================================================
                                             Footer
     =======================================================================================-->
-    <!--<footer class="footer-bg">
+    <footer class="footer-bg">
         <div class="contener">
             <div class="row">
                 <div class="col-lg-3 col-md-3">
@@ -153,7 +156,7 @@
                 </div>
             </div>
         </div>
-    </footer>-->
+    </footer>
 
 </body>
 
