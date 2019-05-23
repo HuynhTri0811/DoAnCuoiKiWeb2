@@ -1,7 +1,28 @@
 <div class="content-area">
     <div class="row">
         <div class="col-lg-3 col-md-3">
-            <% for (let i = 0;i < film.length ; i++ ) { %>
+            <% for (let i = 0;i < film.length ; i+=4 ) { %>
+                <% const filmi = film[i] %>
+                <img scr="<%= filmi.dataValues.film_Image %>" alt="Không load được ảnh" width="216" height="360">
+                <a href="<%= filmi.dataValues.film_ID %>"> <%= filmi.dataValues.film_Name %></a>
+            <% } %>
+        </div>
+        <div class="col-lg-3 col-md-3">
+            <% for (let i = 1;i < film.length ; i+=4 ) { %>
+                <% const filmi = film[i] %>
+                <img scr="<%= filmi.dataValues.film_Image %>" alt="Không load được ảnh" width="216" height="360">
+                <a href="<%= filmi.dataValues.film_ID %>"> <%= filmi.dataValues.film_Name %></a>
+            <% } %>
+        </div>
+        <div class="col-lg-3 col-md-3">
+            <% for (let i = 2;i < film.length ; i+=4 ) { %>
+                <% const filmi = film[i] %>
+                <img scr="<%= filmi.dataValues.film_Image %>" alt="Không load được ảnh" width="216" height="360">
+                <a href="<%= filmi.dataValues.film_ID %>"> <%= filmi.dataValues.film_Name %></a>
+            <% } %>
+        </div>
+        <div class="col-lg-3 col-md-3">
+            <% for (let i = 3;i < film.length ; i+=4 ) { %>
                 <% const filmi = film[i] %>
                 <img scr="<%= filmi.dataValues.film_Image %>" alt="Không load được ảnh" width="216" height="360">
                 <a href="<%= filmi.dataValues.film_ID %>"> <%= filmi.dataValues.film_Name %></a>
