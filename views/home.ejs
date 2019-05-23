@@ -13,55 +13,117 @@
 
 <body>
 
-    <!--Header-->
-    <div id="header" class="jumbotron text-center">
-        <h1 style="color: aqua">Chào mừng đến với Việt Nam Cinema</h1>
-        <p class="signin"><a href="/Login" style="color:white">Đăng nhập</a><span style="color:rgb(202, 202, 202)"> /
-            </span><a href="/signUp" style="color:greenyellow">Đăng ký</a></p>
-    </div>
-
-    <nav class="navbar navbar-default ">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a id="logo" class="navbar-brand" href="#">VNCinema</a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li><a href="#">Giới thiệu</a></li>
-                <li><a href="#">Mua vé</a></li>
-                <li class="dropdown">
-                    <a data-toggle="dropdown" href="">Phim<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Đang chiếu</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Sắp chiếu</a></li>
-                </li>
-            </ul>
-            </li>
-            <li><a href="#">Rạp và giá</a></li>
-            <li><a href="#">Khuyến mãi</a></li>
-            <li><a href="#">Hỗ trợ</a></li>
-            <form class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Gõ tên phim cần tìm">
-                </div>
-                <button type="submit" class="btn btn-default">Tìm</button>
-            </form>
-            </ul>
+    <!--======================================================================================
+                                             Header
+    =======================================================================================-->
+    <header>
+        <div id="header" class="well text-center">
+            <h1>Chào mừng đến với Việt Nam Cinema</h1>
+            <p class="signin"><a href="/Login" style="color:turquoise">Đăng nhập</a><span> / </span><a
+                    href="/signUp">Đăng ký</a>
+            </p>
         </div>
-    </nav>
+
+        <nav class="navbar navbar-default ">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a id="logo" class="navbar-brand" href="#">VNCinema</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="#">Giới thiệu</a></li>
+                    <li><a href="#">Mua vé</a></li>
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" href="">Phim<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Đang chiếu</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Sắp chiếu</a></li>
+                    </li>
+                </ul>
+                </li>
+                <li><a href="#">Rạp và giá</a></li>
+                <li><a href="#">Khuyến mãi</a></li>
+                <li><a href="#">Hỗ trợ</a></li>
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Nhập tên phim cần tìm">
+                    </div>
+                    <button type="submit" class="btn btn-default">Tìm</button>
+                </form>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!--======================================================================================
+                                            Content area
+    =======================================================================================-->
 
 
-    <!--Content area-->
-
-    
 
 
 
 
 
-    <!--Footer-->
 
-
-
+    <!--======================================================================================
+                                            Footer
+    =======================================================================================-->
+    <footer class="footer-bg">
+        <div class="contener">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <ul class="list-styled">
+                        <h1>Giới thiệu</h1>
+                        <ul>
+                            <li>
+                                <a href="/ve-chung-toi"><i class="fa fa-angle-double-right"></i>Về chúng tôi</a>
+                            </li>
+                            <li>
+                                <a href="/thoa-thuan-su-dung"><i class="fa fa-angle-double-right"></i>Thoả thuận sử dụng</a>
+                            </li>
+                            <li>
+                                <a href="/quy-che-hoat-dong"><i class="fa fa-angle-double-right"></i>Quy chế hoạt động</a>
+                            </li>
+                            <li>
+                                <a href="/chinh-sach-bao-mat"><i class="fa fa-angle-double-right"></i>Chính sách bảo mật</a>
+                            </li>
+                        </ul>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <ul class="list-styled">
+                        <h1>Hỗ trợ</h1>
+                        <ul>
+                            <li>
+                                <a href="/gop-y"><i class="fa fa-angle-double-right"></i>Góp ý</a>
+                            </li>
+                            <li>
+                                <a href="/rap-gia-ve"><i class="fa fa-angle-double-right"></i>Rạp / giá vé</a>
+                            </li>
+                            <li>
+                                <a href="/tuyen-dung"><i class="fa fa-angle-double-right"></i>Tuyển dụng</a>
+                            </li>
+                        </ul>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <ul class="list-styled">
+                        <h1>Kết nối Galaxy cinema</h1>
+                        <div class="social-icons">
+                            <ul class="nomargin">
+                                <a href="https://facebook.com/galaxycine.vn" target="_blank"><i id="social"
+                                        class="icon-facebook-app-logo social-fb">fb</i></a>
+                                <a href="https://www.youtube.com/user/galaxymovies" target="_blank"><i id="social"
+                                        class="icon-youtube-logo social-youtube">yt</i></a>
+                                <a href="https://www.instagram.com/galaxycinema/" target="_blank"><i id="social"
+                                        class="icon-instagram-logo social-inst">int</i></a>
+                            </ul>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
 
 </body>
 
