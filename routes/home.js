@@ -13,6 +13,18 @@ router.get('/',async function(req,res){
 	console.log(film[0].dataValues.film_Name);
 	res.render('home.ejs',{film});
 });
+
+
+router.get('/:id' ,async function(req,res){
+	const id = Number(req.params.id);
+	const filmID =  await Film.findOne({
+		where :{
+			film_ID : id ,
+		}
+	});
+	res.render('home.ejs',{filmID});
+});
+
 router.get('/forgotPassword',function(req,res){
 	res.render('forgotPassword.ejs');
 });

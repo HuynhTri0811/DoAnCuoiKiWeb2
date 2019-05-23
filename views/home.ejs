@@ -58,24 +58,12 @@
                                             Content area
     =======================================================================================-->
     <div class="content-area">
-        <div class="row">
-            <div class="col-lg-3 col-md-3">
-                <img scr="<%= film[0].dataValues.film_Image %>" alt="Không load được ảnh" width="216" height="360">
-                <p><%= film[0].dataValues.film_Name %></p>
-            </div>
-            <div class="col-lg-3 col-md-3">
-                <img scr="<%= film[1].dataValues.film_Image %>" alt="Không load được ảnh" width="216" height="360">
-                <p><%= film[1].dataValues.film_Name %></p>
-            </div>
-            <div class="col-lg-3 col-md-3">
-                <img scr="<%= film[2].dataValues.film_Image %>" alt="Không load được ảnh" width="216" height="360">
-                <p><%= film[2].dataValues.film_Name %></p>
-            </div>
-            <div class="col-lg-3 col-md-3">
-                <img scr="<%= film[3].dataValues.film_Image %>" alt="Không load được ảnh" width="216" height="360">
-                <p><%= film[3].dataValues.film_Name %></p>
-            </div>
-        </div>
+            <% if (typeof film !== 'undefined') { %>
+                <% include content/indexContent.ejs %>
+            <% } %>
+            <% if (typeof filmID !== 'undefined') { %>
+                <% include content/filmID.ejs %>
+            <% } %>
     </div>
 
 
