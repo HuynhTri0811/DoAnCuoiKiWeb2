@@ -1,3 +1,9 @@
+html, body {
+   margin:0;
+   padding:0;
+   height:100%;
+}
+
 
 
 /*======================================================================================
@@ -43,6 +49,8 @@ header{
 .content-area{
     padding: 0 10% 0 10%;
     text-align: center;
+    position : relative;
+    min-height : 100%;
 }
 
 

@@ -58,20 +58,50 @@
                                             Content area
     =======================================================================================-->
     <div class="content-area">
-            <% if (typeof film !== 'undefined') { %>
-                <% include content/indexContent.ejs %>
-            <% } %>
-            <% if (typeof filmID !== 'undefined') { %>
-                <% include content/filmID.ejs %>
-            <% } %>
-    </div>
+        <div class="tab-movies">
+            <div class="tab-movies-line">
+                <ul class="nav nav-tabs movie-home">
+                    <li class="active"><a href="#tab_default_1" data-toggle="tab" aria-expanded="true">Phim đang chiếu</a>
+                    </li>
+                    <li class=""><a href="#tab_default_2" data-toggle="tab" aria-expanded="false">Phim sắp chiếu</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab_default_1" class="tab-pane active">
+                        <div class="row movies-group animated fadeInUp">
+                            <% if (typeof film !== 'undefined') { %>
+                            <% include content/indexContent.ejs %>
+                            <% } %>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12 pull-right">
+                                    <a href="/phim-dang-chieu" class="btn secondary fl-right">Xem thêm</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div id="tab_default_2" class="tab-pane">
+                        <div class="row movies-group animated fadeInUp">
+                            <% if (typeof film !== 'undefined') { %>
+                            <% include content/indexContent2.ejs %>
+                            <% } %>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12 pull-right">
+                                    <a href="/phim-sap-chieu" class="btn secondary fl-right">Xem thêm</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <!--======================================================================================
                                             Footer
     =======================================================================================-->
-    <footer class="footer-bg">
+    <!--<footer class="footer-bg">
         <div class="contener">
             <div class="row">
                 <div class="col-lg-3 col-md-3">
@@ -82,7 +112,7 @@
                                 <a href="/ve-chung-toi"><i class="fa fa-angle-double-right"></i>Về chúng tôi</a>
                             </li>
                             <li>
-                                <a href="/thoa-thuan-su-dung"><i class="fa fa-angle-double-right"></i>Thoả thuận sử dụng</a>
+                                <a href="/thoa-thuan-su-dung"><i class="fa fa-angle-double-right"></i>Thoả thuận sửdụng</a>
                             </li>
                             <li>
                                 <a href="/quy-che-hoat-dong"><i class="fa fa-angle-double-right"></i>Quy chế hoạt động</a>
@@ -123,7 +153,7 @@
                 </div>
             </div>
         </div>
-    </footer>
+    </footer>-->
 
 </body>
 

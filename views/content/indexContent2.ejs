@@ -3,7 +3,7 @@
     <div class="col-md-3 col-sm-3 movie-item">
         <% for (let i = 0;i < film.length ; i+=4 ) { %>
             <% const filmi = film[i] %>
-            <% if (filmi.dataValues.film_ViewCount != 0 ) { %>
+            <% if (filmi.dataValues.film_ViewCount == 0 ) { %>
                 <div class="article-movie-home">
                     <img src="<%= filmi.dataValues.film_Image %>" alt="Không load được ảnh" width="216" height="360">
                     <a href="#">
@@ -22,12 +22,12 @@
             <% } %>
         <% } %>
     </div>
-
+    
     <!--col 2-->
     <div class="col-md-3 col-sm-3 movie-item">
         <% for (let i = 1;i < film.length ; i+=4 ) { %>
             <% const filmi = film[i] %>
-            <% if (filmi.dataValues.film_ViewCount != 0 ) { %>
+            <% if (filmi.dataValues.film_ViewCount == 0 ) { %>
                 <div class="article-movie-home">
                     <img src="<%= filmi.dataValues.film_Image %>" alt="Không load được ảnh" width="216" height="360">
                     <a href="#">
@@ -51,7 +51,7 @@
     <div class="col-md-3 col-sm-3 movie-item">
         <% for (let i = 2;i < film.length ; i+=4 ) { %>
             <% const filmi = film[i] %>
-            <% if (filmi.dataValues.film_ViewCount != 0 ) { %>
+            <% if (filmi.dataValues.film_ViewCount == 0 ) { %>
                 <div class="article-movie-home">
                     <img src="<%= filmi.dataValues.film_Image %>" alt="Không load được ảnh" width="216" height="360">
                     <a href="#">
@@ -62,7 +62,7 @@
                                 </div>
                             </div>
                         </div>
-                    </a>
+                     </a>
                 </div>
                 <div class="title-movie">
                     <h4 class="upper-text"><%= filmi.dataValues.film_Name %></h4>
@@ -75,7 +75,7 @@
     <div class="col-md-3 col-sm-3 movie-item">
         <% for (let i = 3;i < film.length ; i+=4 ) { %>
             <% const filmi = film[i] %>
-            <% if (filmi.dataValues.film_ViewCount != 0 ) { %>
+            <% if (filmi.dataValues.film_ViewCount == 0 ) { %>
                 <div class="article-movie-home">
                     <img src="<%= filmi.dataValues.film_Image %>" alt="Không load được ảnh" width="216" height="360">
                     <a href="#">
@@ -86,7 +86,7 @@
                                 </div>
                             </div>
                         </div>
-                    </a>
+                     </a>
                 </div>
                 <div class="title-movie">
                     <h4 class="upper-text"><%= filmi.dataValues.film_Name %></h4>
@@ -94,4 +94,4 @@
             <% } %>
         <% } %>
     </div>
-</div>
+    </div>
