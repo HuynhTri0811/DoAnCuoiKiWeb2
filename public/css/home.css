@@ -10,7 +10,7 @@ html, body {
                                         Header
 =======================================================================================*/
 header{
-    padding: 0 5% 5% 5%;
+    padding: 0 5% 0 5%;
 }
 
 #logo{
@@ -19,14 +19,14 @@ header{
 
 #header{
     width: 100%;
-    background-image: url("../image/background-header.jpg");
+    /*background-image: url("../image/background-header.jpg");*/
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
 }
 
 #header h1{
-    color: whitesmoke;
+    color: red;
 }
 
 #header p{
@@ -35,11 +35,13 @@ header{
 }
 
 #header p a{
+    font-weight: bold;
     color:greenyellow;
 }
 
 #header p span{
-    color:white;
+    font-weight: bold;
+    color: red;
 }
 
 /*======================================================================================
@@ -48,9 +50,9 @@ header{
 
 .content-area{
     padding: 0 10% 0 10%;
-    text-align: center;
     position : relative;
     min-height : 100%;
+    text-align: center;
 }
 
 

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/public/css/home.css">
+    <link rel="stylesheet" href="/public/css/home.css">
 </head>
 
 <body>
@@ -17,13 +17,15 @@
                                              Header
     =======================================================================================-->
     <header>
-        <div id="header" class="well text-center">
+        <!--Header Top-->
+        <div id="header">
             <h1>Chào mừng đến với Việt Nam Cinema</h1>
             <p class="signin"><a href="/Login" style="color:turquoise">Đăng nhập</a><span> / </span><a
                     href="/signUp">Đăng ký</a>
             </p>
         </div>
 
+        <!--Menu header-->
         <nav class="navbar navbar-default ">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -52,17 +54,73 @@
                 </ul>
             </div>
         </nav>
+
+        <!--Sile header-->
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+            </ol>
+        
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img src="https://galaxycine.vn/media/2019/5/21/aladdin-sneakshow-web3_1558410901300.jpg" alt="Không load được ảnh">
+                    <div class="carousel-caption">
+                        ...
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="https://galaxycine.vn/media/2019/5/21/2048x682-vgd_1558425937453.jpg" alt="Không load được ảnh">
+                    <div class="carousel-caption">
+                        ...
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="https://galaxycine.vn/media/2019/5/21/banner-sneakshow-2048-x-682_1558431398094.jpg" alt="Không load được ảnh">
+                    <div class="carousel-caption">
+                        ...
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="https://galaxycine.vn/media/2019/5/23/2048x682_1558584069148.jpg" alt="Không load được ảnh">
+                    <div class="carousel-caption">
+                        ...
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="https://galaxycine.vn/media/2019/4/1/nk-2048-x-682_1554087821449.jpg" alt="Không load được ảnh">
+                    <div class="carousel-caption">
+                        ...
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+
+
     </header>
 
     <!--======================================================================================
                                             Content area
     =======================================================================================-->
     <div class="content-area">
-        <div class="tab-movies">
+        <div class="tab-movies"> 
             <div class="tab-movies-line">
-                            <% if (typeof filmID !== 'undefined') { %>
-                            <% include content/filmID.ejs %>
-                            <% } %>
+                    <% if (typeof filmID !== 'undefined') { %>
+                        <% include content/filmID.ejs %>
+                    <% } %>
                 <ul class="nav nav-tabs movie-home">
                     <li class="active"><a href="#tab_default_1" data-toggle="tab" aria-expanded="true">Phim đang chiếu</a>
                     </li>
@@ -70,10 +128,11 @@
                     </li>
                 </ul>
                 <div class="tab-content">
+                        
                     <div id="tab_default_1" class="tab-pane active">
                         <div class="row movies-group animated fadeInUp">
                             <% if (typeof film !== 'undefined') { %>
-                            <% include content/indexContent.ejs %>
+                                <% include content/indexContent.ejs %>
                             <% } %>
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 pull-right">
@@ -86,7 +145,7 @@
                     <div id="tab_default_2" class="tab-pane">
                         <div class="row movies-group animated fadeInUp">
                             <% if (typeof film !== 'undefined') { %>
-                            <% include content/indexContent2.ejs %>
+                                <% include content/indexContent2.ejs %>
                             <% } %>
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 pull-right">
@@ -96,8 +155,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div>   
+        </div>  
     </div>
 
 
@@ -142,9 +201,9 @@
                         </ul>
                     </ul>
                 </div>
-                <div class="col-lg-3 col-md-3">
+                <div class="col-lg-4 col-md-4">
                     <ul class="list-styled">
-                        <h1>Kết nối Galaxy cinema</h1>
+                        <h1>Kết nối Việt Nam Cinema</h1>
                         <div class="social-icons">
                             <ul class="nomargin">
                                 <a href="https://facebook.com/galaxycine.vn" target="_blank"><i id="social" class="icon-facebook-app-logo social-fb">fb</i></a>
