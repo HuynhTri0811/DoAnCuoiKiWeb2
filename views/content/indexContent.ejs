@@ -3,20 +3,15 @@
     <% if (filmi.dataValues.film_ViewCount != 0 ) { %>
         <div class="col-md-3 col-sm-3 movie-item">
             <div class="article-movie-home">
-                <img id="img-film-indexContent" src="<%= filmi.dataValues.film_Image %>" alt="Không load được ảnh" width="216" height="324">
                 <a href="/film/<%= filmi.dataValues.film_ID %>">
-                    <div class="decription-hover overlay">
-                        <div class="movies-content">
-                            <div class="group">
-                                <div class="btn secondary-white">mua vé</div>
-                            </div>
-                        </div>
-                    </div>
+                    <img id="img-film-indexContent" src="<%= filmi.dataValues.film_Image %>" alt="Không load được ảnh" width="216" height="324">
                 </a>
             </div>
-            <div class="title-movie">
-                <h4><%= filmi.dataValues.film_Name %></h4>
-            </div>
+            <a href="/film/<%= filmi.dataValues.film_ID %>">
+                <div class="title-movie">
+                    <h4><%= filmi.dataValues.film_Name %></h4>
+                </div>
+            </a>
         </div>
     <% } %>
 <% } %>
