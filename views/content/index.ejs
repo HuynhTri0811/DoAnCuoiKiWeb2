@@ -8,9 +8,9 @@
                 </li>
             </ul>
             <div class="tab-content">
-                    
+
                 <div id="tab_default_1" class="tab-pane active">
-                    <div class="row movies-group animated fadeInUp">
+                    <div id="design-row-film-index" class="row movies-group animated fadeInUp">
                         <% if (typeof film !== 'undefined') { %>
                             <% include indexContent.ejs %>
                         <% } %>
@@ -23,7 +23,7 @@
                 </div>
 
                 <div id="tab_default_2" class="tab-pane">
-                    <div class="row movies-group animated fadeInUp">
+                    <div id="design-row-film-index" class="row movies-group animated fadeInUp">
                         <% if (typeof film !== 'undefined') { %>
                             <% include indexContent2.ejs %>
                         <% } %>

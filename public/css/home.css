@@ -1,81 +1,105 @@
 html, body {
-   margin:0;
-   padding:0;
-   height:100%;
-}
-
-
-
-/*======================================================================================
-                                        Header
-=======================================================================================*/
-header{
-    padding: 0 5% 0 5%;
-}
-
-#logo{
-    color: tomato;
-}
-
-#header{
-    width: 100%;
-    /*background-image: url("../image/background-header.jpg");*/
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-}
-
-#header h1{
-    color: red;
-}
-
-#header p{
-    padding: 0 15px 0 0;
-    text-align: right;
-}
-
-#header p a{
-    font-weight: bold;
-    color:greenyellow;
-}
-
-#header p span{
-    font-weight: bold;
-    color: red;
-}
-
-/*======================================================================================
-                                        Content area
-=======================================================================================*/
-
-.content-area{
-    padding: 3% 10% 0 10%;
-    position : relative;
-    min-height : 100%;
-    text-align: center;
-}
-
-
-
-/*======================================================================================
-                                        Footer
-=======================================================================================*/
-
-.footer-bg {
-    padding: 0 10% 0 10%;
-    background: #222;
-    border-top: 5px solid #333;
-    color: #ccc;
-    font-weight: bold;
-    line-height: 15px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    position: static;
-}
-
-footer div div div ul h1{
-    font-size: 20px;
-}
+    margin:0;
+    padding:0;
+    height:100%;
+ }
+ 
+ 
+ 
+ /*======================================================================================
+                                         Header
+ =======================================================================================*/
+ header{
+     padding: 0 5% 0 5%;
+ }
+ 
+ #logo{
+     color: tomato;
+ }
+ 
+ #header{
+     width: 100%;
+     /*background-image: url("../image/background-header.jpg");*/
+     background-repeat: no-repeat;
+     background-position: center center;
+     background-size: cover;
+ }
+ 
+ #header h1{
+     color: red;
+ }
+ 
+ #header p{
+     padding: 0 15px 0 0;
+     text-align: right;
+ }
+ 
+ #header p a{
+     font-weight: bold;
+     color:greenyellow;
+ }
+ 
+ #header p span{
+     font-weight: bold;
+     color: red;
+ }
+ 
+ /*======================================================================================
+                                         Content area
+ =======================================================================================*/
+ 
+ .content-area{
+     padding: 3% 10% 0 10%;
+     position : relative;
+     min-height : 100%;
+     text-align: center;
+ }
+ 
+ #design-row-film-index{
+     position: relative;
+     margin: 20px;
+ }
+ 
+ #img-film-indexContent { 
+     width: 72%; 
+     height: 72%; 
+     object-fit: contain; 
+ } 
+ 
+ .title-movie{
+     object-fit: contain;
+ }
+ 
+ .title-movie h4{
+     white-space: nowrap;
+     border: 2px;
+     border-color: red;
+     width: 100%; 
+     text-overflow: ellipsis;
+     overflow: hidden;
+ }
+ 
+ 
+ 
+ /*======================================================================================
+                                         Footer
+ =======================================================================================*/
+ 
+ .footer-bg {
+     padding: 0 10% 0 10%;
+     background: #222;
+     border-top: 5px solid #333;
+     color: #ccc;
+     font-weight: bold;
+     line-height: 15px;
+     position: absolute;
+     bottom: 0;
+     left: 0;
+     width: 100%;
+     text-align: center;
+     position: static;
+ }
+ 
+ footer div div div ul h1{
+     font-size: 20px;
+ }
