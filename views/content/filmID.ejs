@@ -1,29 +1,51 @@
 <div class="content-area">
     <div class="row">
-        <div class="col-md-8 col-sm-8 movie-item">
-            <div>
-                <img src="<%= filmID.dataValues.film_Image %>" alt="Không load được ảnh" width="216" height="360">
-                <a href="/film/<%= filmID.dataValues.film_ID %>"> <%= filmID.dataValues.film_Name %></a>
+        <div class="col-md-8 col-sm-8">
+            <div class="col-md-7 col-sm-7">
+                <div>
+                    <img id="img-film-indexContent" src="<%= filmID.dataValues.film_Image %>" alt="Không load được ảnh"
+                        width="216" height="360">
+                </div>
+            </div>
+            <div class="col-md-5 col-sm-5">
+                <h3 style="text-align: center"><%= filmID.dataValues.film_Name %></h3>
+                <div style="text-align: center">
+                    <strong>4.9</strong><span>/10</span><div><span>Lượt đánh giá: 56</span></div><span><button>Đánh giá</button></span>
+                </div>
+                <br/>
+                <p>Thời lượng: <%= filmID.dataValues.film_Time %> phút</p>
+                <p>Ngày khởi chiếu: <% var d = new Date(filmID.dataValues.film_DatePublic); %>
+                    <%= d.getDate(); %>
+                    /
+                    <%= d.getMonth(); %>
+                    /
+                    <%= d.getFullYear(); %>
+                </p>
             </div>
         </div>
-        <div class="col-md-4 col-sm-4 movie-item">
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
+        <div style="text-align: center" class="col-md-4 col-sm-4">
+            <div class="title-movie">
+                <h4><%= filmID.dataValues.film_Name %></h4>
+                <h4><%= filmID.dataValues.film_Name %></h4>
+                <h4><%= filmID.dataValues.film_Name %></h4>
+                <h4><%= filmID.dataValues.film_Name %></h4>
+                <h4><%= filmID.dataValues.film_Name %></h4>
+                <h4><%= filmID.dataValues.film_Name %></h4>
+                <h4><%= filmID.dataValues.film_Name %></h4>
+                <h4><%= filmID.dataValues.film_Name %></h4>
+                <h4><%= filmID.dataValues.film_Name %></h4>
+                <h4><%= filmID.dataValues.film_Name %></h4>
+                <h4><%= filmID.dataValues.film_Name %></h4>
+                <h4><%= filmID.dataValues.film_Name %></h4>
+                <h4><%= filmID.dataValues.film_Name %></h4>
+                <h4><%= filmID.dataValues.film_Name %></h4>
+                <h4><%= filmID.dataValues.film_Name %></h4>
+                <h4><%= filmID.dataValues.film_Name %></h4>
+                <h4><%= filmID.dataValues.film_Name %></h4>
+                <h4><%= filmID.dataValues.film_Name %></h4>
+                <h4><%= filmID.dataValues.film_Name %></h4>
+                <h4><%= filmID.dataValues.film_Name %></h4>
+            </div>
         </div>
     </div>
 </div>
