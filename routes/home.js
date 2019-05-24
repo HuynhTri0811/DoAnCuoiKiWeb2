@@ -10,7 +10,8 @@ router.get('/',async function(req,res){
 			/*['film_ViewCount' , 'DESC']	*/
 		]
 	});
-	console.log(film);
+	// Xóa dòng này đi , chừng nào cần thì show ra 
+	//console.log(film);
 	res.render('home.ejs',{film});
 });
 
@@ -22,7 +23,8 @@ router.get('/film/:id',async function(req,res){
 			film_ID : id ,
 		}
 	});
-	console.log(filmID);
+	// Dòng này cũng thế
+	//console.log(filmID);
 	res.render('home.ejs',{filmID});
 });
 
