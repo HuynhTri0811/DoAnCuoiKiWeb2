@@ -1,0 +1,21 @@
+<% var datenow = new Date(); %>
+<% var dem = 0; %>
+<% for (var i = 0; i < searchNameFilm.length; i++ ) { %>
+    <% const searchNameFilmi = searchNameFilm[i] %>
+    <% var date_i = new Date(searchNameFilmi.dataValues.film_DatePublic); %>
+    <% if (date_i <= datenow && dem <= 7) { %>
+        <% dem++ ; %>
+        <div class="col-md-3 col-sm-3 movie-item">
+            <div class="article-movie-home">
+                <a href="/film/<%= searchNameFilmi.dataValues.film_ID %>">
+                    <img id="img-film-indexContent" src="<%= searchNameFilmi.dataValues.film_Image %>" alt="Không load được ảnh" width="216" height="324">
+                </a>
+            </div>
+            <a href="/film/<%= searchNameFilmi.dataValues.film_ID %>">
+                <div class="title-movie">
+                    <h4><%= searchNameFilmi.dataValues.film_Name %></h4>
+                </div>
+            </a>
+        </div>
+    <% } %>
+<% } %>

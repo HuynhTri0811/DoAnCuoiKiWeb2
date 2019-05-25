@@ -30,7 +30,14 @@ const film = db.define('Film',{
         get(){
             return 0;
         }
-    }
+    },
+    film_Public :{
+        type : Sequelize.BOOLEAN ,
+        allowNull : true ,
+        get(){
+            return false;
+        }
+    },
 });
 
 module.exports = film ;

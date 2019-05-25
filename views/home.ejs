@@ -29,7 +29,7 @@
         <nav class="navbar navbar-default ">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a id="logo" class="navbar-brand" href="#">VNCinema</a>
+                    <a id="logo" class="navbar-brand" href="/">VNCinema</a>
                 </div>
                 <ul class="nav navbar-nav">
                     <li><a href="#">Giới thiệu</a></li>
@@ -45,9 +45,9 @@
                 <li><a href="#">Rạp và giá</a></li>
                 <li><a href="#">Khuyến mãi</a></li>
                 <li><a href="#">Hỗ trợ</a></li>
-                <form class="navbar-form navbar-left" role="search">
+                <form class="navbar-form navbar-left" role="search" method="GET" action="/filmSearch">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Nhập tên phim cần tìm">
+                        <input type="text" name="txtSearch" id="txtSearch" class="form-control" placeholder="Nhập tên phim cần tìm">
                     </div>
                     <button type="submit" class="">Tìm</button>
                 </form>
@@ -115,10 +115,12 @@
     <!--======================================================================================
                                             Content area
     =======================================================================================-->
-    <% if (typeof film != 'undefined') { %>
+    <% if (typeof film !== 'undefined') { %>
         <% include content/index.ejs %>
-    <% } else { %>
+    <% } if (typeof filmID !== 'undefined') { %>
         <% include content/filmID.ejs %>
+    <% } if (typeof searchNameFilm !== 'undefined') { %>
+        <% include content/searchNameFilm.ejs %>
     <% } %>
 
 
