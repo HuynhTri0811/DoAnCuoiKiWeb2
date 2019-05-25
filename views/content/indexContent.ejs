@@ -1,6 +1,8 @@
+<% var datenow = new Date(); %>
 <% for (var i = 0; i < film.length; i++ ) { %>
     <% const filmi = film[i] %>
-    <% if (filmi.dataValues.film_ViewCount != 0 ) { %>
+    <% var date_i = new Date(filmi.dataValues.film_DatePublic); %>
+    <% if (date_i <= datenow) { %>
         <div class="col-md-3 col-sm-3 movie-item">
             <div class="article-movie-home">
                 <a href="/film/<%= filmi.dataValues.film_ID %>">
