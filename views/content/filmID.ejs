@@ -17,7 +17,7 @@
                 <p>Ngày khởi chiếu: <% var d = new Date(filmID.dataValues.film_DatePublic); %>
                     <%= d.getDate(); %>
                     /
-                    <%= d.getMonth(); %>
+                    <%= d.getMonth()+1; %>
                     /
                     <%= d.getFullYear(); %>
                 </p>

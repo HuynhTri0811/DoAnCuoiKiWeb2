@@ -1,8 +1,10 @@
 <% var datenow = new Date(); %>
+<% var dem = 0; %>
 <% for (var i = 0; i < film.length; i++ ) { %>
     <% const filmi = film[i] %>
     <% var date_i = new Date(filmi.dataValues.film_DatePublic); %>
-    <% if (date_i > datenow) { %>
+    <% if (date_i > datenow && dem <= 7) { %>
+        <% dem++; %>
         <div class="col-md-3 col-sm-3 movie-item">
             <div class="article-movie-home">
                 <a href="/film/<%= filmi.dataValues.film_ID %>">
