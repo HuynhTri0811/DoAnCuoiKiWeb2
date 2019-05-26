@@ -1,7 +1,7 @@
 {
   "name": "a",
   "version": "1.0.0",
-  "description": "",
+  "description": "+ fix load film ở trang home                    => done\r + fix resize image film theo kích thước cửa sổ  => done\r + fix tên film dài đổi thành ...                => done",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,9 +18,15 @@
   "homepage": "https://github.com/HuynhTri0811/DoAnCuoiKiWeb2#readme",
   "dependencies": {
     "ejs": "^2.6.1",
-    "express": "^4.16.4",
+    "es2015": "0.0.0",
+    "express": "^4.17.0",
     "express-session": "^1.16.1",
+    "long-stack-traces": "^0.1.2",
+    "nodejs": "0.0.0",
+    "nodemon": "^1.19.1",
     "pg": "^7.11.0",
-    "sequelize": "^5.8.6"
-  }
+    "sequelize": "^5.8.6",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {}
 }

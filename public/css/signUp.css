@@ -1,5 +1,5 @@
 html,body{
-    background-image: url('https://i.ibb.co/vsnjYtF/coast-aerial-view-wallpaper-1366x768.jpg');
+    background-image: url('https://wallpapercave.com/wp/wp4016031.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
@@ -26,12 +26,8 @@ html,body{
         font-weight:bold;
     }
     .signup-btn {
-      background: #79bc64;
-      background-image: -webkit-linear-gradient(top, #79bc64, #578843);
-      background-image: -moz-linear-gradient(top, #79bc64, #578843);
-      background-image: -ms-linear-gradient(top, #79bc64, #578843);
-      background-image: -o-linear-gradient(top, #79bc64, #578843);
-      background-image: linear-gradient(to bottom, #79bc64, #578843);
+      
+      
       -webkit-border-radius: 4;
       -moz-border-radius: 4;
       border-radius: 4px;
@@ -45,6 +41,8 @@ html,body{
       padding: 10px 20px 10px 20px;
       border: solid #3b6e22  1px;
       text-decoration: none;
+      color: black;
+      background-color: #FFC312;
     }
     
     .signup-btn:hover {
@@ -62,7 +60,7 @@ html,body{
             font-weight:bold;
         }
     .form .form-control { margin-bottom: 10px; }
-    @media (min-width:768px) {
+    @media (min-width:100px) {
         #home{
             margin-top:50px;
         }
@@ -73,5 +71,12 @@ html,body{
         }
         .row{
             background-color: #A7BED8 !important;
+            padding-top: 90px;
         }
     }
+    h3{
+        color: white;
+        text-align: center;
+        font-size: 33px;
+    }
+    
