@@ -35,6 +35,7 @@ router.get('/',async function(req,res){
 			film_Public : true ,
 		}
 	});
+
 	const film = {  filmPublic : filmPublic , filmNoPublic : filmNoPublic } ;
 	var ObjectHome = { film : film };
 	if(user_Id)

@@ -24,10 +24,10 @@ app.use(bodyParser.urlencoded({
 
 //Router
 
-app.use('/',require('./routes/home'));
-app.use('/login',require('./routes/Login'));
-app.use('/signup',require('./routes/signUp'));
-
+app.use('/',require('./routes/home.js'));
+app.use('/login',require('./routes/Login.js'));
+app.use('/signup',require('./routes/signUp.js'));
+app.use('/updateInfo',require('./routes/updateInfo.js'));
 //Connect database 
 db.sync().then(function(){
 	app.listen(port);
