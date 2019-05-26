@@ -17,7 +17,7 @@ router.post('/',async function(req,res){
 	if(user_Password != User.user_Password){
 		throw Error('2 Wrond email/password');
 	}
-	req.session.user_Name =User.user_Name ;
+	req.session.user_Id = User.user_ID ;
 	res.redirect('/');
 });
 

@@ -19,10 +19,11 @@
     <header>
         <!--Header Top-->
         <div id="header">
-            <h1>Chào mừng đến với Việt Nam Cinema</h1>
-            <p class="signin"><a href="/Login" style="color:turquoise">Đăng nhập</a><span> / </span><a
-                    href="/signUp">Đăng ký</a>
-            </p>
+            <% if ( typeof ObjectHome.useR !== 'undefined' ) { %>
+                <% include Header/logged.ejs %>
+            <% } else { %>
+                <% include Header/noLogin.ejs %>
+            <% } %>
         </div>
 
         <!--Menu header-->
@@ -33,7 +34,6 @@
                 </div>
                 <ul class="nav navbar-nav">
                     <li><a href="#">Giới thiệu</a></li>
-                    <li><a href="#">Mua vé</a></li>
                     <li class="dropdown">
                         <a data-toggle="dropdown" href="">Phim<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
@@ -115,7 +115,7 @@
     <!--======================================================================================
                                             Content area
     =======================================================================================-->
-    <% if (typeof film !== 'undefined') { %>
+    <% if (typeof ObjectHome.film !== 'undefined') { %>
         <% include content/index.ejs %>
     <% } if (typeof filmID !== 'undefined') { %>
         <% include content/filmID.ejs %>
