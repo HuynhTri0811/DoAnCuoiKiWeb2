@@ -23,18 +23,18 @@ router.post('/',async function(req,res){
 	if(!User){
 		res.render('Login.ejs',{UserSaiPass});
 	}
-	const match = await bcrypt.compare(txtUserPassword, User.user_Password);
-	if(match) {
-		console.log('da login');
-        req.session.user_Id = User.user_ID ;
-		res.redirect('/');
+	else{
+		const match = await bcrypt.compare(txtUserPassword, User.user_Password);
+		if(match) {
+			console.log('da login');
+        	req.session.user_Id = User.user_ID ;
+			res.redirect('/');
+		}
+		if(match == false)
+		{
+			res.render('Login.ejs',{UserSaiPass});
+		}
 	}
-	if(match == false)
-	{
-		res.render('Login.ejs',{UserSaiPass});
-	}
-	
-	
 
 });
 
