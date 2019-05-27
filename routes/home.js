@@ -35,15 +35,9 @@ router.get('/',async function(req,res){
 			film_Public : true ,
 		}
 	});
-
+	
 	const film = {  filmPublic : filmPublic , filmNoPublic : filmNoPublic } ;
-	var ObjectHome = { film : film };
-	if(user_Id)
-	{
-		const useR = {user : user};
-		ObjectHome = {useR : useR , film : film };
-	}
-	res.render('home.ejs',{ObjectHome});
+	res.render('home.ejs',{film , user});
 });
 
 
@@ -57,9 +51,19 @@ router.get('/film/:id',async function(req,res){
 			film_Public : true ,
 		}
 	});
+	var user ;
+	const { user_Id } = req.session;
+	if ( user_Id )
+	{
+		user = await User.findOne({
+			where :{
+				user_ID : user_Id 
+			},
+		});
+	}
 	// Dòng này cũng thế
 	//console.log(filmID);
-	res.render('home.ejs',{filmID});
+	res.render('home.ejs',{filmID,user});
 });
 
 router.get('/filmSearch',async function(req,res){
@@ -72,7 +76,17 @@ router.get('/filmSearch',async function(req,res){
 			[Op.substring] : NameFilm,
 		}},
 	});
-	res.render('home.ejs',{searchNameFilm});
+	var user ;
+	const { user_Id } = req.session;
+	if ( user_Id )
+	{
+		user = await User.findOne({
+			where :{
+				user_ID : user_Id 
+			},
+		});
+	};
+	res.render('home.ejs',{searchNameFilm,user});
 });
 
 
