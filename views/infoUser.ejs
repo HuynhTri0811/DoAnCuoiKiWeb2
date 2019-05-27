@@ -5,9 +5,8 @@
     </head>
     <body>
         <h1>Thông tin cá nhân</h1>
-        <strong>Họ và tên :</strong><input type='text' name='txtUserName' value="<%= user.dataValues.user_Name %>"><br/>
-        <strong>Số điện thoại : </strong><input type="text" name='txtUserNumberPhone' value="<%= user.dataValues.user_NumberPhone %>"> <br/>
-        <strong>Email :</strong><input type="email"name='txtUserEmail' value="<%= user.dataValues.user_Email %>"> <br/>
-        <strong>Password : </strong><input type='password' name="txtUserPassword" value="<%= user.dataValues.user_Password %> "/>  
+        <p> <span>Họ và tên :</span> <%= user.dataValues.user_Name %> </p>
+        <p> <span>Số điện thoại : </span> <%= user.dataValues.user_NumberPhone %></p>
+        <p> <span>Email :</span> <%= user.dataValues.user_Email %></p>
     </body>
 </html>

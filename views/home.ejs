@@ -19,7 +19,7 @@
     <header>
         <!--Header Top-->
         <div id="header">
-            <% if ( typeof user !== 'undefined' ) { %>
+            <% if ( typeof ObjectHome.useR !== 'undefined' ) { %>
                 <% include Header/logged.ejs %>
             <% } else { %>
                 <% include Header/noLogin.ejs %>
@@ -115,7 +115,7 @@
     <!--======================================================================================
                                             Content area
     =======================================================================================-->
-    <% if (typeof film !== 'undefined') { %>
+    <% if (typeof ObjectHome.film !== 'undefined') { %>
         <% include content/index.ejs %>
     <% } if (typeof filmID !== 'undefined') { %>
         <% include content/filmID.ejs %>

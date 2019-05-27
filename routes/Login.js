@@ -2,40 +2,23 @@ const Router = require('express').Router;
 const fs = require('fs');
 const user = require('../models/User.js');
 const router = new Router();
-const signup = require('./signUp.js');
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
-
-
-
 router.get('/',function(req,res){
 	res.render('Login.ejs');
 });
 
 router.post('/',async function(req,res){
-	var { txtUserEmail , txtUserPassword } =req.body;
-	var UserSaiPass = 'abc';
-	const User = await user.findOne({
-		where :{
-			user_Email : txtUserEmail ,
-		}
+	var { user_Email , user_Password } =req.body;
+	const User =  await user.findOne({
+		where : { user_Email },
 	});
 	if(!User){
-		res.render('Login.ejs',{UserSaiPass});
+		throw Error('Wrong email/password');
 	}
-	else{
-		const match = await bcrypt.compare(txtUserPassword, User.user_Password);
-		if(match) {
-			console.log('da login');
-        	req.session.user_Id = User.user_ID ;
-			res.redirect('/');
-		}
-		if(match == false)
-		{
-			res.render('Login.ejs',{UserSaiPass});
-		}
+	if(user_Password != User.user_Password){
+		throw Error('2 Wrond email/password');
 	}
-
+	req.session.user_Id = User.user_ID ;
+	res.redirect('/');
 });
 
 	
