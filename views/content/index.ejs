@@ -12,7 +12,7 @@
                 <!--Phim đang chiếu-->
                 <div id="tab_default_1" class="tab-pane active">
                     <div id="design-row-film-index" class="row movies-group animated fadeInUp">
-                        <% if (typeof ObjectHome.film !== 'undefined') { %>
+                        <% if (typeof film !== 'undefined') { %>
                             <% include indexContent.ejs %>
                         <% } %>
                         <div class="row">
@@ -26,7 +26,7 @@
                 <!--Phim sắp chiếu-->
                 <div id="tab_default_2" class="tab-pane">
                     <div id="design-row-film-index" class="row movies-group animated fadeInUp">
-                        <% if (typeof ObjectHome.film !== 'undefined') { %>
+                        <% if (typeof film !== 'undefined') { %>
                             <% include indexContent2.ejs %>
                         <% } %>
                         <div class="row">
