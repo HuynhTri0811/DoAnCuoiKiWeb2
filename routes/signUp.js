@@ -10,18 +10,39 @@ router.get('/',function(req,res){
 });
 router.post('/',async function(req,res){
 	var {user_Email ,user_Password ,user_Name,user_NumberPhone } = req.body ;
-	const hash = await bcrypt.hash(user_Password,saltRounds);
-	await	user.create({
-				user_Email ,
-				user_Password : hash,
-				user_Name ,
-				user_NumberPhone,
-			}).then(function(user){
-				req.session.user_Id = user.user_ID ;
-				res.redirect('/');
-				console.log('Create user succes ');
-			}).catch(function(err){
-				console.log(err,req.body);
-			});
+	const User =  await user.findOne({
+		where : {
+			user_Email : user_Email ,
+		}
+	});
+	if(User){
+		res.render('signUp.ejs',{User});
+	}
+	else{
+		const NumberPhone = await user.findOne({
+			where :{
+				user_NumberPhone : user_NumberPhone ,
+			}
+		});
+		if(NumberPhone)
+		{
+			res.render('signUp.ejs',{NumberPhone});
+		}
+		else{
+			const hash = await bcrypt.hash(user_Password,saltRounds);
+			await	user.create({
+						user_Email ,
+						user_Password : hash,
+						user_Name ,
+						user_NumberPhone,
+					}).then(function(user){
+						req.session.user_Id = user.user_ID ;
+						res.redirect('/');
+						console.log('Create user succes ');
+					}).catch(function(err){
+						console.log(err,req.body);
+					});
+			};
+		}
 });
 module.exports = router;

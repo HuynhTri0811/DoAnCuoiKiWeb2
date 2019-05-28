@@ -20,6 +20,12 @@
           <div class="col-md-6 col-md-offset-3">
               <form action="" method="post" accept-charset="utf-8" class="form" role="form" onsubmit="return CheckSubmit()">   
                 <h3>ĐĂNG KÝ</h3>
+                <% if (typeof User !== 'undefined' ) { %>
+                    <p> Tai khoang da ton tai . Neu ban da quen thi xin quen mat khau  </p>
+                <% } %>
+                <% if (typeof NumberPhone !== 'undefined ') { %>
+                  <p> so dien thoai nay  da dc dang ky . Neu ban da co tai khoang xin bam vao login va quen mat khau</p>
+                <% } %>
 
                       <input type="email" name="user_Email" id="user_Email" value="" class="form-control input-lg" placeholder="Email"/>
                       <input type="text" name="user_Name" id="user_Name" value="" class="form-control input-lg" placeholder="Họ tên"/>
