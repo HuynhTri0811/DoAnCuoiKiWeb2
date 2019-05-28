@@ -1,0 +1,12 @@
+<% if(userAll) { %>
+    <% for (let i=0;i < userAll.length ; i++ ) { %>
+    <div>
+        <p>
+            <span> <%= userAll[i].dataValues.user_ID  %></span>
+            <span> <%= userAll[i].dataValues.user_Name %></span>
+            <span> <%= userAll[i].dataValues.user_Email %></span>
+            <span> <%= userAll[i].dataValues.user_NumberPhone %></span>
+        </p>
+    </div>
+    <% } %>
+<% } %>
