@@ -28,6 +28,8 @@ app.use('/',require('./routes/home.js'));
 app.use('/login',require('./routes/Login.js'));
 app.use('/signup',require('./routes/signUp.js'));
 app.use('/updateInfo',require('./routes/updateInfo.js'));
+app.use('/admin',require('./routes/admin.js'));
+
 //Connect database 
 db.sync().then(function(){
 	app.listen(port);
