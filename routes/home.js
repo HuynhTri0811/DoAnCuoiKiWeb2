@@ -91,12 +91,37 @@ router.get('/filmSearch',async function(req,res){
 
 
 
-router.get('/phimdangchieu',function(req,res){
-	res.render('phimdangchieu.ejs');
-});
-
-router.get('/phimsapchieu',function(req,res){
-	res.render('phimdangchieu.ejs');
+router.get('/phimchieu',async function(req,res){
+	var dateNow = Date.now();
+	var user ;
+	const { user_Id } = req.session;
+	if ( user_Id )
+	{
+		user = await User.findOne({
+			where :{
+				user_ID : user_Id 
+			},
+		});
+	}
+	const filmDangChieu = await Film.findAll({
+		where :{
+			film_DatePublic :{
+				[Op.lte] : dateNow ,
+			},
+			film_Public : true ,
+		}
+	});
+	const filmSapChieu = await Film.findAll({
+		where :{
+			film_DatePublic :{
+				[Op.gt] : dateNow ,
+			},
+			film_Public : true ,
+		}
+	});
+	
+	const filmChieu = {  filmDangChieu : filmDangChieu , filmSapChieu : filmSapChieu } ;
+	res.render('home.ejs',{filmChieu , user});
 });
 
 router.get('/forgotPassword',function(req,res){

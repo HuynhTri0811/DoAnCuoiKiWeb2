@@ -52,6 +52,7 @@ router.post('/update/cinema/:id',async function(req,res){
     }
 });
 
+
 router.get('/')
 
 module.exports = router;

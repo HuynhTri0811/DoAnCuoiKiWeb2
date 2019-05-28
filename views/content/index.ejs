@@ -15,13 +15,17 @@
                         <% if (typeof film !== 'undefined') { %>
                             <% include indexContent.ejs %>
                         <% } %>
+                        <% if(typeof filmChieu !== 'undefined') { %>
+                            <% include phimdangchieu.ejs %>
+                        <% } else { %>
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 pull-right">
-                                    <a href="/phimdangchieu">
+                                    <a href="/phimchieu">
                                         <button class="btns"><span>Xem thêm</span></button>
                                     </a>
                                 </div>
                             </div>
+                        <% } %>
                     </div>
                 </div>
 
@@ -31,13 +35,17 @@
                         <% if (typeof film !== 'undefined') { %>
                             <% include indexContent2.ejs %>
                         <% } %>
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12 pull-right">
-                                <a href="/phimsapchieu">
-                                    <button class="btns"><span>Xem thêm</span></button>
-                                </a>
+                        <% if(typeof filmChieu !== 'undefined') { %>
+                            <% include phimsapchieu.ejs %>
+                        <% } else { %>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12 pull-right">
+                                    <a href="/phimchieu">
+                                        <button class="btns"><span>Xem thêm</span></button>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
+                        <% } %>
                     </div>
                 </div>
             </div>
