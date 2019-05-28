@@ -1,0 +1,10 @@
+<div>
+    <% for(let i = 0 ;i < cinema.length ; i++) { %>
+        <p> <span> <%= cinema[i].dataValues.cinema_Name %> </span>
+        <span> <%= cinema[i].dataValues.cinema_Type %> </span>
+        <span> <%= cinema[i].dataValues.cinema_Length %></span>
+        <span> <%= cinema[i].dataValues.cinema_Width %> </span>
+        <span> <%= cinema[i].dataValues.Cineplex.cineplex_Name %> </span> 
+        <span> <a href="admin/update/cinema/<%= cinema[i].dataValues.cinema_ID %>">Cật nhập</a> </span> </p>
+    <% } %>
+</div>

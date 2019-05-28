@@ -5,7 +5,7 @@ const cineplex =  require('./Cineplex.js');
 const cinema = db.define('Cinema',{
 	cinema_ID : {
 		type : Sequelize.INTEGER,
-		primarykey :true ,
+		primaryKey :true ,
 		allowNull :false,
 		autoIncrement :true ,
 	},
@@ -25,10 +25,7 @@ const cinema = db.define('Cinema',{
 		type : Sequelize.INTEGER ,
 		allowNull : false,
 	},
-	cinema_Cinelex_ID :{
-		type : Sequelize.INTEGER ,
-		allowNull : false ,
-	},
+	
 });
 
 cinema.belongsTo(cineplex);

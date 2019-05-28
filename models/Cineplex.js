@@ -4,7 +4,7 @@ const db = require('./db');
 const cineplex = db.define('Cineplex' ,{
     cineplex_ID : {
         type : Sequelize.INTEGER ,
-        primarykey : true ,
+        primaryKey : true ,
         allowNull : false ,
         autoIncrement :true ,
     },
