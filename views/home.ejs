@@ -17,14 +17,6 @@
                                              Header
     =======================================================================================-->
     <header>
-        <!--Header Top-->
-        <div id="header">
-            <% if ( typeof user !== 'undefined' ) { %>
-                <% include Header/logged.ejs %>
-            <% } else { %>
-                <% include Header/noLogin.ejs %>
-            <% } %>
-        </div>
 
         <!--Menu header-->
         <nav class="navbar navbar-default ">
@@ -47,11 +39,17 @@
                 <li><a href="#">Hỗ trợ</a></li>
                 <form class="navbar-form navbar-left" role="search" method="GET" action="/filmSearch">
                     <div class="form-group">
-                        <input type="text" name="txtSearch" id="txtSearch" class="form-control" placeholder="Nhập tên phim cần tìm">
+                        <input type="text" name="txtSearch" id="txtSearch" class="form-control"
+                            placeholder="Nhập tên phim cần tìm">
                     </div>
                     <button type="submit" class="">Tìm</button>
                 </form>
                 </ul>
+                <% if ( typeof user !== 'undefined' ) { %>
+                    <% include Header/logged.ejs %>
+                <% } else { %>
+                    <% include Header/noLogin.ejs %>
+                <% } %>      
             </div>
         </nav>
 

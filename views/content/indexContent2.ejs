@@ -1,15 +1,14 @@
 <% const filmNoPublic = film.filmNoPublic %> 
 <% for (var i = 0; i < 8; i++ ) { %>
-    <% const filmi = filmNoPublic[i] %>
         <div class="col-md-3 col-sm-3 movie-item">
             <div class="article-movie-home">
-                <a href="/film/<%= filmi.dataValues.film_ID %>">
-                    <img id="img-film-indexContent" src="<%= filmi.dataValues.film_Image %>" alt="Không load được ảnh" width="216" height="324">
+                <a href="/film/<%= filmNoPublic[i].dataValues.film_ID %>">
+                    <img id="img-film-indexContent" src="<%= filmNoPublic[i].dataValues.film_Image %>" alt="Không load được ảnh" width="216" height="324">
                 </a>
             </div>
-            <a href="/film/<%= filmi.dataValues.film_ID %>">
+            <a href="/film/<%= filmNoPublic[i].dataValues.film_ID %>">
                 <div class="title-movie">
-                    <h4><%= filmi.dataValues.film_Name %></h4>
+                    <h4><%= filmNoPublic[i].dataValues.film_Name %></h4>
                 </div>
             </a>
         </div>

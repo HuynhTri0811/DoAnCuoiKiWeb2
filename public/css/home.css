@@ -16,32 +16,10 @@ html, body {
  #logo{
      color: tomato;
  }
- 
- #header{
-     width: 100%;
-     /*background-image: url("../image/background-header.jpg");*/
-     background-repeat: no-repeat;
-     background-position: center center;
-     background-size: cover;
- }
- 
- #header h1{
-     color: red;
- }
- 
- #header p{
-     padding: 0 15px 0 0;
-     text-align: right;
- }
- 
- #header p a{
-     font-weight: bold;
-     color:greenyellow;
- }
- 
- #header p span{
-     font-weight: bold;
-     color: red;
+
+ #login-logout{
+    font-weight: bold; 
+    text-align: right;
  }
  
  /*======================================================================================
