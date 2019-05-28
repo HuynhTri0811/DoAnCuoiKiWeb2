@@ -17,25 +17,10 @@ html, body {
      color: tomato;
  }
 
- .buttons {
-    border: none;
-    display: block;
-    text-align: center;
-    cursor: pointer;
-    text-transform: uppercase;
-    outline: none;
-    overflow: hidden;
-    position: static;
-    color: #fff;
-    font-weight: 700;
-    font-size: 15px;
-    background-color: #222;
-    padding: 17px 60px;
-    margin-top: 0;
-    margin-bottom: 0;
-    margin-left: 85%;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.20);
-  }
+ .header-top{
+    text-align: right;
+    margin-top: 10px;
+ }
  
  /*======================================================================================
                                          Content area
@@ -76,7 +61,7 @@ html, body {
  /*-------------------------test hiệu ứng button---------------------------*/
  @import url('https://fonts.googleapis.com/css?family=Amatic+SC'); 
  
-.btn {
+.btns {
   border: none;
   display: block;
   text-align: center;
@@ -94,12 +79,12 @@ html, body {
   box-shadow: 0 5px 15px rgba(0,0,0,0.20);
 }
  
-.btn span {
+.btns span {
   position: relative; 
   z-index: 1;
 }
  
-.btn:after {
+.btns:after {
   content: "";
   position: absolute;
   left: 0;
@@ -113,7 +98,7 @@ html, body {
   transform: translateX(-98%) translateY(-25%) rotate(45deg);
 }
  
-.btn:hover:after {
+.btns:hover:after {
   -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
   transform: translateX(-9%) translateY(-25%) rotate(45deg);
 }
