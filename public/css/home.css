@@ -31,7 +31,9 @@ html, body {
     font-size: 15px;
     background-color: #222;
     padding: 17px 60px;
-    margin: 0 auto;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 85%;
     box-shadow: 0 5px 15px rgba(0,0,0,0.20);
   }
  

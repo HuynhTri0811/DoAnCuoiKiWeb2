@@ -19,24 +19,25 @@ router.post('/',async function(req,res){
 		req.session.Admin = txtUserEmail;
 		res.redirect('/admin');
 	}
-	const User = await user.findOne({
-		where :{
-			user_Email : txtUserEmail ,
+	else {
+		const User = await user.findOne({
+			where: {
+				user_Email: txtUserEmail,
+			}
+		});
+		if (!User) {
+			res.render('Login.ejs', { UserSaiPass });
 		}
-	});
-	if(!User){
-		res.render('Login.ejs',{UserSaiPass});
-	}
-	else{
-		const match = await bcrypt.compare(txtUserPassword, User.user_Password);
-		if(match) {
-			console.log('da login');
-        	req.session.user_Id = User.user_ID ;
-			res.redirect('/');
-		}
-		if(match == false)
-		{
-			res.render('Login.ejs',{UserSaiPass});
+		else {
+			const match = await bcrypt.compare(txtUserPassword, User.user_Password);
+			if (match) {
+				console.log('da login');
+				req.session.user_Id = User.user_ID;
+				res.redirect('/');
+			}
+			if (match == false) {
+				res.render('Login.ejs', { UserSaiPass });
+			}
 		}
 	}
 
