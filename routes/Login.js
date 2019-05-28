@@ -17,7 +17,7 @@ router.post('/',async function(req,res){
 	var UserSaiPass = 'abc';
 	if(txtUserEmail === "Admin123@gmail.com" && txtUserPassword ==="123456"){
 		req.session.Admin = txtUserEmail;
-		res.render('admin.ejs');
+		res.redirect('/admin');
 	}
 	const User = await user.findOne({
 		where :{

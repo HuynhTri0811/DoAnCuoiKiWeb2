@@ -18,6 +18,12 @@
     =======================================================================================-->
     <header>
 
+        <!--Header top-->
+        <% if ( typeof user !== 'undefined' ) { %>
+            <% include Header/logged.ejs %>
+        <% } else { %>
+            <% include Header/noLogin.ejs %>
+        <% } %>  
         <!--Menu header-->
         <nav class="navbar navbar-default ">
             <div class="container-fluid">
@@ -44,12 +50,7 @@
                     </div>
                     <button type="submit" class="">Tìm</button>
                 </form>
-                </ul>
-                <% if ( typeof user !== 'undefined' ) { %>
-                    <% include Header/logged.ejs %>
-                <% } else { %>
-                    <% include Header/noLogin.ejs %>
-                <% } %>      
+                </ul>    
             </div>
         </nav>
 
