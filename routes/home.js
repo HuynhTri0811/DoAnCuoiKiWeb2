@@ -91,7 +91,13 @@ router.get('/filmSearch',async function(req,res){
 
 
 
+router.get('/phimdangchieu',function(req,res){
+	res.render('phimdangchieu.ejs');
+});
 
+router.get('/phimsapchieu',function(req,res){
+	res.render('phimdangchieu.ejs');
+});
 
 router.get('/forgotPassword',function(req,res){
 	res.render('forgotPassword.ejs');
