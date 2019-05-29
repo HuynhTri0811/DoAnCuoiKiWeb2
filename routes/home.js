@@ -91,7 +91,7 @@ router.get('/filmSearch',async function(req,res){
 
 
 
-router.get('/phimchieu',async function(req,res){
+router.get('/phim',async function(req,res){
 	var dateNow = Date.now();
 	var user ;
 	const { user_Id } = req.session;
@@ -123,6 +123,8 @@ router.get('/phimchieu',async function(req,res){
 	const filmChieu = {  filmDangChieu : filmDangChieu , filmSapChieu : filmSapChieu } ;
 	res.render('home.ejs',{filmChieu , user});
 });
+
+
 
 router.get('/forgotPassword',function(req,res){
 	res.render('forgotPassword.ejs');
