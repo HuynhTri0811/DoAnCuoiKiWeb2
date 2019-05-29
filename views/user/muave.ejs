@@ -1,0 +1,39 @@
+<div class="content-area">
+    <div class="row">
+        <div class="col-md-8 col-sm-8">
+            <div class="col-md-7 col-sm-7">
+                <div>
+                    <img id="img-film-indexContent" src="<%= filmID.dataValues.film_Image %>" alt="Không load được ảnh"
+                        width="216" height="360">
+                </div>
+            </div>
+            <div class="col-md-5 col-sm-5">
+                <h3 style="text-align: center"><%= filmID.dataValues.film_Name %></h3>
+                <div style="text-align: center">
+                    <strong>4.9</strong><span>/10</span>
+                    <div>
+                        <span>Lượt đánh giá: 56</span>
+                    </div>
+                    <button class="btn btn-default">Đánh giá</button>
+                </div>
+                <br />
+                <p>Thời lượng: <%= filmID.dataValues.film_Time %> phút</p>
+                <p>Ngày khởi chiếu: <% var d = new Date(filmID.dataValues.film_DatePublic); %>
+                    <%= d.getDate(); %>
+                    /
+                    <%= d.getMonth()+1; %>
+                    /
+                    <%= d.getFullYear(); %>
+                </p>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <a href="/phim/muave">
+                    <button class="btns"><span>Mua vé</span></button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
