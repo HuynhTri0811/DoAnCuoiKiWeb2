@@ -3,18 +3,17 @@ const fs = require('fs');
 const user = require('../models/User.js');
 const Cinema = require('../models/Cinema.js');
 const Cineplex = require('../models/Cineplex.js');
+const Film = require('../models/Film.js');
 const router = new Router();
 
 router.get('/',async function(req,res){
     const { Admin } = req.session;
-    if(Admin==="Admin123@gmail.com")
+    if(Admin)
     {
-        const cinema = await Cinema.findAll({
-            include:[{
-                model : Cineplex,
-            }]
-        });  
-        res.render('admin.ejs',{cinema});
+        res.render('admin.ejs');
+    }
+    else{
+        res.redirect('/');
     }
 });
 
@@ -30,8 +29,38 @@ router.get('/update/cinema/:id', async function(req,res){
         });
         res.render('admin.ejs',{cinemaid});
     }
+    else{
+        res.redirect('/');
+    }
 });
 
+router.get('/update/user',async function(req,res){
+    const { Admin } = req.session;
+    if(Admin){
+        const userAll =  await user.findAll({
+        
+        });
+        res.render('admin.ejs',{userAll});
+    }
+    else{
+        res.redirect('/');
+    }
+});
+
+router.get('/update/film',async function(req,res){
+    const { Admin } = req.session;
+    if(Admin){
+        const filmAll= await Film.findAll({
+            order : [
+                ['film_ID','ASC']
+            ]
+        });
+        res.render('admin.ejs',{filmAll});
+    }
+    else{
+        res.redirect('/');
+    }
+});
 
 router.post('/update/cinema/:id',async function(req,res){
     const { Admin } = req.session;
@@ -48,11 +77,26 @@ router.post('/update/cinema/:id',async function(req,res){
                 }
             }
         );
+        res.redirect('/admin/update/cinema/');
+    }
+    else{
         res.redirect('/');
     }
 });
+router.get('/update/cinema',async function(req,res){
+    const { Admin } = req.session ;
+    if(Admin){
+        const cinema = await Cinema.findAll({
+            include:[{
+                model : Cineplex,
+            }]
+        });  
+        res.render('admin.ejs',{cinema});
+    }
+    else{
+        res.redirect('/');
+    }
+})
 
-
-router.get('/')
 
 module.exports = router;

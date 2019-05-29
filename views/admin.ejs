@@ -4,8 +4,26 @@
     <title>Admin web đặt vé phim</title>
 </head>
 <body>
+    <div>
     <ul>
-        <li><a href="/admin/update/cinema/"> Cập nhật lại thông tin của rạp  </a></li>
+        <li><a href="/admin/update/cinema/">Cập nhật lại thông tin của rạp</a></li>
+        <li><a href="/admin/update/user/">Cập nhật lại thông tin của user</a></li>
+        <li><a href="/admin/update/film/">Cập nhật lại thông tin của phim</a></li>
     </ul>
+    </div>
+    <div>
+    <% if(typeof cinema !== 'undefined') { %>
+        <% include admin/cinema.ejs %>
+    <% } %>
+    <% if(typeof cinemaid !== 'undefined') { %>
+        <% include admin/updatecinema.ejs %>
+    <% } %>
+    <% if(typeof userAll !== 'undefined') { %>
+        <% include admin/userAll.ejs %>
+    <% } %>
+    <% if(typeof filmAll !== 'undefined') { %>
+        <% include admin/filmAll.ejs %>
+    <% } %>
+    </div>
 </body>
 </html>

@@ -1,0 +1,12 @@
+<% if(filmAll) { %>
+    <% for (let i=0;i < filmAll.length ; i++ ) { %>
+    <div>
+        <p>
+            <span> <%= filmAll[i].dataValues.film_ID  %></span>
+            <span> <%= filmAll[i].dataValues.film_Name %></span>
+            <span> <%= filmAll[i].dataValues.film_DataPublic %></span>
+            <span> <%= filmAll[i].dataValues.film_ViewCount %></span>
+        </p>
+    </div>
+    <% } %>
+<% } %>
