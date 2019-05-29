@@ -87,6 +87,7 @@ margin-right: 5px;
     padding: 10px 30px;
     margin: 0 auto;
     box-shadow: 0 5px 15px rgba(0,0,0,0.20);
+    border-radius:20px;
 }
 
 .login_btn:hover{
@@ -109,4 +110,13 @@ margin-left: 4px;
     width: 120px;
     height: 120px;
     
+}
+.input-group{
+    border-radius:20px;
+}
+.radius{
+    border-radius:20px;
+}
+.input-group-text{
+    border-radius:20px;
 }
