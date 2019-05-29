@@ -1,7 +1,8 @@
 <% if(typeof cinemaid !== 'undefined') { %>
     <div>
         <form action="/admin/update/cinema/<%= cinemaid.dataValues.cinema_ID %>" method="POST">
-            <label>kiểu rạp : </label>
+            <label> Tên rap : </label> <input type="text" name="txtCinemaName" id="txtCinemaName" value="<%= cinemaid.dataValues.cinema_Name %>" required/>
+            <label> kiểu rạp : </label>
             <select name="txtCinemaType" id="txtCinemaType">
                 <option value="2D">2D</option>
                 <option value="3D">3D</option>

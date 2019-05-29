@@ -16,10 +16,13 @@
         <% include admin/cinema.ejs %>
     <% } %>
     <% if(typeof cinemaid !== 'undefined') { %>
-        <% include admin/updatecinema.ejs %>
+        <% include admin/update/updatecinema.ejs %>
     <% } %>
     <% if(typeof userAll !== 'undefined') { %>
         <% include admin/userAll.ejs %>
+    <% } %>
+    <% if(typeof userID !== 'undefined') { %>
+        <% include admin/update/updateuser.ejs %>
     <% } %>
     <% if(typeof filmAll !== 'undefined') { %>
         <% include admin/filmAll.ejs %>

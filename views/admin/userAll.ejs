@@ -6,6 +6,10 @@
             <span> <%= userAll[i].dataValues.user_Name %></span>
             <span> <%= userAll[i].dataValues.user_Email %></span>
             <span> <%= userAll[i].dataValues.user_NumberPhone %></span>
+            <span>&emsp;&emsp;</span>
+        <span><a href="/admin/update/user/<%= userAll[i].dataValues.user_ID %>">Cập nhật </a></span>
+        <span>&emsp;&emsp;</span>
+        <span><a href="/admin/delete/user/<%= userAll[i].dataValues.user_ID %>">Xóa</a></span>
         </p>
     </div>
     <% } %>

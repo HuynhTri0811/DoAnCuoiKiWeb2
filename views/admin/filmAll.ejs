@@ -6,6 +6,8 @@
             <span> <%= filmAll[i].dataValues.film_Name %></span>
             <span> <%= filmAll[i].dataValues.film_DataPublic %></span>
             <span> <%= filmAll[i].dataValues.film_ViewCount %></span>
+            <span><a href="/admin/update/film/<%= filmAll[i].dataValues.film_ID %>">Cập nhật</a></span>
+            <span><a href="/admin/delete/film/<%= filmAll[i].dataValues.film_ID %>">Xóa </a></span>
         </p>
     </div>
     <% } %>

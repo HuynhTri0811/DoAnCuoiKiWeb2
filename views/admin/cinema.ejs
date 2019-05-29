@@ -5,6 +5,8 @@
         <span> <%= cinema[i].dataValues.cinema_Length %></span>
         <span> <%= cinema[i].dataValues.cinema_Width %> </span>
         <span> <%= cinema[i].dataValues.Cineplex.cineplex_Name %> </span> 
-        <span> <a href="<%= cinema[i].dataValues.cinema_ID %>">Cật nhập</a> </span> </p>
+        <span> <a href="<%= cinema[i].dataValues.cinema_ID %>">Cật nhập</a> </span>
+        <span> <a href="/admin/delete/cinema/<%= cinema[i].dataValues.cinema_ID %>">Xóa</a></span>
+    </p>
     <% } %>
 </div>
