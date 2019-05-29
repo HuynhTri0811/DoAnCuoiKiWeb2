@@ -4,6 +4,9 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const Film = require('../models/Film.js');
 const User = require('../models/User.js');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 
 
 const router = new Router();
@@ -124,10 +127,47 @@ router.get('/phim',async function(req,res){
 	res.render('home.ejs',{filmChieu , user});
 });
 
-
+router.get('/phim/muave',async function(req,res)
+{
+	const { user_Id } = req.session;
+	if ( user_Id )
+	{
+		const user = await User.findOne({
+			where :{
+				user_ID : user_Id 
+			},
+		});
+		res.render('user/muave.ejs',{user});
+	} else {
+		res.render('Login.ejs');
+	}
+});
 
 router.get('/forgotPassword',function(req,res){
 	res.render('forgotPassword.ejs');
+});
+router.post('/phim/muave',async function(req,res){
+	var { txtUserEmail , txtUserPassword } =req.body;
+	var UserSaiPass = 'abc';
+	const user = await User.findOne({
+		where: {
+			user_Email: txtUserEmail,
+		}
+	});
+	if (!user) {
+		res.render('Login.ejs', { UserSaiPass });
+	}
+	else {
+		const match = await bcrypt.compare(txtUserPassword, user.user_Password);
+		if (match) {
+			req.session.user_Id = user.user_ID;
+			res.redirect('/phim/muave');
+		}
+		else {
+			res.render('Login.ejs', { UserSaiPass });
+		}
+	}
+
 });
 
 
