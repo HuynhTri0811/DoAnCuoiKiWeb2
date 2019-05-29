@@ -7,4 +7,4 @@
 
 # Lỗi khác khác version node_modules
 => gõ lệnh này để fix: npm rebuild bcrypt --update-binary
-
+=> do node_modules trên máy Mr.Trí khác ae mình
