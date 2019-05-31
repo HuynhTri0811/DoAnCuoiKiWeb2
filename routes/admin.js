@@ -118,6 +118,24 @@ router.get('/update/user/:id' , async function(req,res){
         res.redirect('/');
     }
 });
+router.post('/update/user/:id',async function(req,res){
+    const { Admin } = req.session ;
+    const id = Number(req.params.id);
+    if( Admin ){
+        var {txtUserEmail, txtUserName ,txtUserNumberPhone} =req.body;
+        await user.update({
+            user_Email : txtUserEmail , 
+            user_Name : txtUserName , 
+            user_NumberPhone : txtUserNumberPhone ,
+            },{
+                where :{
+                    user_ID : id ,
+                },
+        });
+    }else{
+        res.redirect('/');
+    }
+});
 router.get('/delete/user/:id',async function(req,res){
     const { Admin } = req.session;
     const id = Number(req.params.id);

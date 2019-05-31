@@ -15,7 +15,7 @@
     <% if(typeof cinema !== 'undefined') { %>
         <% include admin/cinema.ejs %>
     <% } %>
-    <% if(typeof cinemaid !== 'undefined') { %>
+    <% if(typeof cinemaID !== 'undefined') { %>
         <% include admin/update/updatecinema.ejs %>
     <% } %>
     <% if(typeof userAll !== 'undefined') { %>
@@ -26,6 +26,9 @@
     <% } %>
     <% if(typeof filmAll !== 'undefined') { %>
         <% include admin/filmAll.ejs %>
+    <% } %>
+    <% if(typeof filmID !== 'undefined') { %>
+        <% include admin/update/updatefilm.ejs %>
     <% } %>
     </div>
 </body>

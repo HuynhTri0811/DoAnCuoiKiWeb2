@@ -1,9 +1,9 @@
 <% if(typeof filmID !== 'undefined') { %>
     <div>
         <form action="" method="POST">
-            <p> Email : </p> <input type="email" name="txtUserEmail" id="txtUserEmail" value="<%= userID.dataValues.user_Email %>" required/>
-            <p> Name  : </p> <input type="text" name="txtUserName" id="txtUserName" value="<%= userID.dataValues.user_Name %>" required />
-            <p>Số điện thoại </p> <input type="text" name="txtUserNumberPhone" id="txtUserNumberPhone" value="<%= userID.dataValues.user_NumberPhone %>" required/>
+            <label>Tên :</label><input type="text" id="txtFilmName" name ="txtFilmName" size="40" value="<%= filmID.dataValues.film_Name %>"/> <br/>
+            <lable>Ngày công chiếu :</label> <input type="datetime" id="datePlublic" name="datePlublic" value="<%= filmID.dataValues.film_DatePublic %>"/> <br/>
+            <label>Hình ảnh :</label><img src="<%= filmID.dataValues.film_Image %>"/>
             <input type="submit" value="cập nhật "/>
         </form> 
     </div>

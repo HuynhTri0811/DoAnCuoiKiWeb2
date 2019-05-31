@@ -3,7 +3,6 @@ const db = require('./models/db');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 
-
 // Create app 
 const app = express();
 const port = process.env.PORT || 3000 ;
