@@ -17,18 +17,24 @@ router.get('/',async function(req,res){
     }
 });
 
+router.get('/logout',async function(req,res){
+    delete req.session.Admin;
+    res.redirect('/');
+});
+
+
 //cinema 
 router.get('/update/cinema/:id', async function(req,res){
     const { Admin } =req.session;
     const id = Number(req.params.id);
     if(Admin)
     {
-        const cinemaid = await Cinema.findOne({
+        const cinemaID = await Cinema.findOne({
             where :{
                 cinema_ID : id ,
             }
         });
-        res.render('admin.ejs',{cinemaid});
+        res.render('admin.ejs',{cinemaID});
     }
     else{
         res.redirect('/');

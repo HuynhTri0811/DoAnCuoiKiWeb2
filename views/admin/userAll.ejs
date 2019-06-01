@@ -1,16 +1,23 @@
 <% if(userAll) { %>
-    <% for (let i=0;i < userAll.length ; i++ ) { %>
-    <div>
-        <p>
-            <span> <%= userAll[i].dataValues.user_ID  %></span>
-            <span> <%= userAll[i].dataValues.user_Name %></span>
-            <span> <%= userAll[i].dataValues.user_Email %></span>
-            <span> <%= userAll[i].dataValues.user_NumberPhone %></span>
-            <span>&emsp;&emsp;</span>
-        <span><a href="/admin/update/user/<%= userAll[i].dataValues.user_ID %>">Cập nhật </a></span>
-        <span>&emsp;&emsp;</span>
-        <span><a href="/admin/delete/user/<%= userAll[i].dataValues.user_ID %>">Xóa</a></span>
-        </p>
+    <div id="table">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Họ và Tên </th>
+                <th>Email </th>
+                <th>Số điên thoại người dùng</th>
+                <th>Thao tác</th>
+            </tr>
+        <% for (let i=0;i < userAll.length ; i++ ) { %>
+            <tr>
+                <td> <%= userAll[i].dataValues.user_ID  %></td>
+                <td> <%= userAll[i].dataValues.user_Name %></td>
+                <td> <%= userAll[i].dataValues.user_Email %></td>
+                <td> <%= userAll[i].dataValues.user_NumberPhone %></td>
+            <td><a href="/admin/update/user/<%= userAll[i].dataValues.user_ID %>">Cập nhật </a>
+            <a href="/admin/delete/user/<%= userAll[i].dataValues.user_ID %>">Xóa</a></td>
+            </tr>
+        <% } %>
+        </table>
     </div>
-    <% } %>
 <% } %>

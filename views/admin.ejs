@@ -2,16 +2,24 @@
 <html>
 <head>
     <title>Admin web đặt vé phim</title>
+    <link href="/public/css/admin/adminhome.css" rel="stylesheet" />
+    <link href="/public/css/admin/tableAdmin.css" rel="stylesheet" />
+    <link href="/public/css/admin/all.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <div>
-    <ul>
-        <li><a href="/admin/update/cinema/">Cập nhật lại thông tin của rạp</a></li>
-        <li><a href="/admin/update/user/">Cập nhật lại thông tin của user</a></li>
-        <li><a href="/admin/update/film/">Cập nhật lại thông tin của phim</a></li>
-    </ul>
+    <div id="header_admin">
+        <ul>
+            <li><a href="/admin" id="logo">VNCinema</a></li>
+            <li><a href="/admin/update/cinema/">Cập nhật lại thông tin của rạp</a></li>
+            <li><a href="/admin/update/user/">Cập nhật lại thông tin của user</a></li>
+            <li><a href="/admin/update/film/">Cập nhật lại thông tin của phim</a></li>
+            <li style="float: right"><a href="/admin/logout/" id="logout">
+                Đăng xuất   
+            </a></li>
+        </ul>
     </div>
-    <div>
+    <div id="content_admin">
     <% if(typeof cinema !== 'undefined') { %>
         <% include admin/cinema.ejs %>
     <% } %>

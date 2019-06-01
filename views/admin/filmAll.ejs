@@ -1,14 +1,34 @@
 <% if(filmAll) { %>
-    <% for (let i=0;i < filmAll.length ; i++ ) { %>
-    <div>
-        <p>
-            <span> <%= filmAll[i].dataValues.film_ID  %></span>
-            <span> <%= filmAll[i].dataValues.film_Name %></span>
-            <span> <%= filmAll[i].dataValues.film_DataPublic %></span>
-            <span> <%= filmAll[i].dataValues.film_ViewCount %></span>
-            <span><a href="/admin/update/film/<%= filmAll[i].dataValues.film_ID %>">Cập nhật</a></span>
-            <span><a href="/admin/delete/film/<%= filmAll[i].dataValues.film_ID %>">Xóa </a></span>
-        </p>
+    <div id="table">
+    <table>
+        <tr>
+            <th>STT </th>
+            <th>Tên phim </th>
+            <th>Ảnh phim </th>
+            <th>Ngày công chiếu</th>
+            <th>Số lượt bấm vào phim trên trang web </th>
+            <th>Thao tác</th>
+        </tr>
+            <% for (let i=0;i < filmAll.length ; i++ ) { %>
+                <tr>
+                    <td> <%= filmAll[i].dataValues.film_ID  %></td>
+                    <td> <%= filmAll[i].dataValues.film_Name %></td>
+                    <td>
+                        <img src="<%= filmAll[i].dataValues.film_Image %>" alt="no load image"/>
+                    </td>
+                    <td> 
+                            <% var d = new Date(filmAll[i].dataValues.film_DatePublic); %>
+                            <%= d.getDate(); %>
+                            /
+                            <%= d.getMonth()+1; %>
+                            /
+                            <%= d.getFullYear(); %>
+                    </td>
+                    <td> <%= filmAll[i].dataValues.film_ViewCount %></td>
+                    <td><a href="/admin/update/film/<%= filmAll[i].dataValues.film_ID %>">Cập nhật</a>
+                    <a href="/admin/delete/film/<%= filmAll[i].dataValues.film_ID %>">Xóa </a></td>
+                </tr>
+            <% } %>
+    </table>
     </div>
-    <% } %>
 <% } %>

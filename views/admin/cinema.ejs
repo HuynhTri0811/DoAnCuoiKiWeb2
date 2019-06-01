@@ -1,12 +1,23 @@
-<div>
-    <% for(let i = 0 ;i < cinema.length ; i++) { %>
-        <p> <span> <%= cinema[i].dataValues.cinema_Name %> </span>
-        <span> <%= cinema[i].dataValues.cinema_Type %> </span>
-        <span> <%= cinema[i].dataValues.cinema_Length %></span>
-        <span> <%= cinema[i].dataValues.cinema_Width %> </span>
-        <span> <%= cinema[i].dataValues.Cineplex.cineplex_Name %> </span> 
-        <span> <a href="<%= cinema[i].dataValues.cinema_ID %>">Cật nhập</a> </span>
-        <span> <a href="/admin/delete/cinema/<%= cinema[i].dataValues.cinema_ID %>">Xóa</a></span>
-    </p>
-    <% } %>
+<div id="table">
+    <table>
+        <tr>
+            <th>Tên rạp phim  </th>
+            <th>Kiểu rạp </th>
+            <th>Số chỗ ngồi chiều dọc </th>
+            <th>Số chỗ ngồi chiều dài </th>
+            <th>Địa chỉ </th>
+            <th>Thao tác</th>
+        </tr>
+        <tr>
+        <% for(let i = 0 ;i < cinema.length ; i++) { %>
+            <td><%= cinema[i].dataValues.cinema_Name %></td> 
+            <td><%= cinema[i].dataValues.cinema_Type %></td> 
+            <td><%= cinema[i].dataValues.cinema_Length %></td>
+            <td><%= cinema[i].dataValues.cinema_Width %></td> 
+            <td><%= cinema[i].dataValues.Cineplex.cineplex_Name %></td>  
+            <td><a href="<%= cinema[i].dataValues.cinema_ID %>">Cật nhập</a>&nbsp;&nbsp;
+            <a href="/admin/delete/cinema/<%= cinema[i].dataValues.cinema_ID %>">Xóa</a></td>
+        </tr>
+        <% } %>
+    </table>
 </div>

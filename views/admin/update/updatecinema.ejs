@@ -1,14 +1,14 @@
-<% if(typeof cinemaid !== 'undefined') { %>
+<% if(typeof cinemaID !== 'undefined') { %>
     <div>
-        <form action="/admin/update/cinema/<%= cinemaid.dataValues.cinema_ID %>" method="POST">
-            <label> Tên rap : </label> <input type="text" name="txtCinemaName" id="txtCinemaName" value="<%= cinemaid.dataValues.cinema_Name %>" required/>
+        <form action="/admin/update/cinema/<%= cinemaID.dataValues.cinema_ID %>" method="POST">
+            <label> Tên rap : </label> <input type="text" name="txtCinemaName" id="txtCinemaName" value="<%= cinemaID.dataValues.cinema_Name %>" required/>
             <label> kiểu rạp : </label>
             <select name="txtCinemaType" id="txtCinemaType">
                 <option value="2D">2D</option>
                 <option value="3D">3D</option>
             </select>
-            <label>Số ghế ngồi ngang của rạp :</label> <input type="text" name="txtCinemaLength" id="txtCinemaLength" value="<%= cinemaid.dataValues.cinema_Length %>" required/>
-            <label>Số ghế ngồi dọc của rạp : </label><input type="text" name="txtCinemaWidth" id="txtCinemaWidth" value="<%= cinemaid.dataValues.cinema_Width %>" required/>
+            <label>Số ghế ngồi ngang của rạp :</label> <input type="text" name="txtCinemaLength" id="txtCinemaLength" value="<%= cinemaID.dataValues.cinema_Length %>" required/>
+            <label>Số ghế ngồi dọc của rạp : </label><input type="text" name="txtCinemaWidth" id="txtCinemaWidth" value="<%= cinemaID.dataValues.cinema_Width %>" required/>
             <input type="submit" value="cập nhật "/>
         </form> 
     </div>
