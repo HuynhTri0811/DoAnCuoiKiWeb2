@@ -54,7 +54,6 @@ router.get('/update/cinema',async function(req,res){
         res.redirect('/');
     }
 });
-
 router.get('/delete/cinema/:id',async function(req,res){
     const { Admin } = req.session ;
     const id = Number(req.params.id);
@@ -70,7 +69,6 @@ router.get('/delete/cinema/:id',async function(req,res){
         res.redirect('/');
     }
 });
-
 router.post('/update/cinema/:id',async function(req,res){
     const { Admin } = req.session;
     const id =Number(req.params.id);
@@ -174,7 +172,6 @@ router.get('/update/film/',async function(req,res){
         res.redirect('/');
     }
 });
-
 router.get('/update/film/:id',async function(req,res){
     const { Admin } = req.session;
     const id = req.params.id;
@@ -189,8 +186,6 @@ router.get('/update/film/:id',async function(req,res){
         res.redirect('/');
     }
 });
-
-
 router.get('/delete/film/:id',async function(req,res){
     const { Admin } = req.session;
     const id = Number(req.params.id);
@@ -207,6 +202,17 @@ router.get('/delete/film/:id',async function(req,res){
 });
 
 
+// Cineplex 
+router.get('/update/cineplex',async function(req,res){
+    const { Admin } = req.session;
+    if( Admin ){
+        const cineplex = await Cineplex.findAll({
 
+        });
+        res.render('admin.ejs',{cineplex});
+    } else {
+        res.redirect('/');
+    }
+});
 
 module.exports = router;

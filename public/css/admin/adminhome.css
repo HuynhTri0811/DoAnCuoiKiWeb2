@@ -10,6 +10,7 @@ body{
 }
 
 #header_admin{
+
     border: 1px solid #908C8C;
 }
 
@@ -41,13 +42,35 @@ body{
 #logout {
     border: 1px solid #09E700;
     padding-top: 5px;
-    width: 70px;
-    margin: 3px;
-    height: 12px;
+    margin: 10px;
     margin-top: 3px;
-    text-align: center;
     background-color: #09E7F2;
     border-radius: 20px; 
 }
 
+#logout a{
+    font-size: 10px;
+    height: 10px;
+}
 
+
+.btn_create{
+    float: right;
+    border: 1px solid #09E700;
+    padding: 5px;
+    margin: 10px;
+    margin-top: 3px;
+    background-color: #09E700;
+    border-radius: 20px; 
+    text-decoration: none;
+    color:  #09E7F2;
+}
+
+.btn_create a{
+    
+    font-size: 10px;
+}
+
+.btn_create:hover{
+    color: white;
+}

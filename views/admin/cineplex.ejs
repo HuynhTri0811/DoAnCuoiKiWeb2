@@ -1,0 +1,23 @@
+<% if( cineplex ) { %>
+    <div id="table">
+    <table>
+        <tr>
+            <th>ID </th>
+            <th>Tên  </th>
+            <th>Địa chỉ </th>
+            <th>Thao tác</th>
+        </tr>
+        <% for(let i = 0 ;i < cineplex.length ; i++) { %>
+            <tr>
+            <td><%= cineplex[i].dataValues.cineplex_ID %></td> 
+            <td><%= cineplex[i].dataValues.cineplex_Name %></td> 
+            <td><%= cineplex[i].dataValues.cineplex_Adress %></td>
+            <td><a href="/admin/update/cineplex/<%= cineplex[i].dataValues.cineplex_ID %>">Cật nhập</a>&nbsp;&nbsp;
+            <a href="/admin/delete/cineplex/<%= cineplex[i].dataValues.cineplex_ID %>" onclick="return confirmAction()" >Xóa</a></td>
+            </tr>
+        <% } %>
+    </table>
+        <a href="/admin/create/cineplex/"  class="btn_create">Thêm cụm rạp</a>
+    </div>
+<% } %>
+
