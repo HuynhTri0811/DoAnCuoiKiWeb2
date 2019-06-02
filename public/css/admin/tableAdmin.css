@@ -33,3 +33,44 @@
     border :1px solid #ddd;
     margin-bottom: 12px;
 }
+
+#create_film form{
+    border: 1px solid #4CAF50;
+}
+
+#create_film form input[type=text],input[type=file],input[type=date],input[type=number]{
+    width : 30%;
+    padding :5px 5px;
+    margin: 2px 0;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+#create_film button{
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 8px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+#create_film button:hover{
+    opacity: 0.8;
+}
+
+#create_film {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    padding-top: 60px;
+  }
+  

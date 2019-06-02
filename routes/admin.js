@@ -16,7 +16,6 @@ router.get('/',async function(req,res){
         res.redirect('/');
     }
 });
-
 router.get('/logout',async function(req,res){
     delete req.session.Admin;
     res.redirect('/');

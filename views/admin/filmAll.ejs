@@ -30,6 +30,23 @@
                 </tr>
             <% } %>
     </table>
-        <a href="/admin/create/cineplex/" class="btn_create">Thêm phim</a>
+        <button style="width:auto" id="block_from_create_film">
+            Thêm phim 
+        </button>
+    </div>
+    <div id="create_film">
+    <form action="/admin/create/cineplex/" method="POST">
+        <label>Tên phim :</label>
+        <input type="text" placeholder="Nhap vao ten phim " id="film_Name" name="film_Name" required/><br/>
+        <label>Ảnh film :</label>
+        <input type="file" id="film_Image" name="film_Image" required/><br/>
+        <label>Ngày công chiếu :</label>
+        <input type="date" name="film_DatePublic" id="film_DatePublic" required/><br/>
+        <label>Thời lượng :</label>
+        <input type="number" id="film_Time" name="film_Time" required><br/>
+        <button type="submit" value="Thêm vào Film">
+            Thêm vào film
+        </buton>
+    </form>
     </div>
 <% } %>
