@@ -22,7 +22,8 @@ app.use(bodyParser.urlencoded({
   
 
 //Router
-
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+app.use('/forgotPassword', require('./routes/forgotPassword'));
 app.use('/',require('./routes/home.js'));
 app.use('/login',require('./routes/Login.js'));
 app.use('/signup',require('./routes/signUp.js'));

@@ -25,6 +25,10 @@ const user = db.define('User', {
 		type : Sequelize.STRING ,
 		allowNull : false ,		
 	},
+	user_Code : {
+        type: Sequelize.STRING,
+        allowNull: true
+    },
 
 });
 
