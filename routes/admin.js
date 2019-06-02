@@ -106,21 +106,6 @@ router.get('/update/user',async function(req,res){
         res.redirect('/');
     }
 });
-router.get('/update/user/:id' , async function(req,res){
-    const { Admin } = req.session;
-    const id = Number(req.params.id);
-    if(Admin){
-        const userID = await user.findOne({
-            where :{
-                user_ID : id ,
-            }
-        });
-        res.render('admin.ejs',{userID});
-    }
-    else{
-        res.redirect('/');
-    }
-});
 router.post('/update/user/:id',async function(req,res){
     const { Admin } = req.session ;
     const id = Number(req.params.id);
@@ -213,5 +198,39 @@ router.get('/update/cineplex',async function(req,res){
         res.redirect('/');
     }
 });
+router.get('/delete/cineplex/:id',async function(req,res){
+    const { Admin } =req.session;
+    const id =Number(req.params.id);
+    if(Admin){
+        await Cineplex.destroy({
+            where :{
+                cineplex_ID : id,
+            }
+        });
+        res.redirect('/admin/update/cineplex');
+    } else {
+        res.redirect('/');
+    }
+});
+router.post('/update/cineplex/:id',async function(req,res){
+    const { Admin } = req.session;
+    const id = Number(req.params.id);
+    if(Admin){
+        var { txtCineplexName , txtCineplexAdress} = req.body ;
+        await Cineplex.update({
+            cineplex_Name : txtCineplexName ,
+            cineplex_Adress :txtCineplexAdress ,
+        },{
+            where :{
+                cineplex_ID : id ,
+            }
+        });
+        res.redirect('/admin/update/cineplex');
+    }else{
+        res.redirect('/');
+    }
+});
+
+
 
 module.exports = router;
