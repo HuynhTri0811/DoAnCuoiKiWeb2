@@ -19,6 +19,7 @@
   "dependencies": {
     "bcrypt": "^3.0.6",
     "ejs": "^2.6.1",
+    "ejs-lint": "^0.3.0",
     "es2015": "0.0.0",
     "express": "^4.17.0",
     "express-promise-router": "^3.0.3",

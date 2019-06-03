@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Việt Nam Cinema</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="/public/css/user/muave.css">
+</head>
+
+<body>
+    <div >
+        <div >
+            <div style="padding-left: 10%; padding-right: 10%">
+                <div class="col-main">
+                    <div class="booking-progress">
+                        <h1>Đặt vé trực tuyến</h1>
+                    </div>
+                    <div class="main-content">
+                        <ul class="progress" style="position: relative; height: 566px;">
+                            <li class="booking-step cycle-slide cycle-slide-active" style="position: absolute; top: 0px; left: 0px; z-index: 100; opacity: 1; display: block; visibility: visible;">
+                                <label class="top-content">Phòng chiếu</label>    
+                                <div class="ticketbox">
+                                    <img src="/public/image/screen.JPG" >
+                                    <div class="row">
+                                        <% for (var i = 1; i <= 22 ; i++) { %>
+                                            <div class="seat seat-standard active" zone="Thường" price="85000"> A<%= i %> </div>
+                                        <% } %>
+                                    </div>
+                                    <div class="row">
+                                        <% for (var i = 1; i <= 22 ; i++) { %>
+                                            <div class="seat seat-standard active" zone="Thường" price="85000"> B<%= i %> </div>
+                                        <% } %>
+                                    </div>
+                                    <div class="row">
+                                        <% for (var i = 1; i <= 22 ; i++) { %>
+                                        <div class="seat seat-standard active" zone="Thường" price="85000"> C<%= i %> </div>
+                                        <% } %>
+                                    </div>
+                                    <div class="row">
+                                        <% for (var i = 1; i <= 22 ; i++) { %>
+                                        <div class="seat seat-standard active" zone="Thường" price="85000"> D<%= i %> </div>
+                                        <% } %>
+                                    </div>
+                                    <div class="row">
+                                        <% for (var i = 1; i <= 22 ; i++) { %>
+                                        <div class="seat seat-vipprime active" zone="Vipprime" price="85000"> E<%= i %> </div>
+                                        <% } %>
+                                    </div>
+                                    <div class="row">
+                                        <% for (var i = 1; i <= 22 ; i++) { %>
+                                        <div class="seat seat-vipprime active" zone="Vipprime" price="85000"> F<%= i %> </div>
+                                        <% } %>
+                                    </div>
+                                    <div class="row">
+                                        <% for (var i = 1; i <= 22 ; i++) { %>
+                                        <div class="seat seat-vipprime active" zone="Vipprime" price="85000"> G<%= i %> </div>
+                                        <% } %>
+                                    </div>
+                                    <div class="row">
+                                        <% for (var i = 1; i <= 22 ; i++) { %>
+                                            <div class="seat seat-vipprime active" zone="Vipprime" price="85000"> H<%= i %> </div>
+                                        <% } %>
+                                    </div>
+                                </div>
+        
+                                <div class="ticketbox-notice">
+                                    <div class="iconlist">
+                                        <div class="icon checked">Đã được đặt</div>
+                                        <div class="icon occupied">Đã chọn</div>
+                                        <div></div>
+                                    </div>
+                        
+                                    <div class="iconlist">
+                                        <div class="icon zone-standard" title="Standard"> Thường </div>
+                                        <div class="icon zone-vipprime" title="VIP(Prime)"> VIP(Prime) </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bottom-content">
+                        <div class="format-bg-top"></div>
+
+                        <div class="minicart-wrapper">
+                            <ul>
+                                <li class="item first" xmlns="http://www.w3.org/1999/html">
+                                    <div class="product-details">
+                                        <table class="info-wrapper">
+                                            <colgroup>
+                                                <col width="40%">
+                                                <col>
+                                            </colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <img src="https://scontent.fsgn8-1.fna.fbcdn.net/v/t1.0-1/p160x160/49946881_2118306045147289_2143222821399035904_n.jpg?_nc_cat=109&amp;_nc_ht=scontent.fsgn8-1.fna&amp;oh=e673a3ff46440d28d8529ab3106b3f0e&amp;oe=5D66C689" alt="AVENGERS: ENDGAME">
+                                                    </td>
+                                                    <td>
+                                                        <table class="info-wrapper">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="label">AVENGERS: ENDGAME</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="label">2D</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="label">C13</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </li>
+                
+                                <li class="item" xmlns="http://www.w3.org/1999/html">
+                                    <div class="product-details">
+                                        <table class="info-wrapper">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="label">Rạp chiếu phim</td>
+                                                    <td>CGV Vincom Gò Vấp</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="label">Ngày</td>
+                                                    <td>13/05/2019</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="label">Phòng chiếu</td>
+                                                    <td>Cinema 3</td>
+                                                </tr>
+                                                <tr class="block-seats" style="display: none;">
+                                                    <td class="label">Ghế</td>
+                                                    <td class="data"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </li>
+                                                
+                                <li class="item" xmlns="http://www.w3.org/1999/html">                                    
+                                    <div class="product-details">
+                                        <table class="info-wrapper">
+                                            <thead>
+                                                <tr class="block-box">
+                                                    <td class="label">Phim</td>
+                                                    <td class="price">0,00&nbsp;₫</td>
+                                                    <td class="data">
+                                                    <div class="truncated">
+                                                        <div class="truncated_full_value"></div>
+                                                        <a href="javascript: void(0);" onclick="return false;" class="details">I</a>
+                                                    </div>
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                
+                                            <tbody>
+                                                <tr class="block-con">
+                                                    <td class="label">Combo</td>
+                                                    <td class="price"><span class="price">0,00&nbsp;₫</span></td>
+                                                    <td class="data">
+                                                        <div class="truncated">
+                                                            <div class="truncated_full_value"></div>
+                                                            <a href="javascript: void(0);" onclick="return false;" class="details">I</a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                
+                                            <tfoot class="block-price">
+                                                <tr>
+                                                    <td class="label">Tổng</td>
+                                                    <td class="price" colspan="2">0,00&nbsp;₫</td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    
+                        <div class="format-bg-bottom"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

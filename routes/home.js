@@ -127,25 +127,17 @@ router.get('/phim',async function(req,res){
 	res.render('home.ejs',{filmChieu , user});
 });
 
-router.get('/phim/muave',async function(req,res)
+router.get('/phim/muave',function(req,res)
 {
-	const { user_Id } = req.session;
+	const user_Id = req.session;
 	if ( user_Id )
 	{
-		const user = await User.findOne({
-			where :{
-				user_ID : user_Id 
-			},
-		});
-		res.render('user/muave.ejs',{user});
+		res.render('users/muave.ejs');
 	} else {
 		res.render('Login.ejs');
 	}
 });
 
-router.get('/forgotPassword',function(req,res){
-	res.render('forgotPassword.ejs');
-});
 router.post('/phim/muave',async function(req,res){
 	var { txtUserEmail , txtUserPassword } =req.body;
 	var UserSaiPass = 'abc';
@@ -167,9 +159,11 @@ router.post('/phim/muave',async function(req,res){
 			res.render('Login.ejs', { UserSaiPass });
 		}
 	}
-
 });
 
+router.get('/forgotPassword',function(req,res){
+	res.render('forgotPassword.ejs');
+});
 
 router.get('/logout',function(req,res){
 	delete req.session.user_Id;
