@@ -19,7 +19,6 @@
 }
 .col-main{
     text-transform: uppercase;
-    /*color: #fff;*/
     line-height: 32px;
     padding: 0;
     margin: 0;
@@ -85,6 +84,8 @@
 }
 .progress {
     width: 100%;
+    position: relative;
+    height: 536px;
 }
 .progress > li {
     width: 100%;
@@ -115,7 +116,7 @@
     vertical-align: middle;
     font-size: 7pt;
     margin: 0 1px;
-    /*padding: 1px 0;*/
+    padding: 1px 0;
 }
 .seat.active {
     cursor: pointer;
@@ -293,7 +294,7 @@
  * ============================================ */
 .bottom-content {
     background-color: #000;
-    margin-top: 30px;	
+    margin-top: -15px;	
     font-size: 0;
 }
 .format-bg-top {
@@ -311,9 +312,10 @@
 .minicart-wrapper {
     font-size: 0;
     color: #cccccc;
-    width: 750px;
+    width: 90%;
     display: inline-block;
     margin: 0 3px;
+    text-align: left;
 }
 .minicart-wrapper ul {
     width: 100%;
@@ -350,6 +352,11 @@
 .info-wrapper td.label {
     font-weight: normal;
 }
+
+.info-wrapper td.name_film{
+    font-size: 13px;
+}
+
 .truncated {
     float: right;
 }
@@ -369,21 +376,6 @@
 }
 .item-options dt:after {
     content: ' x ';
-}
-.btn-left, .btn-right {
-    float: none;
-    width: 106px;
-    display: inline-block;
-    margin: 0 0 0 3px;
-    height: 108px;
-    vertical-align: top;
-    background: url(https://www.cgv.vn/skin/frontend/cgv/default/images/bg-cgv/bg-cgv-button-process.png) no-repeat;
-}
-.btn-left {	
-    background-position: -152px 0;
-}
-.btn-right {
-    background-position: -152px -441px;
 }
 li[name=familypack] .product-shop, .products-list li[name=familypack] .product-shop .price-box .price{
     color:#fff;
