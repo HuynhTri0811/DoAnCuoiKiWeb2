@@ -16,15 +16,33 @@ router.get('/', function (req, res) {
   });
 router.post('/', async function (req, res) {   
 	var macode =Random();
-	user.update({
-		user_Code: macode,
-	}, {
+
+	var User;
+	const {email } = req.body;
+	User = await user.findOne({
 		where: {
-			user_Email: req.body.email,
-		} 
-	  });
-	const info = await sendEmail(req.body.email, 'Quên mật khẩu', 'Bạn có quên mật khẩu', macode);
-	res.render('resetPassword.ejs');
+			user_Email:email,
+		}
+	});
+
+	if(User)
+	{
+		user.update({
+			user_Code: macode,
+		}, {
+			where: {
+				user_Email: req.body.email,
+			} 
+			});
+			const info = await sendEmail(req.body.email, 'Quên mật khẩu', 'Bạn có quên mật khẩu', macode);
+			res.render('resetPassword.ejs');
+	}
+
+	else
+	{
+		
+	}
+
   });
 	
 
