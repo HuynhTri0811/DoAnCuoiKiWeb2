@@ -1,4 +1,4 @@
-const Router = require('express-promise-router');
+const Router = require('express').Router;
 const router = new Router();
 const sendEmail  = require('../models/email.js');
 const user = require('../models/User.js');
