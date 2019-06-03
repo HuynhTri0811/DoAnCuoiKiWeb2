@@ -25,22 +25,6 @@ router.get('/logout',async function(req,res){
 
 
 //cinema 
-router.get('/update/cinema/:id', async function(req,res){
-    const { Admin } =req.session;
-    const id = Number(req.params.id);
-    if(Admin)
-    {
-        const cinemaID = await Cinema.findOne({
-            where :{
-                cinema_ID : id ,
-            }
-        });
-        res.render('admin.ejs',{cinemaID});
-    }
-    else{
-        res.redirect('/');
-    }
-});
 router.get('/update/cinema',async function(req,res){
     const { Admin } = req.session ;
     if(Admin){
@@ -101,6 +85,31 @@ router.post('/update/cinema/:id',async function(req,res){
         }
     }
     else{
+        res.redirect('/');
+    }
+});
+router.post('/create/cinema/',async function(req,res){
+    const Admin = req.session;
+    if( Admin ){
+        var { txtCinemaName , txtCinemaType ,txtCinemaLength , txtCinemaWidth , txtCineplexName} = req.body;
+        const cineplex_Name_id = await Cineplex.findOne({
+            where :{ cineplex_Name :{
+                [Op.substring]: txtCineplexName ,
+            }}
+        });
+        if(cineplex_Name_id){
+            await Cinema.create({
+                cinema_Name : txtCinemaName,
+                cinema_Type : txtCinemaType ,
+                cinema_Length : txtCinemaLength ,
+                cinema_Width : txtCinemaWidth,
+                CineplexCineplexID : cineplex_Name_id.dataValues.cineplex_ID
+            });
+            res.redirect('/admin/update/cinema');
+        }else{
+            res.redirect('/admin');
+        }
+    }else{
         res.redirect('/');
     }
 });

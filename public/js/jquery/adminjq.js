@@ -26,3 +26,15 @@ $(document).ready(function(){
     });
 });
 
+$(document).ready(function(){
+    $("#create_cinema").hide();
+    $("#btn_create_cinema").click(function(){
+        $("#create_cinema").show();
+    });
+    $("#btn_close_cinema_create").click(function(){
+        $("#create_cinema").hide();
+    });
+    $("#btn_close_cinema_create_1").click(function(){
+        $("#create_cinema").hide();
+    });
+});
