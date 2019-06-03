@@ -16,7 +16,7 @@ router.get('/', function (req, res) {
   });
 router.post('/', async function (req, res) {   
 	var macode =Random();
-
+	var UserSaiMail = 'abc';
 	var User;
 	const {email } = req.body;
 	User = await user.findOne({
@@ -40,7 +40,7 @@ router.post('/', async function (req, res) {
 
 	else
 	{
-		
+		res.render('forgotPassword.ejs', { UserSaiMail });
 	}
 
   });
