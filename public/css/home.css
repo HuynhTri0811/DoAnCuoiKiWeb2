@@ -74,9 +74,10 @@ html, body {
   font-weight: 700;
   font-size: 15px;
   background-color: #222;
-  padding: 17px 60px;
+  padding: 10px 60px;
   margin: 0 auto;
   box-shadow: 0 5px 15px rgba(0,0,0,0.20);
+  border-radius: 20px;
 }
  
 .btns span {
@@ -128,3 +129,13 @@ html, body {
  footer div div div ul h1{
      font-size: 20px;
  }
+
+ .radius{
+    border-radius:20px;
+    width: 130px;
+}
+
+.radiusSearch{
+    border-radius:20px;
+    width: 90px;
+}
