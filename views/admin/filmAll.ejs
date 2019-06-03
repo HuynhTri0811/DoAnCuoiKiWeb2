@@ -25,7 +25,7 @@
                             <%= d.getFullYear(); %>
                     </td>
                     <td> <%= filmAll[i].dataValues.film_ViewCount %></td>
-                    <td><a id="btn_update_film_<%= filmAll[i].dataValues.film_ID %>">Cập nhật</a> &nbsp;
+                    <td><b id="btn_update_film_<%= filmAll[i].dataValues.film_ID %>">Cập nhật</b> &nbsp;
                     <a href="/admin/delete/film/<%= filmAll[i].dataValues.film_ID %>" onclick="return confirmAction()" >Xóa </a></td>
                     </tr>
             <% } %>

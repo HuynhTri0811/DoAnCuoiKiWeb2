@@ -12,7 +12,7 @@
             <td><%= cineplex[i].dataValues.cineplex_ID %></td> 
             <td><%= cineplex[i].dataValues.cineplex_Name %></td> 
             <td><%= cineplex[i].dataValues.cineplex_Adress %></td>
-            <td><a id="btn_update_cineplex_<%= cineplex[i].dataValues.cineplex_ID %>">Cật nhập</a>&nbsp;&nbsp;
+            <td><b id="btn_update_cineplex_<%= cineplex[i].dataValues.cineplex_ID %>">Cật nhập</b>&nbsp;&nbsp;
             <a href="/admin/delete/cineplex/<%= cineplex[i].dataValues.cineplex_ID %>" onclick="return confirmAction()" >Xóa</a></td>
             </tr>   
         <% } %>
