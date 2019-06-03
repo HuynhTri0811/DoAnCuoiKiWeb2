@@ -1,4 +1,6 @@
 const Router = require('express').Router;
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 const fs = require('fs');
 const user = require('../models/User.js');
 const Cinema = require('../models/Cinema.js');
@@ -46,8 +48,11 @@ router.get('/update/cinema',async function(req,res){
             include:[{
                 model : Cineplex,
             }]
-        });  
-        res.render('admin.ejs',{cinema});
+        });
+        const Adress = await Cineplex.findAll({
+           
+        });
+        res.render('admin.ejs',{cinema,Adress});
     }
     else{
         res.redirect('/');
@@ -72,19 +77,28 @@ router.post('/update/cinema/:id',async function(req,res){
     const { Admin } = req.session;
     const id =Number(req.params.id);
     if(Admin){
-        var {txtCinemaName, txtCinemaType ,txtCinemaLength,txtCinemaWidth } =req.body;
-        await Cinema.update({
-            cinema_Name : txtCinemaName ,
-            cinema_Type : txtCinemaType ,
-            cinema_Length : txtCinemaLength ,
-            cinema_Width :txtCinemaWidth ,
-            },{
-                where : {
-                    cinema_ID : id , 
-                }
-            }
-        );
-        res.redirect('/admin/update/cinema/');
+        var {txtCinemaName, txtCinemaType ,txtCinemaLength,txtCinemaWidth,txtCineplexName } =req.body;
+        var cineplex_Name_id = await Cineplex.findOne({
+            where :{ cineplex_Name :{
+                [Op.substring]: txtCineplexName ,
+            }}
+        });
+        if(cineplex_Name_id){
+            await Cinema.update({
+                cinema_Name : txtCinemaName ,
+                cinema_Type : txtCinemaType ,
+                cinema_Length :  txtCinemaLength ,
+                cinema_Width :  txtCinemaWidth ,
+                CineplexCineplexID : cineplex_Name_id.dataValues.cineplex_ID } , 
+                {
+                    where :{
+                        cinema_ID : id,
+                    },
+            });
+            res.redirect('/admin/update/cinema/');
+        }else{
+            res.redirect('/admin');
+        }
     }
     else{
         res.redirect('/');
@@ -230,7 +244,19 @@ router.post('/update/cineplex/:id',async function(req,res){
         res.redirect('/');
     }
 });
-
+router.post('/create/cineplex/',async function(req,res){
+    const { Admin } = req.session ;
+    if(Admin){
+        var { cineplex_Name , cineplex_Adress } = req.body ;
+        await Cineplex.create({
+            cineplex_Name ,
+            cineplex_Adress ,
+        });
+        res.redirect('/admin/update/cineplex');
+    }else{
+        res.redirect('/');
+    }
+});
 
 
 module.exports = router;

@@ -99,3 +99,12 @@ html,body{
         margin: auto;
         border-radius:20px;
     }
+
+    .centerReset{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 15px;
+        width: 100px;
+        height: 100px;
+    }
