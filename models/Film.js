@@ -26,7 +26,7 @@ const film = db.define('Film',{
     },
     film_ViewCount :{
         type : Sequelize.INTEGER ,
-        allowNull : false,
+        allowNull : true,
         get(){
             return 0;
         }

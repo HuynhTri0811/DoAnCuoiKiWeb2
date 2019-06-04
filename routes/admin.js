@@ -7,6 +7,12 @@ const Cinema = require('../models/Cinema.js');
 const Cineplex = require('../models/Cineplex.js');
 const Film = require('../models/Film.js');
 const router = new Router();
+var multer = require('multer');
+var formidable = require('formidable'); 
+
+
+
+const upload = multer({dest: __dirname + '/uploads/images'});
 
 router.get('/',async function(req,res){
     const { Admin } = req.session;
@@ -89,7 +95,7 @@ router.post('/update/cinema/:id',async function(req,res){
     }
 });
 router.post('/create/cinema/',async function(req,res){
-    const Admin = req.session;
+    const { Admin } = req.session;
     if( Admin ){
         var { txtCinemaName , txtCinemaType ,txtCinemaLength , txtCinemaWidth , txtCineplexName} = req.body;
         const cineplex_Name_id = await Cineplex.findOne({
@@ -205,6 +211,36 @@ router.get('/delete/film/:id',async function(req,res){
         res.redirect('/admin/update/film/');
     } else {
         res.redirect('/');
+    }
+});
+router.post('/create/film/',async function(req,res){
+    const { Admin } = req.session;
+    if(Admin){
+
+        var form = new formidable.IncomingForm();
+        await form.parse(req,function(err,filds,files){
+            var oldpath ="dasdasdas";
+            var newpath = 'public/image' + file.filetoupload.name ;
+            fs.rename(oldpath, newpath, function (err) {
+                if (err) throw err;
+                res.write('File uploaded and moved!');
+                res.end();
+            });
+        });
+        console.log(form);  
+        var {txtFilmName ,txtFilmDatePublic ,txtFilmTime,txtFilmImage} = req.body;
+        if(form){
+            await Film.create({
+                film_Name : txtFilmName ,
+                film_Image : 'public/image/'+txtFilmImage ,
+                film_DatePublic : txtFilmDatePublic,
+                film_Time : txtFilmTime ,
+            });
+            res.redirect('/admin/update/film');
+        }else{
+            console.log("loi cmnr 2");
+            res.redirect('/admin/update/film');
+        }
     }
 });
 

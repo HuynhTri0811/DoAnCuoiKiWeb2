@@ -2,6 +2,8 @@ const express = require('express');
 const db = require('./models/db');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const multer = require('multer');
+const path  = require('path');
 
 // Create app 
 const app = express();

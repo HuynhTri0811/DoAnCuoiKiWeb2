@@ -83,16 +83,16 @@
         <span class="close" title="Close Modal" id="btn_close_film_create">
             &times;
         </span>
-        <form action="/admin/create/film/" method="POST" class="modal-content animate">
+        <form action="/admin/create/film/" method="POST" class="modal-content animate" enctype=”multipart/form-data”>
         <div class="container">
             <label>Tên phim :</label>
-            <input type="text" placeholder="Nhap vao ten phim " id="film_Name" name="film_Name" required/><br/>
+            <input type="text" placeholder="Nhap vao ten phim " id="film_Name" name="txtFilmName" required/><br/>
             <label>Ảnh film :</label>
-            <input type="file" id="film_Image" name="film_Image" required/><br/>
+            <input type="file" id="film_Image" name="txtFilmImage" required/><br/>
             <label>Ngày công chiếu :</label>
-            <input type="date" name="film_DatePublic" id="film_DatePublic" required/><br/>
+            <input type="date" name="film_DatePublic" id="txtFilmDatePublic" required/><br/>
             <label>Thời lượng :</label>
-            <input type="number" id="film_Time" name="film_Time" required><br/>
+            <input type="number" id="film_Time" name="txtFilmTime" required><br/>
             <button type="submit" value="Thêm vào Film">
                 Thêm vào film
             </button>
