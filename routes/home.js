@@ -127,12 +127,17 @@ router.get('/phim',async function(req,res){
 	res.render('home.ejs',{filmChieu , user});
 });
 
-router.get('/phim/muave',function(req,res)
+router.get('/phim/muave',async function(req,res)
 {
-	const user_Id = req.session;
+	const { user_Id } = req.session;
 	if ( user_Id )
 	{
-		res.render('users/muave.ejs');
+		var user = await User.findOne({
+			where :{
+				user_ID : user_Id 
+			},
+		});
+		res.render('users/muave.ejs',{user});
 	} else {
 		res.render('Login.ejs');
 	}
