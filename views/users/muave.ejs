@@ -104,10 +104,10 @@
                                                                     <td class="name_film"><%= filmChosen.dataValues.film_Name %></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="label">2D</td>
+                                                                    <td class="label">Loại chưa get được 2D</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="label">C13</td>
+                                                                    <td class="label">Mã này chưa hiểu C13</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -124,15 +124,22 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="label">Rạp chiếu phim</td>
-                                                    <td>VNC Tự Nhiên</td>
+                                                    <td get="<%= cinemaChosen.cineplex_ID %>"><%= cinemaChosen.cineplex_Name%></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="label">Ngày</td>
-                                                    <td>13/05/2019</td>
+                                                    <td>
+                                                        <% var d = new Date(filmChosen.dataValues.film_DatePublic); %>
+                                                        <%= d.getDate(); %>
+                                                        /
+                                                        <%= d.getMonth()+1; %>
+                                                        /
+                                                        <%= d.getFullYear(); %>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="label">Phòng chiếu</td>
-                                                    <td>Cinema 3</td>
+                                                    <td>Thuộc tính chưa get được</td>
                                                 </tr>
                                                 <tr class="block-seats" style="display: none;">
                                                     <td class="label">Ghế</td>
@@ -143,7 +150,7 @@
                                     </div>
                                 </li>
                                                 
-                                <li class="item" xmlns="http://www.w3.org/1999/html">                                    
+                                <!--<li class="item" xmlns="http://www.w3.org/1999/html">                                    
                                     <div class="product-details">
                                         <table class="info-wrapper">
                                             <thead>
@@ -180,7 +187,7 @@
                                             </tfoot>
                                         </table>
                                     </div>
-                                </li>
+                                </li>-->
                             </ul>
                         </div>
                     

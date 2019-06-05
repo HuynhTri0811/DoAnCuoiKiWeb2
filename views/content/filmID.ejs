@@ -1,13 +1,13 @@
 <div class="content-area">
     <div class="row">
         <div class="col-md-8 col-sm-8">
-            <div class="col-md-7 col-sm-7">
+            <div class="col-md-6 col-sm-6">
                 <div>
                     <img id="img-film-indexContent" src="<%= filmID.dataValues.film_Image %>" alt="Không load được ảnh"
                         width="216" height="360">
                 </div>
             </div>
-            <div class="col-md-5 col-sm-5">
+            <div class="col-md-6 col-sm-6">
                 <h3 style="text-align: center"><%= filmID.dataValues.film_Name %></h3>
                 <div style="text-align: center">
                     <strong>4.9</strong><span>/10</span>
@@ -28,6 +28,14 @@
                 <br/>
                 <br/>
                 <br/>
+                <div class="form-group">
+                    <label for="form_control1">Chọn rạp phim</label>
+                    <select class="form-control" id="form_control1">
+                        <% for (var i = 0; i < cinemaName.length; i++) { %>
+                            <option value="<%= cinemaName[i].cineplex_ID %>"><%= cinemaName[i].cineplex_Name %></option>
+                        <% } %>
+                    </select>
+                </div>
                 <br/>
                 <br/>
                 <a href="/phim/muave/<%= filmID.dataValues.film_ID %>">
@@ -37,10 +45,6 @@
         </div>
         <div style="text-align: center" class="col-md-4 col-sm-4">
             <div class="title-movie">
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
                 <h4><%= filmID.dataValues.film_Name %></h4>
                 <h4><%= filmID.dataValues.film_Name %></h4>
                 <h4><%= filmID.dataValues.film_Name %></h4>

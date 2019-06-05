@@ -4,6 +4,7 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const Film = require('../models/Film.js');
 const User = require('../models/User.js');
+const Cineplex = require('../models/Cineplex.js');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -43,32 +44,6 @@ router.get('/',async function(req,res){
 	res.render('home.ejs',{film , user});
 });
 
-
-
-
-router.get('/film/:id',async function(req,res){
-	const id = Number(req.params.id);
-	const filmID =await Film.findOne({
-		where :{
-			film_ID : id ,
-			film_Public : true ,
-		}
-	});
-	var user ;
-	const { user_Id } = req.session;
-	if ( user_Id )
-	{
-		user = await User.findOne({
-			where :{
-				user_ID : user_Id 
-			},
-		});
-	}
-	// Dòng này cũng thế
-	//console.log(filmID);
-	res.render('home.ejs',{filmID,user});
-});
-
 router.get('/filmSearch',async function(req,res){
 
 	const NameFilm = req.query.txtSearch ;
@@ -91,6 +66,46 @@ router.get('/filmSearch',async function(req,res){
 	};
 	res.render('home.ejs',{searchNameFilm,user});
 });
+
+router.get('/forgotPassword',function(req,res){
+	res.render('forgotPassword.ejs');
+});
+
+router.get('/logout',function(req,res){
+	delete req.session.user_Id;
+  	res.redirect('/');
+});
+
+
+
+
+
+
+router.get('/film/:id',async function(req,res){
+	const id = Number(req.params.id);
+	const filmID =await Film.findOne({
+		where :{
+			film_ID : id ,
+			film_Public : true ,
+		}
+	});
+	var user ;
+	const { user_Id } = req.session;
+	if ( user_Id )
+	{
+		user = await User.findOne({
+			where :{
+				user_ID : user_Id 
+			},
+		});
+	}
+	const cinemaName = await Cineplex.findAll();
+	// Dòng này cũng thế
+	console.log(cinemaName);
+	res.render('home.ejs',{filmID,user,cinemaName});
+});
+
+
 
 
 
@@ -132,14 +147,19 @@ router.get('/phim',async function(req,res){
 
 router.get('/phim/muave/:id',async function(req,res)
 {
-	const { user_Id } = req.session;
 	const id_Chosen = Number(req.params.id);
 	const filmChosen = await Film.findOne({
 		where :{
 			film_ID : id_Chosen ,
-			film_Public : true,
 		}
 	});
+	//const cinemaIDChosen = Number(req.params.value);
+	const cinemaChosen = await Cineplex.findOne({
+		where :{
+			//cineplex_ID = cinemaIDChosen,
+		}
+	});
+	const { user_Id } = req.session;
 	if ( user_Id )
 	{
 		var user = await User.findOne({
@@ -147,8 +167,8 @@ router.get('/phim/muave/:id',async function(req,res)
 				user_ID : user_Id 
 			},
 		});
-		res.render('users/muave.ejs',{filmChosen, user});
-		console.log(filmChosen);
+		res.render('users/muave.ejs',{filmChosen, user, cinemaChosen});
+		console.log(cinemaChosen);
 	} else {
 		res.render('Login.ejs');
 	}
@@ -162,6 +182,7 @@ router.post('/phim/muave/:id',async function(req,res){
 			user_Email: txtUserEmail,
 		}
 	});
+	const id_req = String(req.params.id);
 	if (!user) {
 		res.render('Login.ejs', { UserSaiPass });
 	}
@@ -169,20 +190,11 @@ router.post('/phim/muave/:id',async function(req,res){
 		const match = await bcrypt.compare(txtUserPassword, user.user_Password);
 		if (match) {
 			req.session.user_Id = user.user_ID;
-			res.redirect('/phim/muave/:id');
+			res.redirect('/phim/muave/'+id_req);
 		}
 		else {
 			res.render('Login.ejs', { UserSaiPass });
 		}
 	}
-});
-
-router.get('/forgotPassword',function(req,res){
-	res.render('forgotPassword.ejs');
-});
-
-router.get('/logout',function(req,res){
-	delete req.session.user_Id;
-  	res.redirect('/');
 });
 module.exports =router;
