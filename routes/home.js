@@ -127,9 +127,19 @@ router.get('/phim',async function(req,res){
 	res.render('home.ejs',{filmChieu , user});
 });
 
-router.get('/phim/muave',async function(req,res)
+
+
+
+router.get('/phim/muave/:id',async function(req,res)
 {
 	const { user_Id } = req.session;
+	const id_Chosen = Number(req.params.id);
+	const filmChosen = await Film.findOne({
+		where :{
+			film_ID : id_Chosen ,
+			film_Public : true,
+		}
+	});
 	if ( user_Id )
 	{
 		var user = await User.findOne({
@@ -137,13 +147,14 @@ router.get('/phim/muave',async function(req,res)
 				user_ID : user_Id 
 			},
 		});
-		res.render('users/muave.ejs',{user});
+		res.render('users/muave.ejs',{filmChosen, user});
+		console.log(filmChosen);
 	} else {
 		res.render('Login.ejs');
 	}
 });
 
-router.post('/phim/muave',async function(req,res){
+router.post('/phim/muave/:id',async function(req,res){
 	var { txtUserEmail , txtUserPassword } =req.body;
 	var UserSaiPass = 'abc';
 	const user = await User.findOne({
@@ -158,7 +169,7 @@ router.post('/phim/muave',async function(req,res){
 		const match = await bcrypt.compare(txtUserPassword, user.user_Password);
 		if (match) {
 			req.session.user_Id = user.user_ID;
-			res.redirect('/phim/muave');
+			res.redirect('/phim/muave/:id');
 		}
 		else {
 			res.render('Login.ejs', { UserSaiPass });
