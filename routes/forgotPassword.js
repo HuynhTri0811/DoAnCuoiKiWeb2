@@ -35,7 +35,7 @@ router.post('/', async function (req, res) {
 			} 
 			});
 			const info = await sendEmail(req.body.email, 'Quên mật khẩu', 'Bạn có quên mật khẩu', macode);
-			res.render('resetPassword.ejs');
+			res.render('confirm.ejs');
 	}
 
 	else
