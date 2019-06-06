@@ -28,19 +28,26 @@
                 <br/>
                 <br/>
                 <br/>
-                <div class="form-group">
-                    <label for="form_control1">Chọn rạp phim</label>
-                    <select class="form-control" id="form_control1">
-                        <% for (var i = 0; i < cinemaName.length; i++) { %>
-                            <option value="<%= cinemaName[i].cineplex_ID %>"><%= cinemaName[i].cineplex_Name %></option>
-                        <% } %>
-                    </select>
-                </div>
-                <br/>
-                <br/>
-                <a href="/phim/muave/<%= filmID.dataValues.film_ID %>">
-                    <button class="btns"><span>Mua vé</span></button>
-                </a>
+                <% var day_now = new Date();%>
+                <% if (filmID.dataValues.film_DatePublic < day_now) { %>
+                    <form action="" method="POST">
+                        <div class="form-group">
+                            <label for="form_control1">Chọn rạp phim</label>
+                            <select class="form-control" id="form_control1" name="cineplexID">
+                                <% for (var i = 0; i < cinemaName.length; i++) { %>
+                                    <option value="<%= cinemaName[i].cineplex_ID %>"><%= cinemaName[i].cineplex_Name %></option>
+                                <% } %>
+                            </select>
+                        </div>
+                        <br />
+                        <br />
+                        <a href="/phim/muave/<%= filmID.dataValues.film_ID %>">
+                            <button class="btns" type="submit">Mua vé</button>
+                        </a>
+                    </form>
+                <% } else { %>
+                    <h3 style="text-align: center; color: red; text-transform: uppercase"> Phim chưa được công chiếu, hiện tại không thể đặc vé!</h3>
+                <% } %>
             </div>
         </div>
         <div style="text-align: center" class="col-md-4 col-sm-4">

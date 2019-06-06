@@ -80,35 +80,6 @@ router.get('/logout',function(req,res){
 
 
 
-
-router.get('/film/:id',async function(req,res){
-	const id = Number(req.params.id);
-	const filmID =await Film.findOne({
-		where :{
-			film_ID : id ,
-			film_Public : true ,
-		}
-	});
-	var user ;
-	const { user_Id } = req.session;
-	if ( user_Id )
-	{
-		user = await User.findOne({
-			where :{
-				user_ID : user_Id 
-			},
-		});
-	}
-	const cinemaName = await Cineplex.findAll();
-	// Dòng này cũng thế
-	console.log(cinemaName);
-	res.render('home.ejs',{filmID,user,cinemaName});
-});
-
-
-
-
-
 router.get('/phim',async function(req,res){
 	var dateNow = Date.now();
 	var user ;
@@ -142,6 +113,39 @@ router.get('/phim',async function(req,res){
 	res.render('home.ejs',{filmChieu , user});
 });
 
+router.get('/film/:id',async function(req,res){
+	const id = Number(req.params.id);
+	const filmID =await Film.findOne({
+		where :{
+			film_ID : id ,
+			film_Public : true ,
+		}
+	});
+	var user ;
+	const { user_Id } = req.session;
+	if ( user_Id )
+	{
+		user = await User.findOne({
+			where :{
+				user_ID : user_Id 
+			},
+		});
+	}
+	const cinemaName = await Cineplex.findAll();
+	// Dòng này cũng thế
+	//console.log(cinemaName);
+	res.render('home.ejs',{filmID,user,cinemaName});
+});
+
+
+router.post('/film/:id',async function(req,res){
+	var cineplexIDChosen = req.body.cineplexID;
+	const id_reqfilm = Number(req.params.id);
+	req.session.cineplexIDChosen = cineplexIDChosen;
+	res.redirect('/phim/muave/'+id_reqfilm);
+});
+
+
 
 
 
@@ -153,10 +157,10 @@ router.get('/phim/muave/:id',async function(req,res)
 			film_ID : id_Chosen ,
 		}
 	});
-	//const cinemaIDChosen = Number(req.params.value);
+	var { cineplexIDChosen } = req.session;
 	const cinemaChosen = await Cineplex.findOne({
 		where :{
-			//cineplex_ID = cinemaIDChosen,
+			cineplex_ID : cineplexIDChosen,
 		}
 	});
 	const { user_Id } = req.session;
@@ -168,7 +172,7 @@ router.get('/phim/muave/:id',async function(req,res)
 			},
 		});
 		res.render('users/muave.ejs',{filmChosen, user, cinemaChosen});
-		console.log(cinemaChosen);
+		//console.log(cinemaChosen);
 	} else {
 		res.render('Login.ejs');
 	}

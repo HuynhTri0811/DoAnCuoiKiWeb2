@@ -103,12 +103,12 @@
                                                                 <tr>
                                                                     <td class="name_film"><%= filmChosen.dataValues.film_Name %></td>
                                                                 </tr>
-                                                                <tr>
+                                                                <!--<tr>
                                                                     <td class="label">Loại chưa get được 2D</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="label">Mã này chưa hiểu C13</td>
-                                                                </tr>
+                                                                </tr>-->
                                                             </tbody>
                                                         </table>
                                                     </td>
@@ -127,7 +127,7 @@
                                                     <td get="<%= cinemaChosen.cineplex_ID %>"><%= cinemaChosen.cineplex_Name%></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="label">Ngày</td>
+                                                    <td class="label">Ngày chiếu</td>
                                                     <td>
                                                         <% var d = new Date(filmChosen.dataValues.film_DatePublic); %>
                                                         <%= d.getDate(); %>
