@@ -1,0 +1,35 @@
+<h1 style="text-align: center">Bảng xuất chiếu</h1>
+
+<div id="table">
+<% if(timeShowCinemaIDcinema) { %>
+    <table>
+        <tr>
+            <th>Rạp </th>
+            <th>Ngày chiếu </th>
+            <th>Thời gian bất đầu </th>
+            <th>Thời gian kết thúc </th>
+            <th>Film </th>
+            <th>Thao tác</th>
+        </tr>
+        <% for(let i=0; i < timeShowCinemaIDcinema.length ;i++) { %>
+        </tr>
+            <td><%= timeShowCinemaIDcinema[i].dataValues.Cinema.cinema_Name %></td>
+            <td><% var d = new Date(timeShowCinemaIDcinema[i].dataValues.cinemaTimeShow_Date); %>
+                <%= d.getDate(); %>
+                /
+                <%= d.getMonth()+1; %>
+                /
+                <%= d.getFullYear(); %></td>
+            <td><%= timeShowCinemaIDcinema[i].dataValues.cinemaTimeShow_Start %> </td>
+            <td><%= timeShowCinemaIDcinema[i].dataValues.cinemaTimeShow_End %> </td>
+            <td><%= timeShowCinemaIDcinema[i].dataValues.Film.film_Name %></td>
+            <td>
+                <b id="btn_update_cinemaTimeShow_<%= timeShowCinemaIDcinema[i].dataValues">Cập nhật</b> &nbsp;
+                <a href="/admin/delete/cinemaTimeShow/cinema/:id">Xóa</a>
+            </td>
+        </tr>
+        <% } %>
+    </table>
+    <% } %>
+</div>
+        <a id="btn_create_cinema"  class="btn_create">Thêm xuất chiếu</a>

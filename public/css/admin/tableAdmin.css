@@ -94,6 +94,9 @@
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
+.modal button[type = submit]{
+    background-color: #4CAF50;
+}
 
 .modal select {
     width: 100%;
@@ -105,7 +108,6 @@
 }
 
 .modal button{
-    background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -116,8 +118,7 @@
 .modal button:hover {
     opacity: 0.8;
 }
-
-.cancelbtn button{
+.cancelbtn{
     width: auto;
     padding: 10px 18px;
     background-color: #f44336;

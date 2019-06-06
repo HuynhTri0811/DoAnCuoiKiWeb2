@@ -73,3 +73,7 @@ body{
 .btn_create:hover{
     color: white;
 }
+
+b {
+    cursor: pointer; 
+}

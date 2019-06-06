@@ -46,6 +46,9 @@
     <% if(typeof cineplex !== 'undefined') { %>
         <% include admin/cineplex.ejs %>
     <% } %>
+    <% if(typeof timeShowCinemaIDcinema !== 'undefined' ) { %>
+        <% include admin/cinemaTimeShow/cinemaTimeShowCinema.ejs %>
+    <% } %>
     </div>
 </body>
 </html>

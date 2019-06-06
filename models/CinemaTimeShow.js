@@ -1,36 +1,49 @@
 const Sequelize = require('sequelize');
-const db = require('./db');
+const db = require('./db.js');
 const cinema = require('./Cinema.js');
 const film = require('./Film.js');
 
 
-const cinemaTimeShow = db.difine('CinemaTimeShow' ,{
-	cinemaTimeShow_TimeStart :{
+const cinemaTimeShow = db.define('CinemaTimeShow' ,{
+	cinemaTimeShow_ID :{
+		type : Sequelize.INTEGER ,
+		allowNull : true ,
+		primaryKey : true,
+		autoIncrement :true ,
+	},
+	cinemaTimeShow_Date :{
 		type : Sequelize.DATE,
 		allowNull : true,
+		primaryKey : true,
 		defaultValue : null,
 	},
-	cinemaTimeShow_TimeEnd :{
-		type : Sequelize.DATE ,
+	cinemaTimeShow_Start :{
+		type : Sequelize.TIME ,
+		primaryKey : true ,
+		allowNull : true ,
+	},
+	cinemaTimeShow_End :{
+		type : Sequelize.TIME ,
+		primaryKey : true ,
+		allowNull : true ,
+	},
+	film_ID : {
+		type : Sequelize.INTEGER,
 		allowNull : true ,
 	},
 	cinema_ID :{
-		type : Sequelize.INTEGER ,
-		allowNull : false ,
-		primarykey : true ,
-	},
-	film_ID :{
-		type : Sequelize.INTEGER ,
-		allowNull :false ,
-		primarykey : true,
-	},
-	cinemaTimeShow_PriceTicket :{
-		type :  Sequelize.INTEGER ,
-		allowNull :false ,
-	},
+		type : Sequelize.INTEGER,
+		primaryKey : true ,
+		allowNull : true ,
+	}
 });
 
-cinema.belongsTo(cinemaTimeShow);
-film.belongsTo(cinemaTimeShow);
+cinemaTimeShow.belongsTo(cinema,{
+	foreignKey : 'cinema_ID',
+});
+cinemaTimeShow.belongsTo(film,{
+	foreignKey : 'film_ID',
+});
 
-module.exports = CinemaTimeShow;
+
+module.exports = cinemaTimeShow;

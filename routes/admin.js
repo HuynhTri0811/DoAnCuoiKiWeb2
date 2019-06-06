@@ -6,6 +6,7 @@ const user = require('../models/User.js');
 const Cinema = require('../models/Cinema.js');
 const Cineplex = require('../models/Cineplex.js');
 const Film = require('../models/Film.js');
+const CinemaTimeShow = require('../models/CinemaTimeShow.js');
 const router = new Router();
 var multer = require('multer');
 var formidable = require('formidable'); 
@@ -185,16 +186,11 @@ router.get('/update/film/',async function(req,res){
         res.redirect('/');
     }
 });
-router.get('/update/film/:id',async function(req,res){
+router.post('/update/film/:id',async function(req,res){
     const { Admin } = req.session;
     const id = req.params.id;
     if(Admin){
-        const filmID = await Film.findOne({
-            where : {
-                film_ID : id,
-            }
-        });
-        res.render('admin.ejs',{filmID});
+        res.redirect('/admin/');
     }else{
         res.redirect('/');
     }
@@ -216,7 +212,6 @@ router.get('/delete/film/:id',async function(req,res){
 router.post('/create/film/',async function(req,res){
     const { Admin } = req.session;
     if(Admin){
-
         var form = new formidable.IncomingForm();
         await form.parse(req,function(err,filds,files){
             var oldpath ="dasdasdas";
@@ -227,12 +222,11 @@ router.post('/create/film/',async function(req,res){
                 res.end();
             });
         });
-        console.log(form);  
         var {txtFilmName ,txtFilmDatePublic ,txtFilmTime,txtFilmImage} = req.body;
         if(form){
             await Film.create({
                 film_Name : txtFilmName ,
-                film_Image : 'public/image/'+txtFilmImage ,
+                film_Image : '/public/image/'+ txtFilmImage ,
                 film_DatePublic : txtFilmDatePublic,
                 film_Time : txtFilmTime ,
             });
@@ -303,5 +297,43 @@ router.post('/create/cineplex/',async function(req,res){
     }
 });
 
+
+//CinemaTimeShow
+router.get('/update/cinemaTimeShow/cinema/:id',async function(req,res){
+    const { Admin } = req.session ;
+    const id = Number(req.params.id);
+    if( Admin ){
+       
+        const timeShowCinemaIDcinema =  await CinemaTimeShow.findAll({
+            where :{
+                cinema_ID : id  
+            }
+            ,include:[{
+                model : Cinema } , 
+            {
+                model : Film 
+            } ,]
+        });
+        console.log(timeShowCinemaIDcinema);
+        res.render('admin.ejs',{timeShowCinemaIDcinema});
+    }
+    else{
+        res.redirect('/');
+    }
+});
+router.get('/update/cinemaTimeShow/film/:id',async function(req,res){
+    const { Admin } = req.session ;
+    const id = Number(req.params.id);
+    if( Admin ){
+        const timeShowCinemaIDfilm = await CinemaTimeShow.findAll({
+            where :{
+                film_ID : id ,
+            }
+        });
+        res.render('admin.ejs',{timeShowCinemaIDfilm})
+    }else{
+        res.redirect('/');
+    }
+});
 
 module.exports = router;

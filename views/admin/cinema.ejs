@@ -5,7 +5,7 @@
         <tr>
             <th>Tên rạp phim  </th>
             <th>Kiểu rạp </th>
-            <th>Số chỗ ngồi chiều dọc </th>
+            <th>Số chỗ ngồi chiều dọc </th> 
             <th>Số chỗ ngồi chiều dài </th>
             <th>Cụm rạp</th>
             <th>Địa chỉ </th>
@@ -13,7 +13,7 @@
         </tr>
         <tr>
         <% for(let i = 0 ;i < cinema.length ; i++) { %>
-            <td><%= cinema[i].dataValues.cinema_Name %></td> 
+            <td><a href="/admin/update/cinemaTimeShow/cinema/<%= cinema[i].dataValues.cinema_ID %>"><%= cinema[i].dataValues.cinema_Name %></a></td> 
             <td><%= cinema[i].dataValues.cinema_Type %></td> 
             <td><%= cinema[i].dataValues.cinema_Length %></td>
             <td><%= cinema[i].dataValues.cinema_Width %></td> 
