@@ -38,6 +38,10 @@ const film = db.define('Film',{
             return false;
         }
     },
+    film_Content :{
+        type : Sequelize.STRING ,
+        allowNull : true,
+    },
 });
 
 module.exports = film ;

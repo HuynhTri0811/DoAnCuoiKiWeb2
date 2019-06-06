@@ -1,24 +1,22 @@
 <div class="content-area">
     <div class="row">
         <div class="col-md-8 col-sm-8">
-            <div class="col-md-7 col-sm-7">
+            <div class="col-md-6 col-sm-6">
                 <div>
                     <img id="img-film-indexContent" src="<%= filmID.dataValues.film_Image %>" alt="Không load được ảnh"
-                        width="216" height="360">
+                        width="220px" height="360px">
                 </div>
             </div>
-            <div class="col-md-5 col-sm-5">
-                <h3 style="text-align: center"><%= filmID.dataValues.film_Name %></h3>
+            <div class="col-md-6 col-sm-6">
+                <h2 style="text-align: center; font-weight: bold"><%= filmID.dataValues.film_Name %></h2>
                 <div style="text-align: center">
                     <strong>4.9</strong><span>/10</span>
-                    <div>
-                        <span>Lượt đánh giá: 56</span>
-                    </div>
+                    <div><strong>Lượt đánh giá: </strong> 56</div>
                     <button class="btn btn-default radius">Đánh giá</button>
                 </div>
                 <br/>
-                <p>Thời lượng: <%= filmID.dataValues.film_Time %> phút</p>
-                <p>Ngày khởi chiếu: <% var d = new Date(filmID.dataValues.film_DatePublic); %>
+                <p><strong>Thời lượng: </strong><%= filmID.dataValues.film_Time %> phút</p>
+                <p><strong>Ngày khởi chiếu: </strong><% var d = new Date(filmID.dataValues.film_DatePublic); %>
                     <%= d.getDate(); %>
                     /
                     <%= d.getMonth()+1; %>
@@ -27,36 +25,44 @@
                 </p>
                 <br/>
                 <br/>
+                <p><strong>Nội dung: </strong><%= filmID.dataValues.film_Content %></p>
                 <br/>
-                <br/>
-                <br/>
-                <a href="/phim/muave">
-                    <button class="btns"><span>Mua vé</span></button>
-                </a>
+                <% var day_now = new Date();%>
+                <% if (filmID.dataValues.film_DatePublic < day_now) { %>
+                    <form action="" method="POST">
+                        <div class="form-group">
+                            <label for="form_control1">Chọn rạp phim</label>
+                            <select class="form-control" id="form_control1" name="cineplexID">
+                                <% for (var i = 0; i < cinemaName.length; i++) { %>
+                                    <option value="<%= cinemaName[i].cineplex_ID %>"><%= cinemaName[i].cineplex_Name %></option>
+                                <% } %>
+                            </select>
+                        </div>
+                        <br />
+                        <br />
+                        <a href="/phim/muave/<%= filmID.dataValues.film_ID %>">
+                            <button class="btns" type="submit">Mua vé</button>
+                        </a>
+                    </form>
+                <% } else { %>
+                    <h3 style="text-align: center; color: red; text-transform: uppercase; font-weight: bold"> Phim chưa được công chiếu, hiện tại không thể đặc vé!</h3>
+                <% } %>
             </div>
         </div>
         <div style="text-align: center" class="col-md-4 col-sm-4">
             <div class="title-movie">
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
+                <h4 style="text-transform: uppercase">Phim đang chiếu</h4>
+                <% for (var i=0; i< 4; i++) { %>
+                    <a href="/film/<%= filmDangChieu2[i].dataValues.film_ID %>">
+                        <div>
+                            <img src="<%= filmDangChieu2[i].dataValues.film_Image %>" alt="Không load được ảnh" width="150px"
+                                height="190px">
+                        </div>
+                        <div>
+                            <p style="font-weight: bold; text-transform: uppercase; color: black"><%= filmDangChieu2[i].dataValues.film_Name %></p>
+                        </div>
+                    </a>
+                <% } %>
             </div>
         </div>
     </div>
