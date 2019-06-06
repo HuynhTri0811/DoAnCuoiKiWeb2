@@ -6,6 +6,7 @@ const user = require('../models/User.js');
 const Cinema = require('../models/Cinema.js');
 const Cineplex = require('../models/Cineplex.js');
 const Film = require('../models/Film.js');
+const timeShow = require('../models/TimeShow.js');
 const CinemaTimeShow = require('../models/CinemaTimeShow.js');
 const router = new Router();
 var multer = require('multer');
@@ -308,36 +309,43 @@ router.get('/update/cinemaTimeShow/cinema/:id',async function(req,res){
             where :{
                 cinema_ID : id  
             }
-            ,include:[{
-                model : Cinema } , 
-            {
-                model : Film 
-            } ,]
+            ,include:[
+                { model : Cinema } , 
+                { model : Film } , 
+                { model : timeShow },
+            ]
         });
         const cinemaAll = await Cinema.findAll({
             where :{
                 cinema_ID : id ,
             }
         });
-        const filmCinemaTimeShow = await Film.findAll({
+        const TimeShow = await timeShow.findAll({
 
         });
-        res.render('admin.ejs',{timeShowCinemaIDcinema,cinemaAll,filmCinemaTimeShow});
+        var dateNow = Date.now();
+        const filmCinemaTimeShow = await Film.findAll({
+            where :{
+                film_DatePublic :{
+                    [Op.lte] : dateNow ,
+                },
+                film_Public : true ,
+            }
+        });
+        res.render('admin.ejs',{timeShowCinemaIDcinema,cinemaAll,filmCinemaTimeShow,TimeShow});
     }
     else{
         res.redirect('/');
     }
 });
-
 router.post('/create/cinemaTimeShow',async function(req,res){
     const { Admin } = req.session;
     if(Admin){
-        var {txtcinema_ID,txtCinemaTimeShow_Date,txtCinemaTimeShow_Start,txtCinemaTimeShow_End,film_ID} = req.body;
+        var {txtcinema_ID,txtCinemaTimeShow_Date,timeShowID,film_ID} = req.body;
         await CinemaTimeShow.create({
             cinema_ID : txtcinema_ID ,
             cinemaTimeShow_Date : txtCinemaTimeShow_Date ,
-            cinemaTimeShow_Start : txtCinemaTimeShow_Start ,
-            cinemaTimeShow_End : txtCinemaTimeShow_End ,
+            timeShow_ID : timeShowID ,
             film_ID ,
         });
         res.redirect('/admin/update/cinemaTimeShow/cinema/'+String(txtcinema_ID));

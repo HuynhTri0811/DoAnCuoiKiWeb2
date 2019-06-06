@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('./db.js');
 const cinema = require('./Cinema.js');
 const film = require('./Film.js');
-
+const TimeShow = require('./TimeShow.js');
 
 const cinemaTimeShow = db.define('CinemaTimeShow' ,{
 	cinemaTimeShow_ID :{
@@ -17,15 +17,10 @@ const cinemaTimeShow = db.define('CinemaTimeShow' ,{
 		primaryKey : true,
 		defaultValue : null,
 	},
-	cinemaTimeShow_Start :{
-		type : Sequelize.TIME ,
-		primaryKey : true ,
+	timeShow_ID :{
+		type : Sequelize.INTEGER ,
 		allowNull : true ,
-	},
-	cinemaTimeShow_End :{
-		type : Sequelize.TIME ,
 		primaryKey : true ,
-		allowNull : true ,
 	},
 	film_ID : {
 		type : Sequelize.INTEGER,
@@ -43,6 +38,9 @@ cinemaTimeShow.belongsTo(cinema,{
 });
 cinemaTimeShow.belongsTo(film,{
 	foreignKey : 'film_ID',
+});
+cinemaTimeShow.belongsTo(TimeShow,{
+	foreignKey :'timeShow_ID',
 });
 
 

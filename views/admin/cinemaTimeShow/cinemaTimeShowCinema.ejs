@@ -6,8 +6,7 @@
         <tr>
             <th>Rạp </th>
             <th>Ngày chiếu </th>
-            <th>Thời gian bất đầu </th>
-            <th>Thời gian kết thúc </th>
+            <th>Thời gian bất đầu - kết thúc </th>
             <th>Film </th>
             <th>Thao tác</th>
         </tr>
@@ -20,8 +19,7 @@
                 <%= d.getMonth()+1; %>
                 /
                 <%= d.getFullYear(); %></td>
-            <td><%= timeShowCinemaIDcinema[i].dataValues.cinemaTimeShow_Start %> </td>
-            <td><%= timeShowCinemaIDcinema[i].dataValues.cinemaTimeShow_End %> </td>
+            <td><%= timeShowCinemaIDcinema[i].dataValues.TimeShow.timeShow_Start %> - <%= timeShowCinemaIDcinema[i].dataValues.TimeShow.timeShow_End %> </td>
             <td><%= timeShowCinemaIDcinema[i].dataValues.Film.film_Name %></td>
             <td>
                 <b id="btn_update_cinemaTimeShow_<%= timeShowCinemaIDcinema[i].dataValues.cinemaTimeShow_ID %>" >Cập nhật</b> &nbsp;
@@ -49,9 +47,11 @@
                         <label> Ngày chiếu :</label>
                         <input type="date" placeholder="Nhap vao nagy" id="cinemaTimeShow_Date" name="txtCinemaTimeShow_Date" required/><br/>
                         <label> Thời gian bắt đầu : </label>
-                        <input type="time" name ="txtCinemaTimeShow_Start" required/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <label> Thời gian kết thúc :</label>
-                        <input type="time" name="txtCinemaTimeShow_End" required/><br/><br/>
+                        <select name="timeShowID">
+                            <% for(let i=0 ; i < TimeShow.length ;i++ ) { %>
+                                <option value="<%= TimeShow[i].dataValues.timeShow_ID %>"> <%= TimeShow[i].dataValues.timeShow_Start %> - <%= TimeShow[i].dataValues.timeShow_End %></option>
+                            <% } %>
+                        </select>
                         <label>Phim :</label>
                         <select name="film_ID">
                                 <% for(let i=0;i< filmCinemaTimeShow.length ; i++){ %>
