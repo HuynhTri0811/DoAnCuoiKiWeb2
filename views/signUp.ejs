@@ -11,6 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Đăng ký</title>
     <link rel="stylesheet" type="text/css" href="public/css/signUp.css">
+    <script src="/public/js/check_signup.js"></script>
 </head>
 
 <body>
@@ -18,7 +19,7 @@
     <div class="container" id="wrap">
         <div class="row">
           <div class="col-md-6 col-md-offset-3">
-              <form action="" method="post" accept-charset="utf-8" class="form" role="form" >
+              <form action="" method="post" accept-charset="utf-8" class="form signUp" role="form" onsubmit="CheckSubmit()" >
                   <img src="/public/image/iconSignup.png" class="center">   
                 <h3>ĐĂNG KÝ</h3>
                 <input type="email" name="user_Email" id="user_Email" value="" class="form-control input-lg form-label-group" placeholder="Email" required />
