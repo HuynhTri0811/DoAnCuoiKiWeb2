@@ -131,10 +131,19 @@ router.get('/film/:id',async function(req,res){
 			},
 		});
 	}
+	var dateNow = Date.now();
+	const filmDangChieu2 = await Film.findAll({
+		where :{
+			film_DatePublic :{
+				[Op.gt] : dateNow ,
+			},
+			film_Public : true ,
+		}
+	});
 	const cinemaName = await Cineplex.findAll();
 	// Dòng này cũng thế
 	//console.log(cinemaName);
-	res.render('home.ejs',{filmID,user,cinemaName});
+	res.render('home.ejs',{filmID,user,cinemaName,filmDangChieu2});
 });
 
 

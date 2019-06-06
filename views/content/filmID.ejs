@@ -4,7 +4,7 @@
             <div class="col-md-6 col-sm-6">
                 <div>
                     <img id="img-film-indexContent" src="<%= filmID.dataValues.film_Image %>" alt="Không load được ảnh"
-                        width="216" height="360">
+                        width="220px" height="360px">
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
@@ -25,6 +25,7 @@
                 </p>
                 <br/>
                 <br/>
+                <p><strong>Nội dung: </strong><%= filmID.dataValues.film_Content %></p>
                 <br/>
                 <% var day_now = new Date();%>
                 <% if (filmID.dataValues.film_DatePublic < day_now) { %>
@@ -50,22 +51,15 @@
         </div>
         <div style="text-align: center" class="col-md-4 col-sm-4">
             <div class="title-movie">
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
-                <h4><%= filmID.dataValues.film_Name %></h4>
+                <h4 style="text-transform: uppercase">Phim đang chiếu</h4>
+                <% for (var i=0; i< 4; i++) { %>
+                    <div>
+                        <img src="<%= filmDangChieu2[i].dataValues.film_Image %>" alt="Không load được ảnh" width="150px" height="190px">
+                    </div>
+                    <div>
+                        <p style="font-weight: bold; text-transform: uppercase"><%= filmDangChieu2[i].dataValues.film_Name %></p>
+                    </div>
+                <% } %>
             </div>
         </div>
     </div>
