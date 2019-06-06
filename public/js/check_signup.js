@@ -45,7 +45,7 @@ function CheckSubmit() {
         alert("Mật khẩu và mật khẩu nhập lại phải giống nhau ");
         confirm_password.focus();
         password.focus();
-        return false
+        return false;
     }
     return true;
 }

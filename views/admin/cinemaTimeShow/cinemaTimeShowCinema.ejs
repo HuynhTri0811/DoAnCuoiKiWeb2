@@ -24,12 +24,48 @@
             <td><%= timeShowCinemaIDcinema[i].dataValues.cinemaTimeShow_End %> </td>
             <td><%= timeShowCinemaIDcinema[i].dataValues.Film.film_Name %></td>
             <td>
-                <b id="btn_update_cinemaTimeShow_<%= timeShowCinemaIDcinema[i].dataValues">Cập nhật</b> &nbsp;
-                <a href="/admin/delete/cinemaTimeShow/cinema/:id">Xóa</a>
+                <b id="btn_update_cinemaTimeShow_<%= timeShowCinemaIDcinema[i].dataValues.cinemaTimeShow_ID %>" >Cập nhật</b> &nbsp;
+                <a href="/admin/delete/cinemaTimeShow/cinema/<%= timeShowCinemaIDcinema[i].dataValues.cinemaTimeShow_ID %>">Xóa</a>
             </td>
         </tr>
         <% } %>
     </table>
     <% } %>
 </div>
-        <a id="btn_create_cinema"  class="btn_create">Thêm xuất chiếu</a>
+        <a id="btn_create_cinemaTimeShowCinema"  class="btn_create">Thêm xuất chiếu</a>
+
+        <div id="create_cinemaTimeShowCinema" class="modal">
+                <span class="close" title="Close Modal" id="btn_close_cinemaTimeShowCinema">
+                    &times;
+                </span>
+                <form action="/admin/create/cinemaTimeShow/" method="POST" class="modal-content animate">
+                    <div class="container">
+                        <label>Rap :</label>
+                        <select name="txtcinema_ID">
+                            <% for(let i=0;i< cinemaAll.length ; i++){ %>
+                                <option value="<%= cinemaAll[i].dataValues.cinema_ID %>"> <%= cinemaAll[i].dataValues.cinema_Name %></option>
+                            <% } %>
+                        </select>
+                        <label> Ngày chiếu :</label>
+                        <input type="date" placeholder="Nhap vao nagy" id="cinemaTimeShow_Date" name="txtCinemaTimeShow_Date" required/><br/>
+                        <label> Thời gian bắt đầu : </label>
+                        <input type="time" name ="txtCinemaTimeShow_Start" required/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label> Thời gian kết thúc :</label>
+                        <input type="time" name="txtCinemaTimeShow_End" required/><br/><br/>
+                        <label>Phim :</label>
+                        <select name="film_ID">
+                                <% for(let i=0;i< filmCinemaTimeShow.length ; i++){ %>
+                                    <option value="<%= filmCinemaTimeShow[i].dataValues.film_ID %>"> <%= filmCinemaTimeShow[i].dataValues.film_Name %></option>
+                                <% } %>
+                         </select>
+                        <button type="submit" value="Thêm vào Film">
+                            Thêm vào cụm rạp
+                        </button>
+                    </div>
+                    <div class="container">
+                        <button type="button" class="cancelbtn" id="btn_close_cinemaTimeShowCinema_1">
+                            Cancel 
+                        </button>
+                    </div>
+                </form>
+            </div>

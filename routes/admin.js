@@ -314,10 +314,35 @@ router.get('/update/cinemaTimeShow/cinema/:id',async function(req,res){
                 model : Film 
             } ,]
         });
-        console.log(timeShowCinemaIDcinema);
-        res.render('admin.ejs',{timeShowCinemaIDcinema});
+        const cinemaAll = await Cinema.findAll({
+            where :{
+                cinema_ID : id ,
+            }
+        });
+        const filmCinemaTimeShow = await Film.findAll({
+
+        });
+        res.render('admin.ejs',{timeShowCinemaIDcinema,cinemaAll,filmCinemaTimeShow});
     }
     else{
+        res.redirect('/');
+    }
+});
+
+router.post('/create/cinemaTimeShow',async function(req,res){
+    const { Admin } = req.session;
+    if(Admin){
+        var {txtcinema_ID,txtCinemaTimeShow_Date,txtCinemaTimeShow_Start,txtCinemaTimeShow_End,film_ID} = req.body;
+        await CinemaTimeShow.create({
+            cinema_ID : txtcinema_ID ,
+            cinemaTimeShow_Date : txtCinemaTimeShow_Date ,
+            cinemaTimeShow_Start : txtCinemaTimeShow_Start ,
+            cinemaTimeShow_End : txtCinemaTimeShow_End ,
+            film_ID ,
+        });
+        res.redirect('/admin/update/cinemaTimeShow/cinema/'+String(txtcinema_ID));
+    }
+    else {
         res.redirect('/');
     }
 });
