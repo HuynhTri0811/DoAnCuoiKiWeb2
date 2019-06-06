@@ -11,14 +11,12 @@
                 <h3 style="text-align: center"><%= filmID.dataValues.film_Name %></h3>
                 <div style="text-align: center">
                     <strong>4.9</strong><span>/10</span>
-                    <div>
-                        <span>Lượt đánh giá: 56</span>
-                    </div>
+                    <div><strong>Lượt đánh giá: </strong> 56</div>
                     <button class="btn btn-default radius">Đánh giá</button>
                 </div>
                 <br/>
-                <p>Thời lượng: <%= filmID.dataValues.film_Time %> phút</p>
-                <p>Ngày khởi chiếu: <% var d = new Date(filmID.dataValues.film_DatePublic); %>
+                <p><strong>Thời lượng: </strong><%= filmID.dataValues.film_Time %> phút</p>
+                <p><strong>Ngày khởi chiếu: </strong><% var d = new Date(filmID.dataValues.film_DatePublic); %>
                     <%= d.getDate(); %>
                     /
                     <%= d.getMonth()+1; %>
@@ -46,7 +44,7 @@
                         </a>
                     </form>
                 <% } else { %>
-                    <h3 style="text-align: center; color: red; text-transform: uppercase"> Phim chưa được công chiếu, hiện tại không thể đặc vé!</h3>
+                    <h3 style="text-align: center; color: red; text-transform: uppercase; font-weight: bold"> Phim chưa được công chiếu, hiện tại không thể đặc vé!</h3>
                 <% } %>
             </div>
         </div>
