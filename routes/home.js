@@ -211,3 +211,7 @@ router.post('/phim/muave/:id',async function(req,res){
 	}
 });
 module.exports =router;
+
+router.get('/support',function(req,res){
+	res.render('support.ejs');
+});		
