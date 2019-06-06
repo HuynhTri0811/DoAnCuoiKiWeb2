@@ -8,7 +8,7 @@
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
-                <h3 style="text-align: center"><%= filmID.dataValues.film_Name %></h3>
+                <h2 style="text-align: center; font-weight: bold"><%= filmID.dataValues.film_Name %></h2>
                 <div style="text-align: center">
                     <strong>4.9</strong><span>/10</span>
                     <div><strong>Lượt đánh giá: </strong> 56</div>
@@ -53,12 +53,15 @@
             <div class="title-movie">
                 <h4 style="text-transform: uppercase">Phim đang chiếu</h4>
                 <% for (var i=0; i< 4; i++) { %>
-                    <div>
-                        <img src="<%= filmDangChieu2[i].dataValues.film_Image %>" alt="Không load được ảnh" width="150px" height="190px">
-                    </div>
-                    <div>
-                        <p style="font-weight: bold; text-transform: uppercase"><%= filmDangChieu2[i].dataValues.film_Name %></p>
-                    </div>
+                    <a href="/film/<%= filmDangChieu2[i].dataValues.film_ID %>">
+                        <div>
+                            <img src="<%= filmDangChieu2[i].dataValues.film_Image %>" alt="Không load được ảnh" width="150px"
+                                height="190px">
+                        </div>
+                        <div>
+                            <p style="font-weight: bold; text-transform: uppercase; color: black"><%= filmDangChieu2[i].dataValues.film_Name %></p>
+                        </div>
+                    </a>
                 <% } %>
             </div>
         </div>
