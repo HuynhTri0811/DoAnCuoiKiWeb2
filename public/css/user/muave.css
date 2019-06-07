@@ -105,8 +105,11 @@
     font-weight: bold;
 }
 .row {
-    margin: 2px;
+    margin: 10px;
+    margin-left: 10px;
     font-size: 0;
+    line-height: 18px;
+
 }
 .seat {
     display: inline-block;
