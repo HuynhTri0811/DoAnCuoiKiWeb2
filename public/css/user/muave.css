@@ -288,7 +288,7 @@
  * Bottom content
  * ============================================ */
 .bottom-content {
-    background-image: url(/public/image/bg_footer_muave.jpg);
+    background-image: url(/public/image/footer_all/bg_footer_muave_1.jpg);
     /*background-color: #000;*/
     margin-top: -15px;	
     font-size: 0;
@@ -366,6 +366,9 @@
     margin-top: 3px;
     cursor: pointer;
     margin-left: 4px;
+}
+.item-options{
+    display: none;
 }
 .bottom-content .truncated .truncated_full_value .item-options dt, .bottom-content .truncated .truncated_full_value .item-options dd {
     color: #000;
