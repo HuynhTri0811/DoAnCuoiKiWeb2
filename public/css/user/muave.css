@@ -1,7 +1,7 @@
 /* ============================================ *
  * Regular
  * ============================================ */
-.booking-progress{
+ .booking-progress{
     width: 100%;
     border: 2px solid #d4d3c9;
     background-color: #F2F0E4;
@@ -105,8 +105,11 @@
     font-weight: bold;
 }
 .row {
-    margin: 2px;
+    margin: 10px;
+    margin-left: 10px;
     font-size: 0;
+    line-height: 18px;
+
 }
 .seat {
     display: inline-block;
@@ -126,15 +129,7 @@
     border: 1px solid #bbb;
     color: #fff;
 }
-.seat.seat-unavailable {
-    background: #bbb;
-    color: #fff;
-}
-.seat.seat-unavailable:before {
-    content: "X";
-    position: absolute;
-    font-size: 14px;
-}
+
 .seat-standard {
     border: 1px solid #01c73c;
 }

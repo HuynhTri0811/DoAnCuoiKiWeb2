@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <script src="/public/js/jquery/jquery-1.10.2.min.js"></script>
+    <script src="/public/js/jquery/noconflict.js"></script>
     
     <link rel="stylesheet" type="text/css" href="/public/css/user/muave.css">
 </head>
@@ -28,46 +31,131 @@
                                     <img src="/public/image/screen.JPG" >
                                     <div class="row">
                                         <% for (var i = 1; i <= 22 ; i++) { %>
-                                            <div class="seat seat-standard active" zone="Thường" price="85000"> A<%= i %> </div>
+                                            <div class="seat seat-standard active" onclick="selected(this)" loc="01<%= i%>01" zone="Thường" price="85000"> A<%= i %> </div>
                                         <% } %>
                                     </div>
                                     <div class="row">
                                         <% for (var i = 1; i <= 22 ; i++) { %>
-                                            <div class="seat seat-standard active" zone="Thường" price="85000"> B<%= i %> </div>
+                                            <div class="seat seat-standard active" onclick="selected(this)" loc="02<%= i%>02" zone="Thường" price="85000"> B<%= i %> </div>
                                         <% } %>
                                     </div>
                                     <div class="row">
                                         <% for (var i = 1; i <= 22 ; i++) { %>
-                                        <div class="seat seat-standard active" zone="Thường" price="85000"> C<%= i %> </div>
+                                        <div class="seat seat-standard active" onclick="selected(this)" loc="03<%= i%>03" zone="Thường" price="85000"> C<%= i %> </div>
                                         <% } %>
                                     </div>
                                     <div class="row">
                                         <% for (var i = 1; i <= 22 ; i++) { %>
-                                        <div class="seat seat-standard active" zone="Thường" price="85000"> D<%= i %> </div>
+                                        <div class="seat seat-standard active" onclick="selected(this)" loc="04<%= i%>04" zone="Thường" price="85000"> D<%= i %> </div>
                                         <% } %>
                                     </div>
                                     <div class="row">
                                         <% for (var i = 1; i <= 22 ; i++) { %>
-                                        <div class="seat seat-vipprime active" zone="Vipprime" price="85000"> E<%= i %> </div>
+                                        <div class="seat seat-vipprime active" onclick="selected(this)" loc="05<%= i%>05" zone="Vipprime" price="85000"> E<%= i %> </div>
                                         <% } %>
                                     </div>
                                     <div class="row">
                                         <% for (var i = 1; i <= 22 ; i++) { %>
-                                        <div class="seat seat-vipprime active" zone="Vipprime" price="85000"> F<%= i %> </div>
+                                        <div class="seat seat-vipprime active" onclick="selected(this)" loc="06<%= i%>06" zone="Vipprime" price="85000"> F<%= i %> </div>
                                         <% } %>
                                     </div>
                                     <div class="row">
                                         <% for (var i = 1; i <= 22 ; i++) { %>
-                                        <div class="seat seat-vipprime active" zone="Vipprime" price="85000"> G<%= i %> </div>
+                                        <div class="seat seat-vipprime active" onclick="selected(this)" loc="07<%= i%>07" zone="Vipprime" price="85000"> G<%= i %> </div>
                                         <% } %>
                                     </div>
                                     <div class="row">
                                         <% for (var i = 1; i <= 22 ; i++) { %>
-                                            <div class="seat seat-vipprime active" zone="Vipprime" price="85000"> H<%= i %> </div>
+                                            <div class="seat seat-vipprime active" onclick="selected(this)" loc="08<%= i%>08" zone="Vipprime" price="85000"> H<%= i %> </div>
                                         <% } %>
                                     </div>
                                 </div>
-        
+
+<!--==============================================================================================
+                                        Đoạn js xử lý chọn
+   ============================================================================================-->
+
+                                <script>
+                                    /*var x;
+                                    var box = {};
+                                    var con = {};
+                                    var fseats = {};
+                                    var msg_family = '';
+                                    var seq = 3216793;
+                                    var site = '031';
+                                    var dy = '20190513';
+                                    var limit_cbo = 0;*/
+
+                                    var boxprice = boxlimit = conprice = 0;
+
+                                    function selected(obj) {
+                                        if ($j('.seat').hasClass('checked')) {
+                                            if ($j(obj).attr('zone') != $j('.seat.checked').attr('zone')) {
+                                                alert('Vui lòng chọn tất cả ghế cùng loại');
+                                                return;
+                                            }
+                                        }
+                                        if (!$j(obj).hasClass('checked')) {
+                                            if ($j(obj).attr('spec')) {
+                                                if (boxlimit < 7) {
+                                                    var data = $j('.ticketbox .seat.active');
+                                                    $j(data).each(function () {
+                                                        if ($j(obj).attr('spec') == $j(this).attr('spec')) {
+                                                            $j(this).addClass('checked');
+                                                            boxlimit += 1;
+                                                        }
+
+                                                    });
+                                                } else {
+                                                    alert('Bạn có thể chọn tối đa 8 ghế');
+                                                }
+                                            } else {
+
+                                                if (boxlimit < 8) {
+                                                    $j(obj).addClass('checked');
+                                                    boxlimit += 1;
+                                                } else {
+                                                    alert('Bạn có thể chọn tối đa 8 ghế');
+                                                }
+                                            }
+                                        } else {
+                                            if ($j(obj).attr('spec')) {
+                                                var data = $j('.ticketbox .seat.checked');
+                                                $j(data).each(function () {
+                                                    if ($j(obj).attr('spec') == $j(this).attr('spec')) {
+                                                        $j(this).removeClass('checked');
+                                                        boxlimit -= 1;
+                                                    }
+                                                });
+                                            } else {
+                                                $j(obj).removeClass('checked');
+                                                boxlimit -= 1;
+                                            }
+                                        }
+                                        box = {};
+                                        boxprice = 0;
+                                        fseats = {};
+                                        ftickets = 0;
+                                        var columns = $j('.ticketbox .seat.checked');
+                                        $j(columns).each(function () {
+                                            if (typeof box[$j(this).attr('zone')] == 'undefined') box[$j(this).attr('zone')] = {};
+
+                                            box[$j(this).attr('zone')][$j(this).attr('loc')] = {
+                                                label: $j(this).text().replace(/\s/g, ''),
+                                                price: parseInt($j(this).attr('price'))
+                                            };
+
+                                        });
+                                    };
+                                    console.log($j(obj));
+                                    //document.write((this).hasClass);
+
+                                </script>                  
+
+
+
+
+
                                 <div class="ticketbox-notice">
                                     <div class="iconlist">
                                         <div class="icon checked">Đã chọn</div>
@@ -150,7 +238,7 @@
                                     </div>
                                 </li>
                                                 
-                                <!--<li class="item" xmlns="http://www.w3.org/1999/html">                                    
+                                <li class="item" xmlns="http://www.w3.org/1999/html">                                    
                                     <div class="product-details">
                                         <table class="info-wrapper">
                                             <thead>
@@ -187,7 +275,7 @@
                                             </tfoot>
                                         </table>
                                     </div>
-                                </li>-->
+                                </li>
                             </ul>
                         </div>
                     

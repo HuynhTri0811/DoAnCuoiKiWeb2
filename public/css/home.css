@@ -54,6 +54,8 @@ html, body {
  } 
  
  .title-movie{
+     text-decoration:none;
+     color: black;
      object-fit: contain;
  }
  
