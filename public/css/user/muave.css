@@ -264,12 +264,12 @@
     white-space: normal;
     width: 100%;
 }
-/*.except-selected{
+.except-selected{
     text-decoration: line-through;
 }
 #calculateprice{
     font-weight: bold;
-}*/
+}
 /* ============================================ *
  * Main content responsive
  * ============================================ */
