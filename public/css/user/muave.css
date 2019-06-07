@@ -383,7 +383,7 @@ li[name=familypack] .action .button{
 /* ============================================ *
  * Bottom responsive
  * ============================================ */
-/*@media only screen and (max-width: 479px){
+@media only screen and (max-width: 479px){
     .bottom-content .minicart-wrapper {
         float: left;
         width: 98%;
@@ -450,4 +450,4 @@ li[name=familypack] .action .button{
     .bottom-content .minicart-wrapper .item{
         width: 98%;
     }
-}*/
+}
