@@ -86,7 +86,7 @@
     border: 3px solid #f1f1f1;
 }
 
-.modal input[type=text], input[type=file],input[type=date],input[type=number] {
+.modal input[type=text], input[type=file],input[type=date],input[type=number],input [type=time] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;

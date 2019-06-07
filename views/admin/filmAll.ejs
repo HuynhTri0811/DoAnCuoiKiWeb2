@@ -12,7 +12,9 @@
             <% for (let i=0;i < filmAll.length ; i++ ) { %>
                 <tr>
                     <td> <%= filmAll[i].dataValues.film_ID  %></td>
-                    <td> <%= filmAll[i].dataValues.film_Name %></td>
+                    <td>
+                        <a href="/admin/update/cinemaTimeShow/film/<%= filmAll[i].dataValues.film_ID %>">  <%= filmAll[i].dataValues.film_Name %> </a>
+                    </td>
                     <td>
                         <img src="<%= filmAll[i].dataValues.film_Image %>" alt="no load image"/>
                     </td>

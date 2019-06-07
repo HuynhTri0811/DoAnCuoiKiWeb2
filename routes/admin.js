@@ -6,6 +6,7 @@ const user = require('../models/User.js');
 const Cinema = require('../models/Cinema.js');
 const Cineplex = require('../models/Cineplex.js');
 const Film = require('../models/Film.js');
+const timeShow = require('../models/TimeShow.js');
 const CinemaTimeShow = require('../models/CinemaTimeShow.js');
 const router = new Router();
 var multer = require('multer');
@@ -302,22 +303,90 @@ router.post('/create/cineplex/',async function(req,res){
 router.get('/update/cinemaTimeShow/cinema/:id',async function(req,res){
     const { Admin } = req.session ;
     const id = Number(req.params.id);
+    req.session.cinemaID = id ;
     if( Admin ){
        
         const timeShowCinemaIDcinema =  await CinemaTimeShow.findAll({
             where :{
                 cinema_ID : id  
             }
-            ,include:[{
-                model : Cinema } , 
-            {
-                model : Film 
-            } ,]
+            ,include:[
+                { model : Cinema } , 
+                { model : Film } , 
+                { model : timeShow },
+            ]
         });
-        console.log(timeShowCinemaIDcinema);
-        res.render('admin.ejs',{timeShowCinemaIDcinema});
+        const cinemaAll = await Cinema.findAll({
+            where :{
+                cinema_ID : id ,
+            }
+        });
+        const TimeShow = await timeShow.findAll({
+
+        });
+        var dateNow = Date.now();
+        const filmCinemaTimeShow = await Film.findAll({
+            where :{
+                film_DatePublic :{
+                    [Op.lte] : dateNow ,
+                },
+                film_Public : true ,
+            }
+        });
+        res.render('admin.ejs',{timeShowCinemaIDcinema,cinemaAll,filmCinemaTimeShow,TimeShow});
     }
     else{
+        res.redirect('/');
+    }
+});
+router.get('/update/cinemaTimeShow/film/:id',async function(req,res){
+    const { Admin } = req.session ;
+    const id = Number(req.params.id);
+    req.session.cinemaID = id ;
+    if( Admin ){
+       
+        const timeShowCinemaIDcinema =  await CinemaTimeShow.findAll({
+            where :{
+                film_ID : id  
+            }
+            ,include:[
+                { model : Cinema } , 
+                { model : Film } , 
+                { model : timeShow },
+            ]
+        });
+        const cinemaAll = await Cinema.findAll({
+            
+        });
+        const TimeShow = await timeShow.findAll({
+
+        });
+
+        var dateNow = Date.now();
+        const filmCinemaTimeShow = await Film.findAll({
+            where :{
+                film_ID : id ,
+            }
+        });
+        res.render('admin.ejs',{timeShowCinemaIDcinema,cinemaAll,filmCinemaTimeShow,TimeShow});
+    }
+    else{
+        res.redirect('/');
+    }
+});
+router.post('/create/cinemaTimeShow',async function(req,res){
+    const { Admin } = req.session;
+    if(Admin){
+        var {txtcinema_ID,txtCinemaTimeShow_Date,timeShowID,filmID} = req.body;
+        await CinemaTimeShow.create({
+            cinema_ID : txtcinema_ID ,
+            cinemaTimeShow_Date : txtCinemaTimeShow_Date ,
+            timeShow_ID : timeShowID ,
+            film_ID : filmID ,
+        });
+        res.redirect('/admin/update/cinemaTimeShow/cinema/'+String(txtcinema_ID));
+    }
+    else {
         res.redirect('/');
     }
 });
@@ -332,6 +401,22 @@ router.get('/update/cinemaTimeShow/film/:id',async function(req,res){
         });
         res.render('admin.ejs',{timeShowCinemaIDfilm})
     }else{
+        res.redirect('/');
+    }
+});
+router.get('/delete/cinemaTimeShow/cinema/:id',async function(req,res){
+    const { Admin } = req.session ;
+    const id = Number(req.params.id);
+    const cinemaID = req.session ;
+    if( Admin ){
+        await CinemaTimeShow.destroy({
+            where : {
+                cinemaTimeShow_ID :  id ,
+            }
+        });
+        res.redirect('/update/cinemaTimeShow/cinema/'+String(cinemaID));
+    }
+    else{
         res.redirect('/');
     }
 });

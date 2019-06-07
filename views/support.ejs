@@ -9,8 +9,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/public/css/home.css">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
 </head>
 
@@ -57,99 +57,21 @@
             </div>
         </nav>
 
-        <!--Sile header-->
-        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ol class="carousel-indicators">
-                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="3"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="4"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="5"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="6"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="7"></li>
-            </ol>
-        
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner">
-                <div class="item active">
-                    <img src="../public/image/slide_header/slide-header-aladdin.jpg" alt="Không load được ảnh">
-                    <div class="carousel-caption">
-                        ...
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="../public/image/slide_header/slide-header-doraemon-mat-trang-phieu-luu-ky.jpg" alt="Không load được ảnh">
-                    <div class="carousel-caption">
-                        ...
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="../public/image/slide_header/slide-header-godzilla-de-vuong-bat-tu.jpg" alt="Không load được ảnh">
-                    <div class="carousel-caption">
-                        ...
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="../public/image/slide_header/slide-header-the-secret-life-of-pets-2.jpg" alt="Không load được ảnh">
-                    <div class="carousel-caption">
-                        ...
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="../public/image/slide_header/slide-header-vo-gian-dao.jpg" alt="Không load được ảnh">
-                    <div class="carousel-caption">
-                        ...
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="../public/image/slide_header/slide-header-x-men-phuong-hoang-bong-toi.jpg" alt="Không load được ảnh">
-                    <div class="carousel-caption">
-                        ...
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="../public/image/slide_header/slide-header-khuyen-mai-1.jpg" alt="Không load được ảnh">
-                    <div class="carousel-caption">
-                        ...
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="../public/image/slide_header/slide-header-khuyen-mai-2.jpg" alt="Không load được ảnh">
-                    <div class="carousel-caption">
-                        ...
-                    </div>
-                </div>
-            </div>
-        
-            <!-- Controls -->
-            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-            </a>
-            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-            </a>
-        </div>
-
-
-    </header>
 
     <!--======================================================================================
                                             Content area
     =======================================================================================-->
-    <% if (typeof film !== 'undefined') { %>
-        <% include content/index.ejs %>
-    <% } if (typeof filmID !== 'undefined') { %>
-        <% include content/filmID.ejs %>
-    <% } if (typeof searchNameFilm !== 'undefined') { %>
-        <% include content/searchNameFilm.ejs %>
-    <% } if (typeof filmChieu !== 'undefined') { %>
-        <% include content/index.ejs %>
-    <% } %>
-
-
-
+        <h3>Map</h3>
+    <div class="mapouter">
+        <div class="gmap_canvas">
+            <iframe width="924" height="558" id="gmap_canvas" src="https://maps.google.com/maps?q=cgv%20landmark%2081&t=&z=15&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+        </div>
+        <style>
+            .mapouter{position:relative;text-align:right;height:558px;width:924px;}
+            .gmap_canvas {overflow:hidden;background:none!important;height:558px;width:924px;}
+        </style>
+    </div>
+    
     <!--======================================================================================
                                             Footer
     =======================================================================================-->

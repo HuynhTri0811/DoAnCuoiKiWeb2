@@ -38,3 +38,16 @@ $(document).ready(function(){
         $("#create_cinema").hide();
     });
 });
+
+$(document).ready(function(){
+    $("#create_cinemaTimeShowCinema").hide();
+    $("#btn_close_cinemaTimeShowCinema").click(function(){
+        $("#create_cinemaTimeShowCinema").hide();
+    });
+    $("#btn_close_cinemaTimeShowCinema_1").click(function(){
+        $("#create_cinemaTimeShowCinema").hide();
+    });
+    $("#btn_create_cinemaTimeShowCinema").click(function(){
+        $("#create_cinemaTimeShowCinema").show();
+    });
+});
