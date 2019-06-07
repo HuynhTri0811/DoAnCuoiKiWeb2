@@ -288,7 +288,8 @@
  * Bottom content
  * ============================================ */
 .bottom-content {
-    background-color: #000;
+    background-image: url(/public/image/bg_footer_muave.jpg);
+    /*background-color: #000;*/
     margin-top: -15px;	
     font-size: 0;
 }
