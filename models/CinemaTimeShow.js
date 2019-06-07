@@ -8,7 +8,6 @@ const cinemaTimeShow = db.define('CinemaTimeShow' ,{
 	cinemaTimeShow_ID :{
 		type : Sequelize.INTEGER ,
 		allowNull : true ,
-		primaryKey : true,
 		autoIncrement :true ,
 	},
 	cinemaTimeShow_Date :{
