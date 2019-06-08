@@ -168,3 +168,21 @@ html, body {
 }
 
 
+/*button Đánh giá*/
+.rating-header {
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+.btn-lg{
+    font-size: 15px;
+    line-height: 1.3333333;
+    width: 40px;
+    height: 40px;
+    border-radius: 30px;
+}
+#star{
+    width: 15px;
+    height: 15px;
+    text-rendering: auto;
+}
+

@@ -168,18 +168,16 @@
 }
 .ticketbox-notice {
     overflow: hidden;
-}
-.ticketbox-notice {
-    overflow: hidden;
-}
-.ticketbox-notice {
     overflow: hidden;
     text-align: center;
+    margin: center;
+
 }
 .iconlist {
     display: inline-block;
     min-width: 25%;
     vertical-align: top;
+    margin: auto;
 }
 .icon:before {
     content: "";
@@ -192,6 +190,7 @@
 .icon {
     text-align: left;
     margin: 5px 0;
+
 }
 .icon.checked:before {
     background: #b11500;
