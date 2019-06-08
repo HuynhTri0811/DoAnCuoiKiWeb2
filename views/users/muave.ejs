@@ -39,14 +39,14 @@
                                     <% for (var z in st1) { %>
                                         <div class="row">
                                             <% for (var j = 0; j < cinemaChosen.dataValues.cinema_Width ; j++) { %>
-                                                <div class="seat seat-standard active" onclick="selected(this)" zone="Thường" loc="<%= j%><%= j%>01" price="85000"> <%= st1[z]%><%= j+1%> </div>
+                                                <div class="seat seat-standard active" onclick="selected(this)" zone="Thường" loc="<%= st1[z]%><%= j+1%>" price="85000"> <%= st1[z]%><%= j+1%> </div>
                                             <% } %>
                                         </div>
                                     <% } %>
                                     <% for (var z in st2) { %>
                                         <div class="row">
                                             <% for (var j = 0; j < cinemaChosen.dataValues.cinema_Width ; j++) { %>
-                                                <div class="seat seat-vipprime active" onclick="selected(this)" zone="Vipprime" loc="<%= j%><%= j%>01" price="85000"> <%= st2[z]%><%= j+1%> </div>
+                                                <div class="seat seat-vipprime active" onclick="selected(this)" zone="Vipprime" loc="<%= st2[z]%><%= j+1%>" price="85000"> <%= st2[z]%><%= j+1%> </div>
                                             <% } %>
                                         </div>
                                     <% } %>
