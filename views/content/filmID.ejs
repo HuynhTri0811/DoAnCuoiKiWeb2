@@ -23,8 +23,10 @@
         
         }));     
     });
-    
+
+
 </script>
+
 <div class="content-area">
     <div class="row">
         <div class="col-md-9 col-sm-9">
@@ -39,22 +41,61 @@
                 <div style="text-align: center">
                     <strong>4.9</strong><span>/10</span>
                     <div><strong>Lượt đánh giá: </strong> 56</div>
-                    <button class="btn btn-default radius" type="submit">Đánh giá</button>
-                    <div class="form-group" id="rating-ability-wrapper">
-                            <label class="control-label" for="rating">
-                            <span class="field-label-info"></span>
-                            <input type="hidden" id="selected_rating" name="selected_rating" value="" required="required">
-                            </label>
-                            <h2 class="bold rating-header">
-                            <span class="selected-rating">0</span><small>/10</small>
-                            </h2>
-                            <% for(var i = 1; i<= 10; i++) { %>
-                              <button type="button" class="btnrating btn btn-default btn-lg" data-attr="<%= i%>" id="rating-star-<%= i%>">
-                                <i class="fa fa-star" aria-hidden="true" id="star"></i>
-                            </button>
-                              <% } %>
+                    <button class="btn btn-default radius" type="submit" id="myBtn">Đánh giá</button>
+                    <div id="myModal" class="modal">
+                        
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                          <span class="close">&times;</span>
+                          <p>Some text in the Modal..</p>
+                          <div class="form-group" id="rating-ability-wrapper">
+                                <label class="control-label" for="rating">
+                                <span class="field-label-info"></span>
+                                <input type="hidden" id="selected_rating" name="selected_rating" value="" required="required">
+                                </label>
+                                <h2 class="bold rating-header">
+                                <span class="selected-rating">0</span><small>/10</small>
+                                </h2>
+                                <% for(var i = 1; i<= 10; i++) { %>
+                                  <button type="button" class="btnrating btn btn-default btn-lg" data-attr="<%= i%>" id="rating-star-<%= i%>">
+                                    <i class="fa fa-star" aria-hidden="true" id="star"></i>
+                                </button>
+                                  <% } %>
+                            </div>
                         </div>
-    
+                      
+                      </div>
+                <script>
+                        //form Rating
+    // Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+console.log(modal);
+console.log(btn);
+console.log(span);
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+                </script>
                 </div>
                 <br/>
                 <p><strong>Thời lượng: </strong><%= filmID.dataValues.film_Time %> phút</p>
