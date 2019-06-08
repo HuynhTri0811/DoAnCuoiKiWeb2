@@ -27,27 +27,49 @@
                 <br/>
                 <p><strong>Nội dung: </strong><%= filmID.dataValues.film_Content %></p>
                 <br/>
-                <% var day_now = new Date();%>
-                <% if (filmID.dataValues.film_DatePublic < day_now) { %>
-                    <form action="" method="POST">
+            </div>
+
+            <!--Chọn cụm rạp + rạp-->
+            <% var day_now = new Date();%>
+            <% if (filmID.dataValues.film_DatePublic < day_now) { %>
+                <form action="" method="POST">
+                    <div class="col-md-4 col-sm-4">
                         <div class="form-group">
-                            <label for="form_control1">Chọn rạp phim</label>
+                            <label for="form_control1">Chọn cụm rạp phim</label>
                             <select class="form-control" id="form_control1" name="cineplexID">
-                                <% for (var i = 0; i < cinemaName.length; i++) { %>
-                                    <option value="<%= cinemaName[i].cineplex_ID %>"><%= cinemaName[i].cineplex_Name %></option>
+                                <% for (var i = -1; i < cinemaName.length; i++) { %>
+                                    <% if (i == -1) { %>
+                                        <option class="option" value="-1">Tất cả cụm rạp</option>
+                                    <% } else { %>
+                                        <option class="option" value="<%= cinemaName[i].dataValues.cineplex_ID %>"><%= cinemaName[i].dataValues.cineplex_Name %></option>
+                                    <% } %>
                                 <% } %>
                             </select>
                         </div>
-                        <br />
-                        <br />
-                        <a href="/phim/muave/<%= filmID.dataValues.film_ID %>">
-                            <button class="btns" type="submit">Mua vé</button>
-                        </a>
-                    </form>
-                <% } else { %>
-                    <h3 style="text-align: center; color: red; text-transform: uppercase; font-weight: bold"> Phim chưa được công chiếu, hiện tại không thể đặc vé!</h3>
-                <% } %>
-            </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                        <div class="form-group">
+                            <label for="form_control2">Chọn rạp phim</label>
+                            <select class="form-control" id="form_control2" name="cinemaID">
+                                <% for (var i = -1; i < cinemaNumber.length; i++) { %>
+                                    <% if (i == -1) { %>
+                                        <option class="option" value="-1">Tất cả rạp</option>
+                                    <% } else { %>
+                                        <option class="option" value="<%= cinemaNumber[i].dataValues.cinema_ID %>"><%= cinemaNumber[i].dataValues.cinema_Name %></option>
+                                    <% } %>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <a href="/phim/muave/<%= filmID.dataValues.film_ID %>">
+                        <button class="btns" type="submit" onclick="chosen(this)">Mua vé</button>
+                    </a>
+                </form>
+            <% } else { %>
+                <h3 style="text-align: center; color: red; text-transform: uppercase; font-weight: bold"> Phim chưa được công chiếu, hiện tại không thể đặc vé!</h3>
+            <% } %>
         </div>
         <div style="text-align: center" class="col-md-4 col-sm-4">
             <div class="title-movie">
@@ -66,4 +88,22 @@
             </div>
         </div>
     </div>
+
+<!--================================================================================
+                Đoạn js xử lý chọn Cụm rạp và Rạp
+=================================================================================-->
+    <script>
+        function chosen(obj) {
+            if ($j('.option')) {
+                if ($j(obj).attr('value') == -1 ) {
+                    alert('Vui lòng chọn Cụm rạp và rạp');
+                    return;
+                }
+            }
+            console.log($j(obj).attr('value'));
+        }
+    </script>
+
+
+
 </div>

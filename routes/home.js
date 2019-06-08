@@ -5,6 +5,7 @@ const Op = Sequelize.Op;
 const Film = require('../models/Film.js');
 const User = require('../models/User.js');
 const Cineplex = require('../models/Cineplex.js');
+const Cinema = require('../models/Cinema.js');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -141,15 +142,18 @@ router.get('/film/:id',async function(req,res){
 		}
 	});
 	const cinemaName = await Cineplex.findAll();
-	// Dòng này cũng thế
-	//console.log(cinemaName);
-	res.render('home.ejs',{filmID,user,cinemaName,filmDangChieu2});
+	const cinemaNumber = await Cinema.findAll();
+	//console.log(cinemaNumber);
+	res.render('home.ejs',{filmID,user,cinemaName,filmDangChieu2,cinemaNumber});
 });
 
 
 router.post('/film/:id',async function(req,res){
-	var cineplexIDChosen = req.body.cineplexID;
 	const id_reqfilm = Number(req.params.id);
+
+	var cinemaChosen = req.body.cinemaID;
+	req.session.cinemaIDChosen = cinemaChosen;
+	var cineplexIDChosen = req.body.cineplexID;
 	req.session.cineplexIDChosen = cineplexIDChosen;
 	res.redirect('/phim/muave/'+id_reqfilm);
 });
@@ -167,9 +171,15 @@ router.get('/phim/muave/:id',async function(req,res)
 		}
 	});
 	var { cineplexIDChosen } = req.session;
-	const cinemaChosen = await Cineplex.findOne({
+	const cineplexChosen = await Cineplex.findOne({
 		where :{
 			cineplex_ID : cineplexIDChosen,
+		}
+	});
+	var { cinemaIDChosen } = req.session;
+	const cinemaChosen = await Cinema.findOne({
+		where :{
+			cinema_ID : cinemaIDChosen,
 		}
 	});
 	const { user_Id } = req.session;
@@ -180,7 +190,7 @@ router.get('/phim/muave/:id',async function(req,res)
 				user_ID : user_Id 
 			},
 		});
-		res.render('users/muave.ejs',{filmChosen, user, cinemaChosen});
+		res.render('users/muave.ejs',{filmChosen, user, cineplexChosen, cinemaChosen});
 		//console.log(cinemaChosen);
 	} else {
 		res.render('Login.ejs');
