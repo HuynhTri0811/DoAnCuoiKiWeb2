@@ -50,53 +50,9 @@
                                             <% } %>
                                         </div>
                                     <% } %>
-
-
-                                    
-
-
-                                    <!--<div class="row">
-                                        <% for (var i = 1; i <= 22 ; i++) { %>
-                                            <div class="seat seat-standard active" onclick="selected(this)" zone="Thường" loc="02<%= i%>02" price="85000"> B<%= i %> </div>
-                                        <% } %>
-                                    </div>
-                                    <div class="row">
-                                        <% for (var i = 1; i <= 22 ; i++) { %>
-                                        <div class="seat seat-standard active" onclick="selected(this)" zone="Thường" loc="03<%= i%>03" price="85000"> C<%= i %> </div>
-                                        <% } %>
-                                    </div>
-                                    <div class="row">
-                                        <% for (var i = 1; i <= 22 ; i++) { %>
-                                        <div class="seat seat-standard active" onclick="selected(this)" zone="Thường" loc="04<%= i%>04" price="85000"> D<%= i %> </div>
-                                        <% } %>
-                                    </div>
-                                    <div class="row">
-                                        <% for (var i = 1; i <= 22 ; i++) { %>
-                                        <div class="seat seat-vipprime active" onclick="selected(this)" zone="Vipprime" loc="05<%= i%>05" price="85000"> E<%= i %> </div>
-                                        <% } %>
-                                    </div>
-                                    <div class="row">
-                                        <% for (var i = 1; i <= 22 ; i++) { %>
-                                        <div class="seat seat-vipprime active" onclick="selected(this)" zone="Vipprime" loc="06<%= i%>06" price="85000"> F<%= i %> </div>
-                                        <% } %>
-                                    </div>
-                                    <div class="row">
-                                        <% for (var i = 1; i <= 22 ; i++) { %>
-                                        <div class="seat seat-vipprime active" onclick="selected(this)" zone="Vipprime" loc="07<%= i%>07" price="85000"> G<%= i %> </div>
-                                        <% } %>
-                                    </div>
-                                    <div class="row">
-                                        <% for (var i = 1; i <= 22 ; i++) { %>
-                                        <div class="seat seat-vipprime active" onclick="selected(this)" zone="Vipprime" loc="08<%= i%>08" price="85000"> H<%= i %> </div>
-                                        <% } %>
-                                    </div>-->
                                 </div>
 
-                  
-
-
-
-
+                
 
                                 <div class="ticketbox-notice">
                                     <div class="iconlist">
@@ -134,10 +90,12 @@
                                                                     <td class="name_film"><%= filmChosen.dataValues.film_Name %></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="label">Loại chưa get được 2D</td>
+                                                                    <td class="label">Loại</td>
+                                                                    <td><%= cinemaChosen.dataValues.cinema_Type %></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="label">Mã này chưa hiểu C13</td>
+                                                                    <td class="label">Mã định danh</td>
+                                                                    <td><%= cineplexChosen.dataValues.cineplex_ID%><span>-</span><%= cinemaChosen.dataValues.cinema_ID%><span>-</span><%= filmChosen.dataValues.film_ID%></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
