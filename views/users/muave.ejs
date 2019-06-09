@@ -30,26 +30,26 @@
                                 <label class="top-content">Phòng chiếu</label>    
                                 <div class="ticketbox">
                                     <img src="/public/image/screen.JPG" >
-                                    <% var st1 = 'ABCD'; %>
-                                    <% if(cinemaChosen.dataValues.cinema_Width == 8) { %>
-                                        <% var st2 = 'EFGH'; %>
-                                    <% } else { %>
-                                        <% var st2 = 'EFGHJK'; %>
-                                    <% } %>
-                                    <% for (var z in st1) { %>
+                                    <% var st1 = 'ABCDEFGHEFGHJK'; %>
+                                    <% var chuoiLayla1 = st1.substring(0,cinemaTimeShow.dataValues.Cinema.cinema_Length/2); %>
+                                   
+                                    <% var chuoiLayla2 = st1.substring(cinemaTimeShow.dataValues.Cinema.cinema_Length/2,cinemaTimeShow.dataValues.Cinema.cinema_Length); %>
+                                    <% for (var z in chuoiLayla1) { %>
                                         <div class="row">
-                                            <% for (var j = 0; j < cinemaChosen.dataValues.cinema_Width ; j++) { %>
-                                                <div class="seat seat-standard active" onclick="selected(this)" zone="Thường" loc="<%= st1[z]%><%= j+1%>" price="85000"> <%= st1[z]%><%= j+1%> </div>
+                                            <% for (var j = 0; j < cinemaTimeShow.dataValues.Cinema.cinema_Width / 2 ; j++) { %>
+                                                <div class="seat seat-standard active" onclick="selected(this)" zone="Thường" loc="<%= chuoiLayla2[z]%><%= j+1%>" price="85000"> <%= chuoiLayla1[z]%><%= j+1 %> </div>
                                             <% } %>
                                         </div>
                                     <% } %>
-                                    <% for (var z in st2) { %>
-                                        <div class="row">
-                                            <% for (var j = 0; j < cinemaChosen.dataValues.cinema_Width ; j++) { %>
-                                                <div class="seat seat-vipprime active" onclick="selected(this)" zone="Vipprime" loc="<%= st2[z]%><%= j+1%>" price="85000"> <%= st2[z]%><%= j+1%> </div>
-                                            <% } %>
+
+                                    <% for (var z in chuoiLayla2 ) { %>
+                                         <div class="row">
+                                                <% for (var j = 0; j < cinemaTimeShow.dataValues.Cinema.cinema_Width / 2 ; j++) { %>
+                                                    <div class="seat seat-vipprime active" onclick="selected(this)" zone="Vipprime" loc="<%= chuoiLayla2[z] %><%= j+1 %>" price="85000"> <%= chuoiLayla2[z] %><%=  j+1 %> </div>
+                                                <% } %>
                                         </div>
                                     <% } %>
+            
                                 </div>
 
                 
@@ -81,22 +81,19 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <img src="<%= filmChosen.dataValues.film_Image %>" alt="Không load được ảnh">
+                                                        <img src="<%= cinemaTimeShow.dataValues.Film.film_Image %>" alt="Không load được ảnh">
                                                     </td>
                                                     <td>
                                                         <table class="info-wrapper">
                                                             <tbody>
                                                                 <tr>
-                                                                    <td class="name_film"><%= filmChosen.dataValues.film_Name %></td>
+                                                                    <td class="name_film"><%= cinemaTimeShow.dataValues.Film.film_Name %></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="label">Loại</td>
-                                                                    <td><%= cinemaChosen.dataValues.cinema_Type %></td>
+                                                                    <td><%= cinemaTimeShow.dataValues.Film.film_Type %></td>
                                                                 </tr>
-                                                                <tr>
-                                                                    <td class="label">Mã định danh</td>
-                                                                    <td><%= cineplexChosen.dataValues.cineplex_ID%><span>-</span><%= cinemaChosen.dataValues.cinema_ID%><span>-</span><%= filmChosen.dataValues.film_ID%></td>
-                                                                </tr>
+                                                                
                                                             </tbody>
                                                         </table>
                                                     </td>
@@ -110,14 +107,11 @@
                                     <div class="product-details">
                                         <table class="info-wrapper">
                                             <tbody>
-                                                <tr>
-                                                    <td class="label">Cụm rạp phim</td>
-                                                    <td get="<%= cineplexChosen.dataValues.cineplex_ID %>"><%= cineplexChosen.dataValues.cineplex_Name%></td>
-                                                </tr>
+                                                
                                                 <tr>
                                                     <td class="label">Ngày chiếu</td>
                                                     <td>
-                                                        <% var d = new Date(filmChosen.dataValues.film_DatePublic); %>
+                                                        <% var d = new Date(cinemaTimeShow.dataValues.cinemaTimeShow_Date); %>
                                                         <%= d.getDate(); %>
                                                         /
                                                         <%= d.getMonth()+1; %>
@@ -127,7 +121,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="label">Rạp chiếu phim</td>
-                                                    <td get="<%= cinemaChosen.dataValues.cinema_ID %>"><%= cinemaChosen.dataValues.cinema_Name %></td>
+                                                    <td get="<%= cinemaTimeShow.dataValues.Cinema_ID %>"><%= cinemaTimeShow.dataValues.Cinema.cinema_Name %></td>
                                                 </tr>
                                                 <tr class="block-seats" style="display: none;">
                                                     <td class="label">Ghế</td>

@@ -143,12 +143,19 @@ router.get('/film/:id',async function(req,res){
 			film_Public : true ,
 		}
 	});
-	const cinemaName = await Cineplex.findAll();
-	const cinemaNumber = await Cinema.findAll();
-	const timeShow = await TimeShow.findAll();
-	const cinemaTimeShow = await CinemaTimeShow.findAll();
+	const cinema = await Cinema.findAll();
+	const cinemaTimeShow = await CinemaTimeShow.findAll({
+		where :{
+			film_ID : id  
+		}
+		,include:[
+			{ model : Cinema } , 
+			{ model : Film } , 
+			{ model : TimeShow },
+		]
+	});
 	//console.log(cinemaNumber);
-	res.render('home.ejs',{filmID,user,cinemaName,filmDangChieu2,cinemaNumber,timeShow,cinemaTimeShow});
+	res.render('home.ejs',{filmID,user,filmDangChieu2,cinemaTimeShow,cinema});
 });
 
 
@@ -171,23 +178,6 @@ router.post('/film/:id',async function(req,res){
 router.get('/phim/muave/:id',async function(req,res)
 {
 	const id_Chosen = Number(req.params.id);
-	const filmChosen = await Film.findOne({
-		where :{
-			film_ID : id_Chosen ,
-		}
-	});
-	var { cineplexIDChosen } = req.session;
-	const cineplexChosen = await Cineplex.findOne({
-		where :{
-			cineplex_ID : cineplexIDChosen,
-		}
-	});
-	var { cinemaIDChosen } = req.session;
-	const cinemaChosen = await Cinema.findOne({
-		where :{
-			cinema_ID : cinemaIDChosen,
-		}
-	});
 	const { user_Id } = req.session;
 	if ( user_Id )
 	{
@@ -196,7 +186,17 @@ router.get('/phim/muave/:id',async function(req,res)
 				user_ID : user_Id 
 			},
 		});
-		res.render('users/muave.ejs',{filmChosen, user, cineplexChosen, cinemaChosen});
+		const cinemaTimeShow = await CinemaTimeShow.findOne({
+			where : {
+				cinemaTimeShow_ID : id_Chosen ,
+			} ,
+			include:[
+				{ model : Cinema } , 
+				{ model : Film } , 
+				{ model : TimeShow },
+			]
+		})
+		res.render('users/muave.ejs',{ user, cinemaTimeShow });
 		//console.log(cinemaChosen);
 	} else {
 		res.render('Login.ejs');

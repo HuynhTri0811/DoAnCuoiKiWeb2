@@ -116,46 +116,6 @@
 
             
             <!--Chọn cụm rạp + rạp-->
-            <% var day_now = new Date();%>
-            <% if (filmID.dataValues.film_DatePublic < day_now) { %>
-                <form action="" method="POST">
-                    <div class="col-md-4 col-sm-4">
-                        <div class="form-group">
-                            <label for="form_control1">Chọn cụm rạp phim</label>
-                            <select class="form-control" id="form_control1" name="cineplexID">
-                                <% for (var i = -1; i < cinemaName.length; i++) { %>
-                                    <% if (i == -1) { %>
-                                        <option class="option" value="-1">Tất cả cụm rạp</option>
-                                    <% } else { %>
-                                        <option class="option" value="<%= cinemaName[i].dataValues.cineplex_ID %>"><%= cinemaName[i].dataValues.cineplex_Name %></option>
-                                    <% } %>
-                                <% } %>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-4">
-                        <div class="form-group">
-                            <label for="form_control2">Chọn rạp phim</label>
-                            <select class="form-control" id="form_control2" name="cinemaID">
-                                <% for (var i = -1; i < cinemaNumber.length; i++) { %>
-                                    <% if (i == -1) { %>
-                                        <option class="option" value="-1">Tất cả rạp</option>
-                                    <% } else { %>
-                                        <option class="option" value="<%= cinemaNumber[i].dataValues.cinema_ID %>"><%= cinemaNumber[i].dataValues.cinema_Name %></option>
-                                    <% } %>
-                                <% } %>
-                            </select>
-                        </div>
-                    </div>
-                    <br />
-                    <br />
-                    <a href="/phim/muave/<%= filmID.dataValues.film_ID %>">
-                        <button class="btns" type="submit" onclick="chosen(this)">Mua vé</button>
-                    </a>
-                </form>
-            <% } else { %>
-                <h3 style="text-align: center; color: red; text-transform: uppercase; font-weight: bold"> Phim chưa được công chiếu, hiện tại không thể đặc vé!</h3>
-            <% } %>
             <!--================================================================================
                                     Đoạn js xử lý chọn Cụm rạp và Rạp
             =================================================================================-->
@@ -174,29 +134,7 @@
             <br/>
             <br/>
             <br/>
-
-            <% for (var i = 0; i < cinemaNumber.length; i++) { %>
-                <div class="content-rap">
-                    <% for (var j = 0; j< cinemaTimeShow.length; j++ ) { %>
-                        <% if (filmID.dataValues.film_ID == cinemaTimeShow[j].dataValues.film_ID && cinemaNumber[i].dataValues.cinema_ID == cinemaTimeShow[j].dataValues.cinema_ID) { %>
-                            <div class="content-rap-bg">
-                                <h5 class="content-rap-bg-fix"><%= cinemaNumber[i].dataValues.cinema_Name %></h5>
-                            </div>
-                            <div class="content-rap-box">
-                                <% for (var z = 0; z < timeShow.length; z++ ) {%>
-                                    <% if (cinemaTimeShow[j].dataValues.timeShow_ID == timeShow[z].dataValues.timeShow_ID) { %>
-                                        <a href="/phim/muave/<%= filmID.dataValues.film_ID %>" class="content-rap-box-btn">
-                                            <div type="submit" ><%= timeShow[z].dataValues.timeShow_Start %></div>
-                                        </a>
-                                    <% } %>    
-                                <% } %>
-                            </div>
-                        <% } else { %>
-                           
-                        <% } %>
-                    <% } %>
-                </div>
-            <% } %>
+                
         </div>
 
         
@@ -220,8 +158,20 @@
         </div>
     </div>
 
-
-
-
-
-</div>
+    <div class="content-rap">
+                    <div class="content-rap-bg">
+                            <% for (var i = 0; i< cinema.length; i++ ) { %>
+                        <% var temp = 0 %>
+                        <% for(var j=0;j < cinemaTimeShow.length ; j++ ) { %>
+                        <% if(cinema[i].dataValues.cinema_ID == cinemaTimeShow[j].dataValues.Cinema.cinema_ID ) { %>
+                            <% if(temp === 0) { %>
+                                <h5 class="content-rap-bg-fix"><%= cinemaTimeShow[i].dataValues.Cinema.cinema_Name %></h5>
+                                <% temp++ %>
+                            <% } else { %>
+                                <a href="/phim/muave/<%= cinemaTimeShow[j].dataValues.cinemaTimeShow_ID  %>" style="color: red ; background-color: yellow; margin: 5px; padding: 5px;" > <%= cinemaTimeShow[j].dataValues.TimeShow.timeShow_Start  %> </a>
+                            <% } %>
+                        <% } %>
+                <% } %>
+                <% } %>
+        </div>
+    </div>
