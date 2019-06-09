@@ -1,5 +1,7 @@
 <h1 style="text-align: center">Bảng xuất chiếu</h1>
-
+<% if(typeof loi !== 'undefined') { %>
+    <p>Không tạo thêm được xuất chiếu vì có thể bạn đã tạo xuất chiếu đó rồi  </p>
+<% } %>
 <div id="table">
 <% if(timeShowCinemaIDcinema) { %>
     <table>

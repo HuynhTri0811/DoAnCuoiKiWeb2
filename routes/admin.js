@@ -305,7 +305,7 @@ router.get('/update/cinemaTimeShow/cinema/:id',async function(req,res){
     const id = Number(req.params.id);
     req.session.cinemaID = id ;
     if( Admin ){
-       
+       const loi = req.session.loi ;
         const timeShowCinemaIDcinema =  await CinemaTimeShow.findAll({
             where :{
                 cinema_ID : id  
@@ -333,7 +333,7 @@ router.get('/update/cinemaTimeShow/cinema/:id',async function(req,res){
                 film_Public : true ,
             }
         });
-        res.render('admin.ejs',{timeShowCinemaIDcinema,cinemaAll,filmCinemaTimeShow,TimeShow});
+        res.render('admin.ejs',{timeShowCinemaIDcinema,cinemaAll,filmCinemaTimeShow,TimeShow,loi});
     }
     else{
         res.redirect('/');
@@ -344,7 +344,7 @@ router.get('/update/cinemaTimeShow/film/:id',async function(req,res){
     const id = Number(req.params.id);
     req.session.cinemaID = id ;
     if( Admin ){
-       
+        const loi = req.session.loi ;
         const timeShowCinemaIDcinema =  await CinemaTimeShow.findAll({
             where :{
                 film_ID : id  
@@ -383,8 +383,13 @@ router.post('/create/cinemaTimeShow',async function(req,res){
             cinemaTimeShow_Date : txtCinemaTimeShow_Date ,
             timeShow_ID : timeShowID ,
             film_ID : filmID ,
+        }).then(async function(){
+            await delete req.session.loi;
+            res.redirect('/admin/update/cinemaTimeShow/cinema/'+String(txtcinema_ID));
+        }).catch(async function(){
+            req.session.loi = 'bạn đã nhập xuất chiếu xày rồi . xin mời nhập lại';
+            res.redirect('/admin/update/cinemaTimeShow/cinema/'+String(txtcinema_ID));
         });
-        res.redirect('/admin/update/cinemaTimeShow/cinema/'+String(txtcinema_ID));
     }
     else {
         res.redirect('/');
