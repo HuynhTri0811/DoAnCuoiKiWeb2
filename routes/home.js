@@ -6,6 +6,8 @@ const Film = require('../models/Film.js');
 const User = require('../models/User.js');
 const Cineplex = require('../models/Cineplex.js');
 const Cinema = require('../models/Cinema.js');
+const TimeShow = require('../models/TimeShow.js');
+const CinemaTimeShow = require('../models/CinemaTimeShow.js');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -143,8 +145,10 @@ router.get('/film/:id',async function(req,res){
 	});
 	const cinemaName = await Cineplex.findAll();
 	const cinemaNumber = await Cinema.findAll();
+	const timeShow = await TimeShow.findAll();
+	const cinemaTimeShow = await CinemaTimeShow.findAll();
 	//console.log(cinemaNumber);
-	res.render('home.ejs',{filmID,user,cinemaName,filmDangChieu2,cinemaNumber});
+	res.render('home.ejs',{filmID,user,cinemaName,filmDangChieu2,cinemaNumber,timeShow,cinemaTimeShow});
 });
 
 
@@ -153,8 +157,10 @@ router.post('/film/:id',async function(req,res){
 
 	var cinemaChosen = req.body.cinemaID;
 	req.session.cinemaIDChosen = cinemaChosen;
+
 	var cineplexIDChosen = req.body.cineplexID;
 	req.session.cineplexIDChosen = cineplexIDChosen;
+	//console.log(cineplexIDChosen);
 	res.redirect('/phim/muave/'+id_reqfilm);
 });
 

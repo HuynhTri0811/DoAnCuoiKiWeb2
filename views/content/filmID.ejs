@@ -32,8 +32,7 @@
         <div class="col-md-9 col-sm-9">
             <div class="col-md-5 col-sm-5">
                 <div>
-                    <img id="img-film-indexContent" src="<%= filmID.dataValues.film_Image %>" alt="Không load được ảnh"
-                        width="220px" height="360px">
+                    <img id="img-film-indexContent" src="<%= filmID.dataValues.film_Image %>" alt="Không load được ảnh" width="220px" height="360px">
                 </div>
             </div>
             <div class="col-md-7 col-sm-7">
@@ -64,39 +63,37 @@
                             </div>
                         </div>
                       
-                      </div>
-                <script>
+                    </div>
+                    <script>
                         //form Rating
-    // Get the modal
-var modal = document.getElementById("myModal");
+                        // Get the modal
+                        var modal = document.getElementById("myModal");
 
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
+                        // Get the button that opens the modal
+                        var btn = document.getElementById("myBtn");
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+                        // Get the <span> element that closes the modal
+                        var span = document.getElementsByClassName("close")[0];
 
-console.log(modal);
-console.log(btn);
-console.log(span);
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-  modal.style.display = "block";
-}
+                        // When the user clicks the button, open the modal 
+                        btn.onclick = function () {
+                            modal.style.display = "block";
+                        }
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
+                        // When the user clicks on <span> (x), close the modal
+                        span.onclick = function () {
+                            modal.style.display = "none";
+                        }
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-                </script>
+                        // When the user clicks anywhere outside of the modal, close it
+                        window.onclick = function (event) {
+                            if (event.target == modal) {
+                                modal.style.display = "none";
+                            }
+                        }
+                    </script>
                 </div>
+
                 <br/>
                 <p><strong>Thời lượng: </strong><%= filmID.dataValues.film_Time %> phút</p>
                 <p><strong>Ngày khởi chiếu: </strong><% var d = new Date(filmID.dataValues.film_DatePublic); %>
@@ -110,8 +107,14 @@ window.onclick = function(event) {
                 <br/>
                 <p><strong>Nội dung: </strong><%= filmID.dataValues.film_Content %></p>
                 <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
             </div>
 
+            
             <!--Chọn cụm rạp + rạp-->
             <% var day_now = new Date();%>
             <% if (filmID.dataValues.film_DatePublic < day_now) { %>
@@ -153,7 +156,52 @@ window.onclick = function(event) {
             <% } else { %>
                 <h3 style="text-align: center; color: red; text-transform: uppercase; font-weight: bold"> Phim chưa được công chiếu, hiện tại không thể đặc vé!</h3>
             <% } %>
+            <!--================================================================================
+                                    Đoạn js xử lý chọn Cụm rạp và Rạp
+            =================================================================================-->
+            <script>
+                function chosen(obj) {
+                    if ($j('.option')) {
+                        if ($j(obj).attr('value') == -1) {
+                            alert('Vui lòng chọn Cụm rạp và rạp');
+                            return;
+                        }
+                    }
+                    console.log($j(obj).attr('value'));
+                }
+            </script>
+
+            <br/>
+            <br/>
+            <br/>
+
+            <% for (var i = 0; i < cinemaNumber.length; i++) { %>
+                <div class="content-rap">
+                    <% for (var j = 0; j< cinemaTimeShow.length; j++ ) { %>
+                        <% if (filmID.dataValues.film_ID == cinemaTimeShow[j].dataValues.film_ID && cinemaNumber[i].dataValues.cinema_ID == cinemaTimeShow[j].dataValues.cinema_ID) { %>
+                            <div class="content-rap-bg">
+                                <h5 class="content-rap-bg-fix"><%= cinemaNumber[i].dataValues.cinema_Name %></h5>
+                            </div>
+                            <div class="content-rap-box">
+                                <% for (var z = 0; z < timeShow.length; z++ ) {%>
+                                    <% if (cinemaTimeShow[j].dataValues.timeShow_ID == timeShow[z].dataValues.timeShow_ID) { %>
+                                        <a href="/phim/muave/<%= filmID.dataValues.film_ID %>" class="content-rap-box-btn">
+                                            <div type="submit" ><%= timeShow[z].dataValues.timeShow_Start %></div>
+                                        </a>
+                                    <% } %>    
+                                <% } %>
+                            </div>
+                        <% } else { %>
+                           
+                        <% } %>
+                    <% } %>
+                </div>
+            <% } %>
         </div>
+
+        
+
+
         <div style="text-align: right;" class="col-md-3 col-sm-3">
             <div class="title-movie">
                 <h4 style="text-transform: uppercase">Phim đang chiếu</h4>
@@ -172,20 +220,7 @@ window.onclick = function(event) {
         </div>
     </div>
 
-<!--================================================================================
-                Đoạn js xử lý chọn Cụm rạp và Rạp
-=================================================================================-->
-    <script>
-        function chosen(obj) {
-            if ($j('.option')) {
-                if ($j(obj).attr('value') == -1 ) {
-                    alert('Vui lòng chọn Cụm rạp và rạp');
-                    return;
-                }
-            }
-            console.log($j(obj).attr('value'));
-        }
-    </script>
+
 
 
 
