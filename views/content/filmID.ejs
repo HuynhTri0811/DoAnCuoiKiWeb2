@@ -46,7 +46,7 @@
                         <!-- Modal content -->
                         <div class="modal-content">
                           <span class="close">&times;</span>
-                          <p>Some text in the Modal..</p>
+                          <h4>Đánh giá bộ phim</h4>
                           <div class="form-group" id="rating-ability-wrapper">
                                 <label class="control-label" for="rating">
                                 <span class="field-label-info"></span>
@@ -56,7 +56,7 @@
                                 <span class="selected-rating">0</span><small>/10</small>
                                 </h2>
                                 <% for(var i = 1; i<= 10; i++) { %>
-                                  <button type="button" class="btnrating btn btn-default btn-lg" data-attr="<%= i%>" id="rating-star-<%= i%>">
+                                <button type="button" class="btnrating btn btn-default btn-lg" data-attr="<%= i%>" id="rating-star-<%= i%>">
                                     <i class="fa fa-star" aria-hidden="true" id="star"></i>
                                 </button>
                                   <% } %>
