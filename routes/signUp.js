@@ -1,14 +1,25 @@
 const Router = require('express').Router;
 const fs = require('fs');
 const user = require('../models/User.js');
+const sendEmail  = require('../models/email.js');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const router = new Router();
+
+function Random() {
+	var text = "";
+	var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  
+	for (var i = 0; i < 10; i++)
+	  text += possible.charAt(Math.floor(Math.random() * possible.length));
+	return text;
+}
 
 router.get('/',function(req,res){
 	res.render('signUp.ejs');
 });
 router.post('/',async function(req,res){
+	var text = Random();
 	var {user_Email ,user_Password ,user_Name,user_NumberPhone } = req.body ;
 	const User =  await user.findOne({
 		where : {
@@ -35,14 +46,37 @@ router.post('/',async function(req,res){
 						user_Password : hash,
 						user_Name ,
 						user_NumberPhone,
-					}).then(function(user){
-						req.session.user_Id = user.user_ID ;
-						res.redirect('/');
-						console.log('Create user succes ');
+						user_Code : text ,
+					}).then(async function(user){
+						const info = await sendEmail(req.body.user_Email, 'xac nhap', 'xac nhan', text	);
+						res.render('loginConfirm.ejs',{user_Email});
 					}).catch(function(err){
 						console.log(err,req.body);
 					});
 			};
 		}
 });
+router.post('/confirm/',async function(req,res){
+	const codefail="a"; 
+	const mail = req.body.email ;
+	const {user_ConfirmEmail} = req.body;
+	User = await user.findOne({
+		where: {
+						user_Email:mail,
+						user_Code:user_ConfirmEmail,
+		}
+	});
+
+	if(User)
+	{
+			req.session.user_Id = User.user_ID ;
+			res.redirect('/');
+	}
+	else
+	{
+		res.render('loginConfirm.ejs',{user_Email,codefail});
+	}
+
+});
+
 module.exports = router;
