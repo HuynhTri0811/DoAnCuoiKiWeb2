@@ -166,9 +166,6 @@ router.post('/film/:id',async function(req,res){
 
 	var cinemaChosen = req.body.cinemaID;
 	req.session.cinemaIDChosen = cinemaChosen;
-
-	var cineplexIDChosen = req.body.cineplexID;
-	req.session.cineplexIDChosen = cineplexIDChosen;
 	//console.log(cineplexIDChosen);
 	res.redirect('/phim/muave/'+id_reqfilm);
 });
@@ -193,11 +190,11 @@ router.get('/phim/muave/:id',async function(req,res)
 				cinemaTimeShow_ID : id_Chosen ,
 			} ,
 			include:[
-				{ model : Cinema } , 
+				{ model : Cinema} , 
 				{ model : Film } , 
 				{ model : TimeShow },
 			]
-		})
+		});
 		res.render('users/muave.ejs',{ user, cinemaTimeShow });
 		//console.log(cinemaChosen);
 	} else {

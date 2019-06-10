@@ -115,7 +115,7 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                             <div class="form-group">
                                 <label for="form_control1">Chọn cụm rạp phim</label>
-                                <select class="form-control" id="form_control1" name="cineplexID">
+                                <select class="form-control" id="form_control1">
                                     <% for (var i = -1; i < cineplex.length; i++) { %>
                                         <% if (i == -1) { %>
                                             <option class="option" value="-1">Tất cả cụm rạp</option>
@@ -129,7 +129,7 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                             <div class="form-group">
                                 <label for="form_control2">Chọn rạp phim</label>
-                                <select class="form-control" id="form_control2" name="cinemaID">
+                                <select class="form-control" id="form_control2">
                                     <% for (var i = -1; i < cinema.length; i++) { %>
                                         <% if (i == -1) { %>
                                             <option class="option" value="-1">Tất cả rạp</option>
@@ -150,14 +150,14 @@
                                 <% for (var i = 0; i< cinemaTimeShow.length; i++ ) { %>
                                     <% if (i==0 || cinemaTimeShow[i].dataValues.cinema_ID != cinemaTimeShow[i-1].dataValues.cinema_ID) { %>
                                         <div class="content-rap-bg">
-                                            <h5 class="content-rap-bg-fix"><%= cinemaTimeShow[i].dataValues.Cinema.cinema_Name %></h5>
+                                            <h5 class="content-rap-bg-fix" name="cinemaID"><%= cinemaTimeShow[i].dataValues.Cinema.cinema_Name %></h5>
                                         </div>
                                         <div class="content-rap-box"></div>                                                                                        
-                                        <a href="/phim/muave/<%= cinemaTimeShow[i].dataValues.film_ID  %>" class="content-rap-box-btn">
+                                        <a href="/phim/muave/<%= cinemaTimeShow[i].dataValues.cinemaTimeShow_ID  %>" class="content-rap-box-btn">
                                             <%= cinemaTimeShow[i].dataValues.TimeShow.timeShow_Start %>
                                         </a>
                                     <% } else { %>
-                                        <a href="/phim/muave/<%= cinemaTimeShow[i].dataValues.film_ID  %>" class="content-rap-box-btn">
+                                        <a href="/phim/muave/<%= cinemaTimeShow[i].dataValues.cinemaTimeShow_ID  %>" class="content-rap-box-btn">
                                             <%= cinemaTimeShow[i].dataValues.TimeShow.timeShow_Start %>
                                         </a>                                    
                                     <% } %>

@@ -34,20 +34,38 @@
                                     <% var chuoiLayla1 = st1.substring(0,cinemaTimeShow.dataValues.Cinema.cinema_Length/2); %>
                                    
                                     <% var chuoiLayla2 = st1.substring(cinemaTimeShow.dataValues.Cinema.cinema_Length/2,cinemaTimeShow.dataValues.Cinema.cinema_Length); %>
-                                    <% for (var z in chuoiLayla1) { %>
-                                        <div class="row">
-                                            <% for (var j = 0; j < cinemaTimeShow.dataValues.Cinema.cinema_Width / 2 ; j++) { %>
-                                                <div class="seat seat-standard active" onclick="selected(this)" zone="Thường" loc="<%= chuoiLayla2[z]%><%= j+1%>" price="75000"> <%= chuoiLayla1[z]%><%= j+1 %> </div>
-                                            <% } %>
-                                        </div>
-                                    <% } %>
-
-                                    <% for (var z in chuoiLayla2 ) { %>
-                                         <div class="row">
-                                                <% for (var j = 0; j < cinemaTimeShow.dataValues.Cinema.cinema_Width / 2 ; j++) { %>
-                                                    <div class="seat seat-vipprime active" onclick="selected(this)" zone="Vipprime" loc="<%= chuoiLayla2[z] %><%= j+1 %>" price="90000"> <%= chuoiLayla2[z] %><%=  j+1 %> </div>
+                                    <% if (cinemaTimeShow.dataValues.Cinema.cinema_Type === '2D') { %>
+                                        <% for (var z in chuoiLayla1) { %>
+                                            <div class="row">
+                                                <% for (var j = 0; j < cinemaTimeShow.dataValues.Cinema.cinema_Width; j++) { %>
+                                                    <div class="seat seat-standard active" onclick="selected(this)" zone="Thường" loc="<%= chuoiLayla2[z]%><%= j+1%>" price="75000"> <%= chuoiLayla1[z]%><%= j+1 %> </div>
                                                 <% } %>
-                                        </div>
+                                            </div>
+                                        <% } %>
+
+                                        <% for (var z in chuoiLayla2 ) { %>
+                                            <div class="row">
+                                                    <% for (var j = 0; j < cinemaTimeShow.dataValues.Cinema.cinema_Width ; j++) { %>
+                                                        <div class="seat seat-vipprime active" onclick="selected(this)" zone="Vipprime" loc="<%= chuoiLayla2[z] %><%= j+1 %>" price="90000"> <%= chuoiLayla2[z] %><%=  j+1 %> </div>
+                                                    <% } %>
+                                            </div>
+                                        <% } %>
+                                    <% } else { %>
+                                        <% for (var z in chuoiLayla1) { %>
+                                            <div class="row">
+                                                <% for (var j = 0; j < cinemaTimeShow.dataValues.Cinema.cinema_Width; j++) { %>
+                                                    <div class="seat seat-standard active" onclick="selected(this)" zone="Thường" loc="<%= chuoiLayla2[z]%><%= j+1%>" price="95000"> <%= chuoiLayla1[z]%><%= j+1 %> </div>
+                                                <% } %>
+                                            </div>
+                                        <% } %>
+
+                                        <% for (var z in chuoiLayla2 ) { %>
+                                            <div class="row">
+                                                    <% for (var j = 0; j < cinemaTimeShow.dataValues.Cinema.cinema_Width ; j++) { %>
+                                                        <div class="seat seat-vipprime active" onclick="selected(this)" zone="Vipprime" loc="<%= chuoiLayla2[z] %><%= j+1 %>" price="115000"> <%= chuoiLayla2[z] %><%=  j+1 %> </div>
+                                                    <% } %>
+                                            </div>
+                                        <% } %>
                                     <% } %>
             
                                 </div>
@@ -91,7 +109,7 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="label">Loại</td>
-                                                                    <td><%= cinemaTimeShow.dataValues.Film.film_Type %></td>
+                                                                    <td style=><%= cinemaTimeShow.dataValues.Cinema.cinema_Type %></td>
                                                                 </tr>
                                                                 
                                                             </tbody>
@@ -107,7 +125,10 @@
                                     <div class="product-details">
                                         <table class="info-wrapper">
                                             <tbody>
-                                                
+                                                <tr>
+                                                    <td class="label">Cụm rạp</td>
+                                                    <td get=""></td>
+                                                </tr>
                                                 <tr>
                                                     <td class="label">Ngày chiếu</td>
                                                     <td>

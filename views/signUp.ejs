@@ -30,16 +30,22 @@
                 <input type="password" name="user_ConfirmPassword" id="user_ConfirmPassword" value="" class="form-control input-lg" placeholder="Nhập lại mật khẩu" required />                    
 
                 <% if (typeof User !== 'undefined' ) { %>
-                    <p> Tai khoang da ton tai . Neu ban da quen thi xin quen mat khau  </p>
+                    <p> Tài khoản đã tồn tài, nếu quên mật khẩu vui lòng bấm link Quên mất khẩu ở trang Đăng Nhập </p>
                 <% } %>
                 <% if (typeof NumberPhone !== 'undefined') { %>
-                  <p> so dien thoai nay  da dc dang ky . Neu ban da co tai khoang xin bam vao login va quen mat khau</p>
+                  <p> Số điện thoại này đã được đăng ký, nếu quên mật khẩu vui lòng bấm link Quên mất khẩu ở trang Đăng Nhập</p>
                 <% } %>                 
                 <br />
                 <span class="help-block">Bằng cách nhấp vào Tạo tài khoản, bạn đồng ý với Điều khoản và Chính sách sử dụng dữ liệu của chúng tôi, bao gồm cả việc sử dụng cookie.</span>
-                      <button class="btn btn-lg btn-primary btn-block signup-btn" type="submit">Tạo tài khoản</button>
+                      <button class="btn btn-lg btn-primary btn-block signup-btn" type="submit" onclick="clicks_send()">Tạo tài khoản</button>
               </form>          
             </div>
+
+            <script>
+              function clicks_send(){
+                alert('Một mã xác thực đã được gửi đến email của bạn, vui lòng kiểm tra email!');
+              }
+            </script>
   </div>            
   </div>
   </div>    
