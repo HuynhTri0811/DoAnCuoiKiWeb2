@@ -26,7 +26,12 @@ router.post('/',async function(req,res){
 			}
 		});
 		if (!User) {
+			console.log('password sai');
 			res.render('Login.ejs', { UserSaiPass });
+		}
+		else if(User.accept_User === false){
+			const error = "Vui long xac nhan email!";
+			res.render('Login.ejs', {error});
 		}
 		else {
 			const match = await bcrypt.compare(txtUserPassword, User.user_Password);
