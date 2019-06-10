@@ -1,132 +1,126 @@
-html,
-body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-}
-
-
-/*======================================================================================
+html, body {
+    margin:0;
+    padding:0;
+    height:100%;
+ }
+ 
+ 
+ 
+ /*======================================================================================
                                          Header
  =======================================================================================*/
+ header{
+     padding: 0 5% 0 5%;
+ }
+ 
+ #logo{
+     color: tomato;
+ }
 
-header {
-    padding: 0 5% 0 5%;
-}
-
-#logo {
-    color: tomato;
-}
-
-.header-top {
+ .header-top{
     text-align: right;
     margin-top: 10px;
-}
-
-.radius {
-    border-radius: 20px;
+ }
+ 
+ .radius{
+    border-radius:20px;
     width: 130px;
 }
 
-.radiusSearch {
-    border-radius: 20px;
+.radiusSearch{
+    border-radius:20px;
     width: 90px;
 }
 
-
-/*======================================================================================
+ /*======================================================================================
                                          Content area
  =======================================================================================*/
-
-.content-area {
-    padding: 3% 10% 0 10%;
-    position: relative;
-    min-height: 100%;
-}
-
-#design-row-film-index {
-    position: relative;
-    margin: 20px;
-}
-
-#img-film-indexContent {
-    width: 72%;
-    height: 72%;
-    object-fit: contain;
-}
-
-.title-movie {
-    text-decoration: none;
-    color: black;
-    object-fit: contain;
-}
-
-.title-movie h4 {
-    white-space: nowrap;
-    border: 2px;
-    border-color: red;
-    width: 100%;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
-
-/*-------------------------test hiệu ứng button---------------------------*/
-
-@import url('https://fonts.googleapis.com/css?family=Amatic+SC');
-
+ 
+ .content-area{
+     padding: 3% 10% 0 10%;
+     position : relative;
+     min-height : 100%;
+ }
+ 
+ #design-row-film-index{
+     position: relative;
+     margin: 20px;
+ }
+ 
+ #img-film-indexContent { 
+     width: 72%; 
+     height: 72%; 
+     object-fit: contain; 
+ } 
+ 
+ .title-movie{
+     text-decoration:none;
+     color: black;
+     object-fit: contain;
+ }
+ 
+ .title-movie h4{
+     white-space: nowrap;
+     border: 2px;
+     border-color: red;
+     width: 100%; 
+     text-overflow: ellipsis;
+     overflow: hidden;
+ }
+ 
+ 
+ 
+ /*-------------------------test hiệu ứng button---------------------------*/
+ @import url('https://fonts.googleapis.com/css?family=Amatic+SC'); 
+ 
 .btns {
-    border: none;
-    display: block;
-    text-align: center;
-    cursor: pointer;
-    text-transform: uppercase;
-    outline: none;
-    overflow: hidden;
-    position: relative;
-    color: #fff;
-    font-weight: 700;
-    font-size: 14px;
-    background-color: #222;
-    padding: 10px 60px;
-    margin: 0 auto;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.20);
-    border-radius: 20px;
+  border: none;
+  display: block;
+  text-align: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  background-color: #222;
+  padding: 10px 60px;
+  margin: 0 auto;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.20);
+  border-radius: 20px;
 }
-
+ 
 .btns span {
-    position: relative;
-    z-index: 1;
+  position: relative; 
+  z-index: 1;
 }
-
+ 
 .btns:after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 490%;
-    width: 140%;
-    background: #78c7d2;
-    -webkit-transition: all .5s ease-in-out;
-    transition: all .5s ease-in-out;
-    -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
-    transform: translateX(-98%) translateY(-25%) rotate(45deg);
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 490%;
+  width: 140%;
+  background: #78c7d2;
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
+  transform: translateX(-98%) translateY(-25%) rotate(45deg);
 }
-
+ 
 .btns:hover:after {
-    -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
-    transform: translateX(-9%) translateY(-25%) rotate(45deg);
+  -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
+  transform: translateX(-9%) translateY(-25%) rotate(45deg);
 }
-
 
 /*-----------------------------------------------------------------------------------*/
-
-
-/* ============================================ *
+ /* ============================================ *
  * Content Rap filmID.ejs
  * ============================================ */
-
-.content-rap {
+.content-rap{
     height: 198px;
     margin-top: 5px;
     padding-top: 10px;
@@ -142,20 +136,15 @@ header {
     padding-right: 20px;
     padding-bottom: 7px;
     padding-left: 20px;
-<<<<<<< HEAD
     margin-top: 15px;
-=======
->>>>>>> 95b8a4c3f3dacb52d8b7f5d9b19de7c9c09fca18
 }
-
-.content-rap-bg-fix {
+.content-rap-bg-fix{
     font-family: "Times New Roman", Times, serif;
-    font-size: 26px;
+	font-size: 26px;
     margin: 0px;
     color: white;
 }
 
-<<<<<<< HEAD
 .content-rap-box{
 	border-top: 1px solid black;
     border-bottom: 1px solid black;
@@ -163,29 +152,17 @@ header {
 
 .content-rap-box-btn{
     margin-top: 10px;
-=======
-.content-rap-box {
-    border-top: 1px solid #47251c;
-    border-bottom: 1px solid #47251c;
-}
-
-.content-rap-box-btn {
-    margin-top: 5px;
->>>>>>> 95b8a4c3f3dacb52d8b7f5d9b19de7c9c09fca18
     margin-bottom: 5px;
     margin-left: 5px;
     border: 1px solid black;
     width: 90px;
 }
-
-.content-rap-box-btn:link,
-.content-rap-box-btn:visited {
+.content-rap-box-btn:link, .content-rap-box-btn:visited {
     font-family: "Times New Roman", Times, serif;
     color: black;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-<<<<<<< HEAD
   }
   
   .content-rap-box-btn:hover {
@@ -224,190 +201,84 @@ header {
  }
 
 .padding{
-=======
-}
-
-.content-rap-box-btn:hover {
-    background-color: #00ffff;
-}
-
-
-/*======================================================================================
-                                         Footer
- =======================================================================================*/
-
-.footer-bg {
-    padding: 0 20% 0 10%;
-    background: #222;
-    border-top: 5px solid #333;
-    color: #ccc;
-    font-weight: bold;
-    line-height: 15px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    text-align: left;
-    position: static;
-    padding-bottom: 20px;
-}
-
-footer div div div ul h1 {
-    font-size: 20px;
-}
-
-.padding {
->>>>>>> 95b8a4c3f3dacb52d8b7f5d9b19de7c9c09fca18
     margin-left: -45px;
 }
-
-.fa-angle-double-right {
+.fa-angle-double-right{
     padding-top: 7px;
-}
 
-.social {
+}
+.social{
     padding-top: 20px;
 }
 
-
 /* Style all font awesome icons */
-
 .fa {
     font-size: 20px;
     width: 30px;
     text-align: center;
     text-decoration: none;
-}
+  }
 
-.paddingIconSocial {
+
+.paddingIconSocial{
     margin-left: 20px;
 }
 
 
 /*button Đánh giá*/
-
 .rating-header {
     margin-top: -10px;
     margin-bottom: 10px;
 }
-
-.btn-lg {
+.btn-lg{
     font-size: 15px;
     line-height: 1.3333333;
     width: 40px;
     height: 40px;
     border-radius: 30px;
 }
-
-#star {
+#star{
     width: 15px;
     height: 15px;
     text-rendering: auto;
 }
 
-
 /*rating*/
-
-
 /* The Modal (background) */
-
 .modal {
-    display: none;
-    /* Hidden by default */
-    position: fixed;
-    /* Stay in place */
-    z-index: 1;
-    /* Sit on top */
-    padding-top: 100px;
-    /* Location of the box */
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
     left: 0;
     top: 0;
-    width: 100%;
-    /* Full width */
-    height: 100%;
-    /* Full height */
-    overflow: auto;
-    /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0);
-    /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4);
-    /* Black w/ opacity */
-}
-
-
-/* Modal Content */
-
-.modal-content {
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content */
+  .modal-content {
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 40%;
-    ;
-}
-
-
-/* The Close Button */
-
-.close {
+    width: 40%;;
+  }
+  
+  /* The Close Button */
+  .close {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
+  }
+  
+  .close:hover,
+  .close:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
-}
-
-.mapouter {
-    margin-left: 60px;
-    margin-bottom: 40px;
-}
-
-.marginMap {
-    margin-top: 30px;
-    margin-left: 60px;
-    margin-bottom: 20px;
-}
-
-.form-control {
-    width: 80%;
-}
-
-.btn-secondary {
-    width: 100%;
-    border-radius: 5px;
-}
-
-.ctnIntro {
-    margin-left: 60px;
-    margin-bottom: 40px;
-    margin-top: 30px;
-}
-
-.contentGioiThieu {
-    width: 90%;
-    font-size: 15px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-#lienhe {
-    width: 100%;
-    padding: 50px 0;
-    text-align: center;
-    background-color: lightblue;
-    margin-top: 20px;
-}
-
-.btnIntro {
-    width: 110%;
-}
-
-.imgGioiThieu {
-    margin-top: 30px;
-}
+  }
