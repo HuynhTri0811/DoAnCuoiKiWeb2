@@ -185,7 +185,6 @@ header {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-<<<<<<< HEAD
   }
   
   .content-rap-box-btn:hover {
@@ -224,40 +223,6 @@ header {
  }
 
 .padding{
-=======
-}
-
-.content-rap-box-btn:hover {
-    background-color: #00ffff;
-}
-
-
-/*======================================================================================
-                                         Footer
- =======================================================================================*/
-
-.footer-bg {
-    padding: 0 20% 0 10%;
-    background: #222;
-    border-top: 5px solid #333;
-    color: #ccc;
-    font-weight: bold;
-    line-height: 15px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    text-align: left;
-    position: static;
-    padding-bottom: 20px;
-}
-
-footer div div div ul h1 {
-    font-size: 20px;
-}
-
-.padding {
->>>>>>> 95b8a4c3f3dacb52d8b7f5d9b19de7c9c09fca18
     margin-left: -45px;
 }
 
