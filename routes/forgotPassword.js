@@ -29,17 +29,25 @@ router.post('/', async function (req, res) {
 	});
 
 	if(User)
-	{
-		user.update({
+	{	
+		if(User.accept_User === false)
+		{
+			const error = "Email chua xac nhan!";
+			res.render('forgotPassword.ejs', { error });
+		}
+		else{
+			user.update({
 			
-			user_Code: macode,
-		}, {
-			where: {
-				user_Email: req.body.email,
-			} 
+				user_Code: macode,
+			}, 
+			{
+				where: {
+					user_Email: req.body.email,
+				} 
 			});
 			const info = await sendEmail(req.body.email, 'Quên mật khẩu', 'Bạn có quên mật khẩu', macode);
 			res.render('confirm.ejs',{mail});
+		}
 	}
 
 	else
@@ -74,23 +82,30 @@ router.post('/', async function (req, res) {
 	
 		});
 
-		router.get('/resetpassword', function (req, res) {
+router.get('/resetpassword', function (req, res) {
 			res.render('resetPassword.ejs'); 
 			});
-		router.post('/resetpassword', async function (req, res) {   
+router.post('/resetpassword', async function (req, res) {   
 			const passfail="a";
 			const mail = req.body.email
 			const pass=req.body.user_Password;
+			const pass1=req.body.user_ConfirmPassword;
 			const hash = await bcrypt.hash(pass,saltRounds);
-			user.update({
+			var passsai="abc";
+			if(pass===pass1){
+				user.update({
 			
-				user_Password: hash,
-			}, {
-				where: {
-					user_Email: mail,
-				} 
-				});
-				res.redirect('/'); 
+					user_Password: hash,
+				}, {
+					where: {
+						user_Email: mail,
+					} 
+					});
+					res.redirect('/'); 
+			}
+			else {
+				res.render('resetPassword.ejs',{mail,passsai});
+			}
 			});
 		
 		

@@ -34,7 +34,7 @@
                     <a id="logo" class="navbar-brand" href="/">VNCinema</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li><a href="#">Giới thiệu</a></li>
+                    <li><a href="/intro">Giới thiệu</a></li>
                     <li class="dropdown">
                         <a data-toggle="dropdown" href="">Phim<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
@@ -137,6 +137,9 @@
 
     <% if (typeof support !== 'undefined') { %>
         <% include content/support.ejs %>
+    <% } %>
+    <% if (typeof intro !== 'undefined') { %>
+        <% include content/intro.ejs %>
     <% } %>
     <!--======================================================================================
                                             Content area
