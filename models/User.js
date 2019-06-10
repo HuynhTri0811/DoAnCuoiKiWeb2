@@ -29,7 +29,10 @@ const user = db.define('User', {
         type: Sequelize.STRING,
         allowNull: true
     },
-
+	accept_User:{
+		type: Sequelize.BOOLEAN,
+		defaultValue: false,
+	}
 });
 
 module.exports = user ;

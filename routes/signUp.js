@@ -56,27 +56,36 @@ router.post('/',async function(req,res){
 			};
 		}
 });
-router.post('/confirm/',async function(req,res){
+router.post('/confirm/',async function(req,res, next){
 	const codefail="a"; 
-	const mail = req.body.email ;
+	const user_Email = req.body.email ;
 	const {user_ConfirmEmail} = req.body;
-	User = await user.findOne({
+	user.findOne({
 		where: {
-						user_Email:mail,
-						user_Code:user_ConfirmEmail,
+			user_Email:user_Email,
+			user_Code:user_ConfirmEmail,
 		}
-	});
-
-	if(User)
-	{
-			req.session.user_Id = User.user_ID ;
-			res.redirect('/');
-	}
-	else
-	{
+	}).then(function(User){
+		if(User)
+		{
+			user.update({
+				accept_User: true,
+			},
+			{
+				where: {user_Email:user_Email,}
+			}).then(function(result){
+				console.log('asakdhakj');
+				req.session.user_Id = User.user_ID ;
+				res.redirect('/');
+			}).catch(next);
+		}
+		else
+		{
+			res.render('loginConfirm.ejs',{user_Email,codefail});
+		}
+	}).catch(function(next){
 		res.render('loginConfirm.ejs',{user_Email,codefail});
-	}
-
+	});
 });
 
 module.exports = router;
