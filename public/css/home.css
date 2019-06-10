@@ -350,5 +350,10 @@ footer div div div ul h1 {
 }
 
 .imgGioiThieu {
-    margin-top: 30px;
+    margin-top: 10px;
+}
+.ctnGioiThieu{
+    margin-left: 20%;
+    margin-right: 10%;
+    margin-bottom: 40px;
 }
