@@ -29,13 +29,13 @@
 
 <div class="content-area">
     <div class="row">
-        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
-            <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
+        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+            <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
                 <div>
                     <img id="img-film-indexContent" src="<%= filmID.dataValues.film_Image %>" alt="Không load được ảnh" width="220px" height="360px">
                 </div>
             </div>
-            <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7">
+            <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
                 <h3 style="text-align: center; font-weight: bold"><%= filmID.dataValues.film_Name %></h3>
                 <div style="text-align: center">
                     <strong>4.9</strong><span>/10</span>
@@ -107,12 +107,12 @@
                 <p><strong>Nội dung: </strong><%= filmID.dataValues.film_Content %></p>
                 <br/>
             </div>
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <% var day_now = new Date();%>
                 <% if (filmID.dataValues.film_DatePublic < day_now) { %>
                     <!--Hiển thị form-control cho cụm rạp và rạp-->
                     <form action="" method="POST" class="form-fix">
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                             <div class="form-group">
                                 <label for="form_control1">Chọn cụm rạp phim</label>
                                 <select class="form-control" id="form_control1" name="cineplexID">
@@ -126,7 +126,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                             <div class="form-group">
                                 <label for="form_control2">Chọn rạp phim</label>
                                 <select class="form-control" id="form_control2" name="cinemaID">
@@ -142,7 +142,7 @@
                         </div>
                     </form>
                     <!--Load các xuất chiếu và thông báo-->
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <% if (cinemaTimeShow.length == 0) { %>
                             <h4 style="text-align: center; color: red; text-transform: uppercase; font-weight: bold">Hiện tại chưa có xuất chiếu nào cho phim này!!!</h4>
                         <% } else { %>
@@ -172,17 +172,6 @@
             <!--================================================================================
                                     Đoạn js xử lý chọn Cụm rạp và Rạp
             =================================================================================-->
-            <script>
-                function chosen(obj) {
-                    if ($j('.option')) {
-                        if ($j(obj).attr('value') == -1) {
-                            alert('Vui lòng chọn Cụm rạp và rạp');
-                            return;
-                        }
-                    }
-                    console.log($j(obj).attr('value'));
-                }
-            </script>
 
 
             
@@ -190,19 +179,14 @@
         </div>
 
         <!--Phim đang chiếu bên phải-->
-        <div style="text-align: center;" class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
-            <div class="title-movie">
-                <h4 style="text-transform: uppercase">Phim đang chiếu</h4>
-                <% for (var i=0; i< 4; i++) { %>
-                    <a href="/film/<%= filmDangChieu2[i].dataValues.film_ID %>">
-                        <div>
-                            <img src="<%= filmDangChieu2[i].dataValues.film_Image %>" alt="Không load được ảnh" width="150px"
-                                height="190px">
-                        </div>
-                        <div class="title-movie"><h4><%= filmDangChieu2[i].dataValues.film_Name %></h4></div>
-                    </a>
-                <% } %>
-            </div>
+        <div style="text-align: center;" class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 title-movie">
+            <h4 style="text-transform: uppercase">Phim đang chiếu</h4>
+            <% for (var i=0; i< 4; i++) { %>
+                <a href="/film/<%= filmDangChieu2[i].dataValues.film_ID %>">
+                    <img src="<%= filmDangChieu2[i].dataValues.film_Image %>" alt="Không load được ảnh" width="150px" height="190px">
+                    <div class="title-movie"><h4><%= filmDangChieu2[i].dataValues.film_Name %></h4></div>
+                </a>
+            <% } %>
         </div>
     </div>
 </div> 

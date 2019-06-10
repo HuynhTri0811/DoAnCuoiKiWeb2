@@ -42,12 +42,13 @@ header {
  =======================================================================================*/
 
 .content-area {
-    padding: 3% 10% 0 10%;
+    padding: 3% 10% 1% 10%;
     min-height: 100%;
+    margin: 0px 0px 20px 0px;
 }
 
 #design-row-film-index {
-    margin: 20px;
+    margin-top: 20px;
     text-align: center;
 }
 
@@ -136,7 +137,6 @@ a:active{
  * Content Rap filmID.ejs
  * ============================================ */
 .content-rap {
-    height: 198px;
     margin-top: 5px;
     padding-top: 10px;
 }
