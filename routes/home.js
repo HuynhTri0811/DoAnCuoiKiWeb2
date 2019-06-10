@@ -144,18 +144,20 @@ router.get('/film/:id',async function(req,res){
 		}
 	});
 	const cinema = await Cinema.findAll();
+	const cineplex = await Cineplex.findAll();
 	const cinemaTimeShow = await CinemaTimeShow.findAll({
 		where :{
-			film_ID : id  
-		}
-		,include:[
+			film_ID : id,  
+		},
+		order:['cinema_ID'],
+		include:[
 			{ model : Cinema } , 
 			{ model : Film } , 
 			{ model : TimeShow },
 		]
 	});
-	//console.log(cinemaNumber);
-	res.render('home.ejs',{filmID,user,filmDangChieu2,cinemaTimeShow,cinema});
+	console.log(cinemaTimeShow);
+	res.render('home.ejs',{filmID,user,filmDangChieu2,cinemaTimeShow,cinema,cineplex});
 });
 
 
