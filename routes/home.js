@@ -232,3 +232,8 @@ router.get('/support',function(req,res){
 	const support = true;
 	res.render('home.ejs',{support});
 });
+
+router.get('/intro',function(req,res){
+	const intro = true;
+	res.render('home.ejs',{intro});
+});
