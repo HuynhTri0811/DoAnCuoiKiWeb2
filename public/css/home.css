@@ -336,6 +336,7 @@ footer div div div ul h1 {
     width: 90%;
     font-size: 15px;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 #lienhe {
@@ -347,5 +348,9 @@ footer div div div ul h1 {
 }
 
 .btnIntro {
-    width: 130%;
+    width: 110%;
+}
+
+.imgGioiThieu {
+    margin-top: 30px;
 }
