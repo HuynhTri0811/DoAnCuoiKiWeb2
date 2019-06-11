@@ -1,0 +1,28 @@
+<div class="content-area">
+    <div class="row">
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+            <strong>Họ và tên :</strong>
+            <br />
+            <br />
+            <strong>Số điện thoại : </strong>
+            <br />
+            <br />
+            <strong>Email :</strong>
+            <br />
+            <br />
+            <strong>Password : </strong>
+        </div>
+        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+            <input type='text' name='txtUserName' value="<%= user.dataValues.user_Name %>">
+            <br />
+            <br />
+            <input type="text" name='txtUserNumberPhone' value="<%= user.dataValues.user_NumberPhone %>">
+            <br />
+            <br />
+            <input type="email" name='txtUserEmail' value="<%= user.dataValues.user_Email %>">
+            <br />
+            <br />
+            <input type='password' name="txtUserPassword" value="<%= user.dataValues.user_Password %>">
+        </div>
+    </div>
+</div>

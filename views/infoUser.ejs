@@ -2,123 +2,24 @@
 <html>
     <head>
         <title>Chỉnh sửa thông tin cá nhân </title>
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
         
-        <style>
-            body {
-                background: #F1F3FA;
-            }
-        
-            /* Profile container */
-            .profile {
-                margin: 20px 0;
-            }
-        
-            /* Profile sidebar */
-            .profile-sidebar {
-                padding: 20px 0 10px 0;
-                background: #fff;
-            }
-        
-            .profile-usertitle {
-                text-align: center;
-                margin-top: 20px;
-            }
-        
-            .profile-usertitle-name {
-                color: #5a7391;
-                font-size: 16px;
-                font-weight: 600;
-                margin-bottom: 7px;
-            }
-        
-            .profile-usertitle-job {
-                text-transform: uppercase;
-                color: #5b9bd1;
-                font-size: 12px;
-                font-weight: 600;
-                margin-bottom: 15px;
-            }
-        
-            .profile-userbuttons {
-                text-align: center;
-                margin-top: 10px;
-            }
-        
-            .profile-userbuttons .btn {
-                text-transform: uppercase;
-                font-size: 11px;
-                font-weight: 600;
-                padding: 6px 15px;
-                margin-right: 5px;
-            }
-        
-            .profile-userbuttons .btn:last-child {
-                margin-right: 0px;
-            }
-        
-            .profile-usermenu {
-                margin-top: 30px;
-            }
-        
-            .profile-usermenu ul li {
-                border-bottom: 1px solid #f0f4f7;
-            }
-        
-            .profile-usermenu ul li:last-child {
-                border-bottom: none;
-            }
-        
-            .profile-usermenu ul li a {
-                color: #93a3b5;
-                font-size: 14px;
-                font-weight: 400;
-            }
-        
-            .profile-usermenu ul li a i {
-                margin-right: 8px;
-                font-size: 14px;
-            }
-        
-            .profile-usermenu ul li a:hover {
-                background-color: #fafcfd;
-                color: #5b9bd1;
-            }
-        
-            .profile-usermenu ul li.active {
-                border-bottom: none;
-            }
-        
-            .profile-usermenu ul li.active a {
-                color: #5b9bd1;
-                background-color: #f6f9fb;
-                border-left: 2px solid #5b9bd1;
-                margin-left: -2px;
-            }
-        
-            /* Profile Content */
-            .profile-content {
-                padding: 20px;
-                background: #fff;
-                min-height: 460px;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="/public/css/user/infoUser.css">
+        <link rel="stylesheet" type="text/css" href="/public/css/home.css">
 
     </head>
     <body>
         <h1 style="text-align: center">Thông tin cá nhân</h1>
-        <!--<strong>Họ và tên :</strong><input type='text' name='txtUserName' value="<%= user.dataValues.user_Name %>"><br/>
-        <strong>Số điện thoại : </strong><input type="text" name='txtUserNumberPhone' value="<%= user.dataValues.user_NumberPhone %>"> <br/>
-        <strong>Email :</strong><input type="email"name='txtUserEmail' value="<%= user.dataValues.user_Email %>"> <br/>
-        <strong>Password : </strong><input type='password' name="txtUserPassword" value="<%= user.dataValues.user_Password %> "/>  -->
+        
 
         <div class="container">
             <div class="row profile">
                 <div class="col-md-3">
                     <div class="profile-sidebar">
-
                         <div class="profile-usertitle">
                             <div class="profile-usertitle-name"><%= user.dataValues.user_Name %></div>
                             <div class="profile-usertitle-job">[Nghề nghiệp user]</div>
@@ -129,19 +30,19 @@
                         <div class="profile-usermenu">
                             <ul class="nav">
                                 <li class="active">
-                                    <a href="#">
+                                    <a href="#infofull" data-toggle="tab" aria-expanded="true">
                                         <i class="glyphicon glyphicon-home"></i>
                                         Thông tin tổng quan 
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#">
+                                <li class="">
+                                    <a href="#infobasic" data-toggle="tab" aria-expanded="false">
                                         <i class="glyphicon glyphicon-user"></i>
                                         Tài khoản 
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#">
+                                <li class="">
+                                    <a href="#infohelp" data-toggle="tab" aria-expanded="false">
                                         <i class="glyphicon glyphicon-flag"></i>
                                         Trợ giúp 
                                     </a>
@@ -152,7 +53,15 @@
                 </div>
                 <div class="col-md-9">
                     <div class="profile-content">
-                        Bạn có thể cập nhật thông tin của mình ở đây!
+                        <div id="infofull" class="tab-pane fade in active">
+                            <% include users/infofull.ejs %>
+                        </div>
+                        <div id="infobasic" class="tab-pane fade">
+                            <% include users/infobasic.ejs %>
+                        </div>
+                        <div id="infohelp" class="tab-pane fade">
+                            <% include users/infohelp.ejs %>
+                        </div>
                     </div>
                 </div>
             </div>
