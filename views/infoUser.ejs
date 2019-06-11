@@ -4,7 +4,8 @@
         <title>Chỉnh sửa thông tin cá nhân </title>
 
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="https://code.jquery.com/jquery-latest.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
         
@@ -25,7 +26,7 @@
                             <div class="profile-usertitle-job">[Nghề nghiệp user]</div>
                         </div>
                         <div class="profile-userbuttons">
-                            <button type="button" class="btn btn-success btn-sm">Đổi tên</button>
+                            <button type="button" class="btnuser">Đổi tên</button>
                         </div>
                         <div class="profile-usermenu">
                             <ul class="nav">
@@ -53,13 +54,13 @@
                 </div>
                 <div class="col-md-9">
                     <div class="profile-content">
-                        <div id="infofull" class="tab-pane fade in active">
+                        <div id="infofull" class="tab-pane fade in active" style="z-index: 1">
                             <% include users/infofull.ejs %>
                         </div>
-                        <div id="infobasic" class="tab-pane fade">
+                        <div id="infobasic" class="tab-pane fade" style="z-index: 0">
                             <% include users/infobasic.ejs %>
                         </div>
-                        <div id="infohelp" class="tab-pane fade">
+                        <div id="infohelp" class="tab-pane fade" style="z-index: 0">
                             <% include users/infohelp.ejs %>
                         </div>
                     </div>
@@ -67,6 +68,32 @@
             </div>
         </div>
 
+
+        <!-- Đoạn xử lý nổi phần tử-->
+        <script>
+            $(function () {
+                var href_a;
+                $('a').click(function () {
+                    var html = ["Click từng phần tử li để xem kết quả:"];
+                    href_a = $(this).attr('href');
+                    if (href_a == "#infofull") {
+                        $("#infofull").css("z-index", "1");
+                        $("#infobasic").css("z-index", "0");
+                        $("#infohelp").css("z-index", "0");
+                    };
+                    if (href_a == "#infobasic") {
+                        $("#infofull").css("z-index", "0");
+                        $("#infobasic").css("z-index", "1");
+                        $("#infohelp").css("z-index", "0");
+                    };
+                    if (href_a == "#infohelp") {
+                        $("#infofull").css("z-index", "0");
+                        $("#infobasic").css("z-index", "0");
+                        $("#infohelp").css("z-index", "1");
+                    };
+                });
+            });
+        </script>
 
 
     </body>
