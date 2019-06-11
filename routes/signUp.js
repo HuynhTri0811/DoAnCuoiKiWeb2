@@ -74,7 +74,6 @@ router.post('/confirm/',async function(req,res, next){
 			{
 				where: {user_Email:user_Email,}
 			}).then(function(result){
-				console.log('asakdhakj');
 				req.session.user_Id = User.user_ID ;
 				res.redirect('/');
 			}).catch(next);

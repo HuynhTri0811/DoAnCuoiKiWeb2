@@ -44,6 +44,7 @@ router.get('/update/cinema',async function(req,res){
         const Adress = await Cineplex.findAll({
            
         });
+        
         res.render('admin.ejs',{cinema,Adress});
     }
     else{
@@ -58,12 +59,18 @@ router.get('/delete/cinema/:id',async function(req,res){
             where  :{
                 cinema_ID : id,
             }
+        }).then(function(){
+            res.redirect('/admin/update/cinema/');
+        }).catch(function(){
+            res.render('404NotFound.ejs');
         });
-        res.redirect('/admin/update/cinema/');
     }
     else{
         res.redirect('/');
     }
+});
+router.get('/update/cinema/:id',async function(req,res){
+    res.render('404NotFound.ejs');
 });
 router.post('/update/cinema/:id',async function(req,res){
     const { Admin } = req.session;
@@ -86,8 +93,11 @@ router.post('/update/cinema/:id',async function(req,res){
                     where :{
                         cinema_ID : id,
                     },
+            }).then(function(){
+                res.redirect('/admin/update/cinema/');
+            }).catch(function(){
+                res.render('404NotFound.ejs');
             });
-            res.redirect('/admin/update/cinema/');
         }else{
             res.redirect('/admin');
         }
@@ -121,6 +131,9 @@ router.post('/create/cinema/',async function(req,res){
         res.redirect('/');
     }
 });
+router.get('/create/cinema/',async function(req,res){
+    res.render('404NotFound.ejs');
+});
 
 
 
@@ -150,10 +163,17 @@ router.post('/update/user/:id',async function(req,res){
                 where :{
                     user_ID : id ,
                 },
+        }).then(()=>{
+            res.redirect('/admin/update/user/');
+        }).catch(()=>{
+            res.render('404NotFound.ejs');
         });
     }else{
         res.redirect('/');
     }
+});
+router.get('/update/user/:id',async function(req,res){
+    res.render('404NotFound.ejs');
 });
 router.get('/delete/user/:id',async function(req,res){
     const { Admin } = req.session;
@@ -163,8 +183,11 @@ router.get('/delete/user/:id',async function(req,res){
             where  :{
                 user_ID : id,
             }
+        }).then(function(){
+            res.redirect('/admin/update/user/');
+        }).catch(function(){
+            res.render('404NotFound.ejs');
         });
-        res.redirect('/admin/update/user/');
     }else{
         res.redirect('/');
     }
