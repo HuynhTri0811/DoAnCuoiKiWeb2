@@ -30,61 +30,6 @@
 
 
 /* ============================================ *
- * Top content
- * ============================================ */
-
-
-/*.top-content {
-    width: 100%;
-    padding: 10px;
-    border-bottom: 2px solid #d4d3c9;
-    background: #fff1ce;
-    margin-bottom: 20px;
-    overflow: hidden;
-}
-.top-content .products-list {
-    width: 100%;
-    margin: 0px;
-}
-.top-content .products-list > li {
-    margin: 0px;
-    width: 100%;
-}
-.top-content .products-list .product-shop {
-    float: left;
-    padding: 0px;
-    width: 100%;
-}
-.top-content .products-list .product-shop * {
-    white-space: normal;
-}
-.countexpire {
-    display: none;
-}
-#countdown .cgvminutes, #countdown .cgvseconds{
-    font-weight: normal;
-}
-#countdown > div {
-    padding: 10px;
-    border-radius: 5px;
-    background: #fdfcf0;
-    display: inline-block;
-    text-align: center;
-}
-#countdown div > span {
-    padding: 10px;
-    border-radius: 5px;
-    background: #e71a0f;
-    display: inline-block;
-    width: 40px;
-    color: #fff;
-}
-.smalltext {
-    color:#999;
-}*/
-
-
-/* ============================================ *
  * Main content
  * ============================================ */
 
@@ -95,7 +40,7 @@
 .progress {
     width: 100%;
     position: relative;
-    height: 536px;
+    height: 580px;
 }
 
 .progress>li {
@@ -312,7 +257,20 @@
     font-weight: bold;
 }
 
-
+/*button muave*/
+.muave{
+    border-radius: 20px;
+    width: 76px;
+    height: 38px;
+    color: #fff; 
+    background-color: #1ae000;
+    border: none;
+    font-weight: bold;
+}
+.muave:hover{
+    background-color: #e28915;
+    color: black;
+}
 /* ============================================ *
  * Main content responsive
  * ============================================ */
