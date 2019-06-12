@@ -1,58 +1,122 @@
 <div class="content-area">
     <div class="row">
         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-            <strong>Họ và tên :</strong>
-            <br/>
-            <br/>
-            <strong>Số điện thoại : </strong>
-            <br/>
-            <br/>
-            <strong>Email :</strong>
-            <br/>
-            <br/>
-            <strong>Password : </strong>
-            <br/>
-            <br/>
-            <strong>Địa chỉ : </strong>
-            <br/>
-            <br/>
-            <strong>Tổng tiền : </strong>
+            <div class="title-info">Số điện thoại : </div>
+            <br />
+            <div class="title-info">Email : </div>
+            <br />
+            <div class="title-info">Mật khẩu : </div>
+            <br />
+            <div class="title-info">Địa chỉ : </div>
+            <br />
+            <div class="title-info">Tổng tiền : </div>
         </div>
-        <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
-            <input type='text' name='txtUserName' value="<%= user.dataValues.user_Name %>">
-            <br/>
-            <br/>
-            <input type="text" name='txtUserNumberPhone' value="<%= user.dataValues.user_NumberPhone %>">
-            <br/>
-            <br/>
-            <input type="email" name='txtUserEmail' value="<%= user.dataValues.user_Email %>">
-            <br/>
-            <br/>
-            <input type='password' name="txtUserPassword" value="<%= user.dataValues.user_Password %>">
-            <br/>
-            <br/>
-            <input type='text' name="txtUserAddress" value="Thuộc tính này chưa được cập nhật">
-            <br/>
-            <br/>
-            <input type='text' name="txtUserTotalMoney" value="Thuộc tính này chưa được xử lý">
+        <form action="/updateInfo/numberphone" method="POST">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                <input type="text" name='txtUserNumberPhone' placeholder="<%= user.dataValues.user_NumberPhone %>">
+                <br />
+                <br />
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                <button type="submit" class="btnuser">Cập nhật</button>
+                <br />
+                <br />
+            </div>
+        </form>
+        <form action="/updateInfo/email" method="POST">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                <input type="email" name='txtUserEmail' placeholder="<%= user.dataValues.user_Email %>">
+                <br />
+                <br />
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                <button type="submit" class="btnuser">Cập nhật</button>
+                <br />
+                <br />
+            </div>
+        </form>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+            <input id="input_pass1" type='password' placeholder="*************************">
+            <br />
+            <br />
         </div>
-        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
-            <button class="btnuser">Cập nhật</button>
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+            <button id="myBtn1" class="btnuser">Cập nhật</button>
             <br />
             <br />
-            <button class="btnuser">Cập nhật</button>
-            <br />
-            <br />
-            <button class="btnuser">Cập nhật</button>
-            <br />
-            <br />
-            <button class="btnuser">Cập nhật</button>
-            <br />
-            <br />
-            <button class="btnuser">Cập nhật</button>
-            <br />
-            <br />
-            <button class="btnuser">Cập nhật</button>
         </div>
+        <form action="/updateInfo/address" method="POST">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                <input type='text' name="txtUserAddress" placeholder="Thuộc tính này chưa được cập nhật">
+                <br />
+                <br />
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                <button type="submit" class="btnuser">Cập nhật</button>
+                <br />
+                <br />
+            </div>
+        </form>
+        <p>Thuộc tính này chưa được xử lý</p>
+        <!--Password lần 2-->
+        <form action="/updateInfo/password" method="POST">
+            <div id="myModal1" class="modal">
+                <div class="modal-content">
+                    <div class="row" style="text-align: center">
+                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9 title-info">
+                            <p>Nhập lại mật khẩu</p>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                            <span class="exit1 exit_df">&times;</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                            <input id="input_pass2" type='password' name="txtUserPassword"
+                                placeholder="Nhập mật khẩu của bạn vào đây" style="width: 60%">
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                            <button id="btn_pass" type="submit" class="btnuser">Cập nhật</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
+
+    <script>
+        // Get the modal
+        var modal1 = document.getElementById("myModal1");
+
+        // Get the button that opens the modal
+        var btn1 = document.getElementById("myBtn1");
+
+        // Get the <span> element that closes the modal
+        var span1 = document.getElementsByClassName("exit1")[0];
+
+        // When the user clicks the button, open the modal 
+        btn1.onclick = function () {
+            modal1.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span1.onclick = function () {
+            modal1.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal1) {
+                modal1.style.display = "none";
+            }
+        }
+
+        /* Xét 2 pass đã nhập có trùng nhau hay không*/
+        $("#input_pass2").change(function () {
+            var p = $("#input_pass1").val();
+            if ($(this).val() != p) {
+                alert("Mật khẩu không khớp! Vui lòng kiểm tra lại.");
+            }
+        })
+    </script>
 </div>

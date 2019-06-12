@@ -74,10 +74,7 @@ header {
 
 a:hover{
     text-decoration: none;
-    color: coral;
-}
-a:active{
-    color: blue;
+    color: black;
 }
 
 

@@ -106,13 +106,16 @@
                                                         <table class="info-wrapper">
                                                             <tbody>
                                                                 <tr>
-                                                                    <td class="name_film"><%= cinemaTimeShow.dataValues.Film.film_Name %></td>
+                                                                    <td class="name_film" style="text-align: center"><%= cinemaTimeShow.dataValues.Film.film_Name %></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="label">Loại</td>
-                                                                    <td style=><%= cinemaTimeShow.dataValues.Cinema.cinema_Type %></td>
+                                                                    <td><%= cinemaTimeShow.dataValues.Cinema.cinema_Type %></td>
                                                                 </tr>
-                                                                
+                                                                <tr>
+                                                                    <td class="label">Xuất chiếu</td>
+                                                                    <td><%= cinemaTimeShow.dataValues.TimeShow.timeShow_Start %></td>
+                                                                </tr>
                                                             </tbody>
                                                         </table>
                                                     </td>
@@ -204,15 +207,6 @@
    ============================================================================================-->
 
             <script>
-                var x;
-                var box = {};
-                var con = {};
-                var fseats = {};
-                var msg_family = '';
-                var seq = 3216793;
-                var site = '031';
-                var dy = '20190513';
-                var limit_cbo = 0;
 
                 var boxprice = boxlimit = conprice = 0;
 
