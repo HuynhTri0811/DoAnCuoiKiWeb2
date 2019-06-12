@@ -97,7 +97,7 @@
                 <input type="number" placeholder="0" id="cinema_Width_create" name="txtCinemaWidth" required/><br/>
                 <select name="txtCineplexName">
                     <% for(let i=0;i < Adress.length ;i++ ) { %>
-                        <option value="<%= Adress[i].dataValues.cineplex_Name %>"> <%= Adress[i].dataValues.cineplex_Name %> </option>
+                        <option value="<%= Adress[i].dataValues.cineplex_ID %>"> <%= Adress[i].dataValues.cineplex_Name %> </option>
                     <% } %>
                 </select>
                 <button type="submit" value="Thêm vào Film">

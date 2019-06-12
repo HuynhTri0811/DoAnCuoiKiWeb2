@@ -111,19 +111,27 @@ router.post('/create/cinema/',async function(req,res){
     if( Admin ){
         var { txtCinemaName , txtCinemaType ,txtCinemaLength , txtCinemaWidth , txtCineplexName} = req.body;
         const cineplex_Name_id = await Cineplex.findOne({
-            where :{ cineplex_Name :{
-                [Op.substring]: txtCineplexName ,
+            where :{
+                 cineplex_ID : txtCineplexName ,
             }}
+        ).catch(function(){
+            console.log('co loi gi do roi m oi ');
         });
-        if(cineplex_Name_id){
+
+
+        if(await cineplex_Name_id){
             await Cinema.create({
                 cinema_Name : txtCinemaName,
                 cinema_Type : txtCinemaType ,
                 cinema_Length : txtCinemaLength ,
                 cinema_Width : txtCinemaWidth,
                 CineplexCineplexID : cineplex_Name_id.dataValues.cineplex_ID
+            }).then(function(){
+                res.redirect('/admin/update/cinema');
+            }).catch(function(err){
+                console.log(err);
+                res.render('404NotFound.ejs');
             });
-            res.redirect('/admin/update/cinema');
         }else{
             res.redirect('/admin');
         }
@@ -261,6 +269,14 @@ router.post('/create/film/',async function(req,res){
         }
     }
 });
+router.get('/create/film/',async function(req,res){
+    const { Admin } = req.session;
+    if(Admin){
+        res.redirect('/admin/update/film');
+    }else{
+        res.redirect('/');
+    }
+});
 
 
 // Cineplex 
@@ -307,6 +323,14 @@ router.post('/update/cineplex/:id',async function(req,res){
         res.redirect('/');
     }
 });
+router.get('/update/cineplex/:id',async function(req,res){
+    const { Admin } = req.session;
+    if(Admin){
+        res.redirect('/admin/update/cineplex');
+    }else{
+        res.redirect('/');
+    }
+});
 router.post('/create/cineplex/',async function(req,res){
     const { Admin } = req.session ;
     if(Admin){
@@ -315,6 +339,14 @@ router.post('/create/cineplex/',async function(req,res){
             cineplex_Name ,
             cineplex_Adress ,
         });
+        res.redirect('/admin/update/cineplex');
+    }else{
+        res.redirect('/');
+    }
+});
+router.get('/create/cineplex/',async function(req,res){
+    const { Admin } = req.session ;
+    if(Admin){
         res.redirect('/admin/update/cineplex');
     }else{
         res.redirect('/');
@@ -397,7 +429,7 @@ router.get('/update/cinemaTimeShow/film/:id',async function(req,res){
         res.redirect('/');
     }
 });
-router.post('/create/cinemaTimeShow',async function(req,res){
+router.post('/create/cinemaTimeShow/',async function(req,res){
     const { Admin } = req.session;
     if(Admin){
         var {txtcinema_ID,txtCinemaTimeShow_Date,timeShowID,filmID} = req.body;
@@ -415,6 +447,14 @@ router.post('/create/cinemaTimeShow',async function(req,res){
         });
     }
     else {
+        res.redirect('/');
+    }
+});
+router.get('/create/cinemaTimeShow/',async function(req,res){
+    const { Admin } = req.session ;
+    if(Admin){
+        res.redirect('/admin/update/cinemaTimeShow/');
+    }else{
         res.redirect('/');
     }
 });
