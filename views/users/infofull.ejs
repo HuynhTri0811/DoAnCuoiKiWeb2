@@ -45,18 +45,18 @@
             <br />
             <br />
         </div>
-
-        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-            <input type='text' name="txtUserAddress" placeholder="Thuộc tính này chưa được cập nhật">
-            <br />
-            <br />
-        </div>
-        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-            <button id="check_add" type="submit" class="btnuser">Cập nhật</button>
-            <br />
-            <br />
-        </div>
-
+        <form action="/updateInfo/address" method="POST">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                <input type='text' name="txtUserAddress" placeholder="<%= user.dataValues.user_Address %>">
+                <br />
+                <br />
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                <button type="submit" class="btnuser">Cập nhật</button>
+                <br />
+                <br />
+            </div>
+        </form>
         <p>Thuộc tính này chưa được xử lý</p>
         <!--Password lần 2-->
         <form action="/updateInfo/password" method="POST">
@@ -119,8 +119,8 @@
             }
         });
 
-        $("#check_add").click(function () {
+        /*$("#check_add").click(function () {
             alert("Tính năng đang được phát triển, vui lòng thử lại sau :))");
-        })
+        })*/
     </script>
 </div>

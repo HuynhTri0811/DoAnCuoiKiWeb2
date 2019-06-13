@@ -118,6 +118,26 @@ router.post('/password',async function(req,res){
         };
     }; 
 });
+router.post('/address',async function(req,res){
+    const {user_Id} = req.session;
+    var form = new formidable.IncomingForm();
+    var {txtUserAddress} = req.body;
+    if(form){
+        if(user_Id){
+            await User.update({
+                user_Address : txtUserAddress ,
+                },
+                { where : {
+                    user_ID : user_Id,
+                    },
+            }).then(function(){
+                res.redirect('/updateInfo');
+            }).catch(function(){
+                res.render('404NotFound.ejs');
+            });
+        };
+    }; 
+});
 
 
 module.exports =router;

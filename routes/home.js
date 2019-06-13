@@ -237,9 +237,17 @@ router.get('/phim/muave/comeback/:id',async function(req,res){
 router.get('/phim/muave/submit/:id',async function(req,res){
 	const id_cinemaTimeShow_req = Number(req.params.id);
 	const user_Id = req.session;
-	var { txtDate, txtChairType, txtChair, txtTotalMoney } = req.body;
-	console.log("Du lieu lay duoc: ");
+	var txtDate, txtChairType, txtChair, txtTotalMoney;
+	txtDate = $('#txtDate').attr();
+	txtChairType = $('#txtChairType').attr();
+	txtChair = $('#txtChair').attr();
+	txtTotalMoney =  $('#txtTotalMoney').attr();
+	
+	console.log("Du lieu doc duoc la:");
+	console.log(txtDate);
+	console.log(txtChairType);
 	console.log(txtChair);
+	console.log(txtTotalMoney);
 });
 
 module.exports =router;

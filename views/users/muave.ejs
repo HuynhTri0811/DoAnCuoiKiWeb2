@@ -30,44 +30,45 @@
                                 <label class="top-content">Phòng chiếu</label>    
                                 <div class="ticketbox">
                                     <img src="/public/image/screen.JPG" >
-                                    <% var st1 = 'ABCDEFGHEFGHJK'; %>
+                                    <% var st1 = 'ABCDEFGHJKLMNOP'; %>
                                     <% var chuoiLayla1 = st1.substring(0,cinemaTimeShow.dataValues.Cinema.cinema_Length/2); %>
                                    
                                     <% var chuoiLayla2 = st1.substring(cinemaTimeShow.dataValues.Cinema.cinema_Length/2,cinemaTimeShow.dataValues.Cinema.cinema_Length); %>
-                                    <% if (cinemaTimeShow.dataValues.Cinema.cinema_Type === '2D') { %>
+                                    <% if (cinemaTimeShow.dataValues.Cinema.cinema_Type == "2D") { %>
                                         <% for (var z in chuoiLayla1) { %>
-                                            <div class="row">
-                                                <% for (var j = 0; j < cinemaTimeShow.dataValues.Cinema.cinema_Width; j++) { %>
-                                                    <div class="seat seat-standard active" onclick="selected(this)" zone="Thường" loc="<%= chuoiLayla2[z]%><%= j+1%>" price="75000"> <%= chuoiLayla1[z]%><%= j+1 %> </div>
-                                                <% } %>
-                                            </div>
+                                        <div class="row">
+                                            <% for (var i = 0; i < cinemaTimeShow.dataValues.Cinema.cinema_Width; i++) { %>
+                                            <div class="seat seat-standard active" onclick="selected(this)" zone="Thường" loc="<%= chuoiLayla1[z]%><%= i+1%>"
+                                                price="75000"> <%= chuoiLayla1[z]%><%= i+1 %> </div>
+                                            <% } %>
+                                        </div>
                                         <% } %>
-
                                         <% for (var z in chuoiLayla2 ) { %>
-                                            <div class="row">
-                                                    <% for (var j = 0; j < cinemaTimeShow.dataValues.Cinema.cinema_Width ; j++) { %>
-                                                        <div class="seat seat-vipprime active" onclick="selected(this)" zone="Vipprime" loc="<%= chuoiLayla2[z] %><%= j+1 %>" price="90000"> <%= chuoiLayla2[z] %><%=  j+1 %> </div>
-                                                    <% } %>
-                                            </div>
+                                        <div class="row">
+                                            <% for (var i = 0; i < cinemaTimeShow.dataValues.Cinema.cinema_Width ; i++) { %>
+                                            <div class="seat seat-vipprime active" onclick="selected(this)" zone="Vipprime"
+                                                loc="<%= chuoiLayla2[z] %><%= i+1 %>" price="90000"> <%= chuoiLayla2[z] %><%=  i+1 %> </div>
+                                            <% } %>
+                                        </div>
                                         <% } %>
-                                    <% } else { %>
+                                    <% } else { %> 
                                         <% for (var z in chuoiLayla1) { %>
-                                            <div class="row">
-                                                <% for (var j = 0; j < cinemaTimeShow.dataValues.Cinema.cinema_Width; j++) { %>
-                                                    <div class="seat seat-standard active" onclick="selected(this)" zone="Thường" loc="<%= chuoiLayla2[z]%><%= j+1%>" price="95000"> <%= chuoiLayla1[z]%><%= j+1 %> </div>
-                                                <% } %>
-                                            </div>
+                                        <div class="row">
+                                            <% for (var i = 0; i < cinemaTimeShow.dataValues.Cinema.cinema_Width; i++) { %>
+                                            <div class="seat seat-standard active" onclick="selected(this)" zone="Thường" loc="<%= chuoiLayla1[z]%><%= i+1%>"
+                                                price="95000"> <%= chuoiLayla1[z]%><%= i+1 %> </div>
+                                            <% } %>
+                                        </div>
                                         <% } %>
-
                                         <% for (var z in chuoiLayla2 ) { %>
-                                            <div class="row">
-                                                    <% for (var j = 0; j < cinemaTimeShow.dataValues.Cinema.cinema_Width ; j++) { %>
-                                                        <div class="seat seat-vipprime active" onclick="selected(this)" zone="Vipprime" loc="<%= chuoiLayla2[z] %><%= j+1 %>" price="115000"> <%= chuoiLayla2[z] %><%=  j+1 %> </div>
-                                                    <% } %>
-                                            </div>
+                                        <div class="row">
+                                            <% for (var i = 0; i < cinemaTimeShow.dataValues.Cinema.cinema_Width ; i++) { %>
+                                            <div class="seat seat-vipprime active" onclick="selected(this)" zone="Vipprime"
+                                                loc="<%= chuoiLayla2[z] %><%= i+1 %>" price="110000"> <%= chuoiLayla2[z] %><%=  i+1 %> </div>
+                                            <% } %>
+                                        </div>
                                         <% } %>
                                     <% } %>
-            
                                 </div>
 
                                 <div class="ticketbox-notice">
@@ -139,7 +140,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="label">Ngày chiếu</td>
-                                                    <td name="txtDate">
+                                                    <td id="txtDate">
                                                         <% var d = new Date(cinemaTimeShow.dataValues.cinemaTimeShow_Date); %>
                                                         <%= d.getDate(); %>
                                                         /
@@ -193,7 +194,7 @@
                                             <tfoot class="block-price">
                                                 <tr>
                                                     <td class="label">Tổng</td>
-                                                    <td class="price" colspan="2" name="txtTotalMoney">0,00&nbsp;₫</td>
+                                                    <td class="price" colspan="2" id="txtTotalMoney">0,00&nbsp;₫</td>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -213,6 +214,9 @@
             <script>
 
                 var boxprice = boxlimit = conprice = 0;
+
+                /*SET tiền cho loại phòng*/
+                
 
                 function selected(obj) {
                     /* Giới hạn chọn ghế cùng loại */
@@ -304,12 +308,12 @@
                         var html_btn_muave;
                         $j.each(label, function (index, value) {
                             if (!html) {
-                                html = '<span style="clear: both; float: left;" name="txtChairType">' + index + '</span>';                                
+                                html = '<span style="clear: both; float: left;" id="txtChairType">' + index + '</span>';                                
                             } else {
-                                html += '<span style="clear: both; float: left;" name="txtChairType">' + index + '</span>';
+                                html += '<span style="clear: both; float: left;" id="txtChairType">' + index + '</span>';
                             }
-                            html += '<span style="clear: both; float: left;" name="txtChair">' + value + '</span>';
-                            html_btn_muave = '<table class="info-wrapper"><a href="/phim/muave/submit/<%= cinemaTimeShow.dataValues.cinemaTimeShow_ID %>"><button class="muave" id="check_muave"> Mua vé </button></a></table>';
+                            html += '<span style="clear: both; float: left;" id="txtChair">' + value + '</span>';
+                            html_btn_muave = '<table class="info-wrapper"><a href="/phim/muave/submit/<%= cinemaTimeShow.dataValues.cinemaTimeShow_ID %>"><button type="submit" class="muave" id="check_muave"> Mua vé </button></a></table>';
                         });
                         
 
@@ -328,7 +332,18 @@
                     $j('.minicart-wrapper .block-box .price').html(formatCurrency(boxprice, { "pattern": "%s\u00a0\u20ab", "precision": 2, "requiredPrecision": 2, "decimalSymbol": ",", "groupSymbol": ".", "groupLength": 3, "integerRequired": 1 }));
                     $j('.minicart-wrapper .block-price .price').html(formatCurrency(boxprice + conprice, { "pattern": "%s\u00a0\u20ab", "precision": 2, "requiredPrecision": 2, "decimalSymbol": ",", "groupSymbol": ".", "groupLength": 3, "integerRequired": 1 }));
                 };
-                
+
+                $('#check_muave').click(function () {
+                    var txt_Date = $('#txtDate').attr();
+                    var txt_ChairType = $('#txtChairType').attr();
+                    var txt_Chair = $('#txtChair').attr();
+                    var txt_TotalMoney = $('#txtTotalMoney').attr();
+                    localStorage.setItem('txtDate', txt_Date);
+                    localStorage.setItem('txtChairType', txt_ChairType);
+                    localStorage.setItem('txtChair', txt_Chair);
+                    localStorage.setItem('txtTotalMoney', txt_TotalMoney);
+                });
+
             </script>
 
 
