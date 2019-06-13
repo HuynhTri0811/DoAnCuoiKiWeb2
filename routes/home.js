@@ -157,7 +157,7 @@ router.get('/film/:id',async function(req,res){
 			{ model : TimeShow },
 		]
 	});
-	console.log(cinemaTimeShow);
+	//console.log(cinemaTimeShow);
 	res.render('home.ejs',{filmID,user,filmDangChieu2,cinemaTimeShow,cinema,cineplex});
 });
 
@@ -191,13 +191,15 @@ router.get('/phim/muave/:id',async function(req,res)
 				cinemaTimeShow_ID : id_Chosen ,
 			} ,
 			include:[
-				{ model : Cinema} , 
+				{ model : Cinema , include :[
+					{model : Cineplex},
+				] } , 
 				{ model : Film } , 
 				{ model : TimeShow },
 			]
 		});
 		res.render('users/muave.ejs',{ user, cinemaTimeShow });
-		//console.log(cinemaChosen);
+		//console.log(cinemaTimeShow.dataValues.Cinema.Cineplex);
 	} else {
 		res.render('Login.ejs');
 	}
@@ -230,6 +232,14 @@ router.post('/phim/muave/:id',async function(req,res){
 router.get('/phim/muave/comeback/:id',async function(req,res){
 	const id_req = String(req.params.id);
 	res.redirect('/film/'+id_req);
+});
+
+router.get('/phim/muave/submit/:id',async function(req,res){
+	const id_cinemaTimeShow_req = Number(req.params.id);
+	const user_Id = req.session;
+	var { txtDate, txtChairType, txtChair, txtTotalMoney } = req.body;
+	console.log("Du lieu lay duoc: ");
+	console.log(txtChair);
 });
 
 module.exports =router;

@@ -135,11 +135,11 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="label">Cụm rạp</td>
-                                                    <td get=""></td>
+                                                    <td get=""><%= cinemaTimeShow.dataValues.Cinema.Cineplex.cineplex_Name %></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="label">Ngày chiếu</td>
-                                                    <td>
+                                                    <td name="txtDate">
                                                         <% var d = new Date(cinemaTimeShow.dataValues.cinemaTimeShow_Date); %>
                                                         <%= d.getDate(); %>
                                                         /
@@ -193,13 +193,11 @@
                                             <tfoot class="block-price">
                                                 <tr>
                                                     <td class="label">Tổng</td>
-                                                    <td class="price" colspan="2">0,00&nbsp;₫</td>
+                                                    <td class="price" colspan="2" name="txtTotalMoney">0,00&nbsp;₫</td>
                                                 </tr>
                                             </tfoot>
                                         </table>
-                                        <table class="info-wrapper">
-                                            <button class="muave"> Mua vé </button>
-                                        </table>                                        
+                                        <div class="button_muave"></div>                                                                           
                                     </div>                                    
                                 </li>                                
                             </ul>                            
@@ -303,20 +301,27 @@
                         htmlbox += '</dl>';
 
                         var html;
+                        var html_btn_muave;
                         $j.each(label, function (index, value) {
                             if (!html) {
-                                html = '<span style="clear: both; float: left;">' + index + '</span>';
+                                html = '<span style="clear: both; float: left;" name="txtChairType">' + index + '</span>';                                
                             } else {
-                                html += '<span style="clear: both; float: left;">' + index + '</span>';
+                                html += '<span style="clear: both; float: left;" name="txtChairType">' + index + '</span>';
                             }
-                            html += '<span style="clear: both; float: left;">' + value + '</span>';
+                            html += '<span style="clear: both; float: left;" name="txtChair">' + value + '</span>';
+                            html_btn_muave = '<table class="info-wrapper"><a href="/phim/muave/submit/<%= cinemaTimeShow.dataValues.cinemaTimeShow_ID %>"><button class="muave" id="check_muave"> Mua vé </button></a></table>';
                         });
+                        
 
                         $j('.minicart-wrapper .block-seats .data').html(html);
+                        $j('.minicart-wrapper .product-details .button_muave').html(html_btn_muave);
                         $j('.block-seats').show();
+                        $j('.button_muave').show();
                     } else {
                         $j('.minicart-wrapper .block-seats .data').empty();
+                        $j('.minicart-wrapper .product-details .button_muave').empty();
                         $j('.block-seats').hide();
+                        $j('.button_muave').hide();
                     }
                     $j('.minicart-wrapper .block-box .data .truncated_full_value').empty();
                     $j('.minicart-wrapper .block-box .data .truncated_full_value').html(htmlbox);
