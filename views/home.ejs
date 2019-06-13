@@ -29,23 +29,18 @@
         <% } %>  
         <!--Menu header-->
         <nav class="navbar navbar-default ">
-            <div class="container-fluid">
+            <div class="container-fluid menu_hover">
                 <div class="navbar-header">
                     <a id="logo" class="navbar-brand" href="/">VNCinema</a>
                 </div>
                 <ul class="nav navbar-nav">
                     <li><a href="/intro">Giới thiệu</a></li>
-                    <li class="dropdown">
-                        <a data-toggle="dropdown" href="">Phim<span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Đang chiếu</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Sắp chiếu</a></li>
-                    </li>
+                    <li><a href="/phim">Phim</a></li>
+                    <li><a href="#">Rạp và giá</a></li>
+                    <li><a href="#">Khuyến mãi</a></li>
+                    <li><a href="/support">Hỗ trợ</a></li>
                 </ul>
-                </li>
-                <li><a href="#">Rạp và giá</a></li>
-                <li><a href="#">Khuyến mãi</a></li>
-                <li><a href="/support">Hỗ trợ</a></li>
+                
                 <form class="navbar-form navbar-left" role="search" method="GET" action="/filmSearch">
                     <div class="form-group">
                         <input type="text" name="txtSearch" id="txtSearch" class="form-control radius"

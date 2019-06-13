@@ -488,3 +488,21 @@ li[name=familypack] .action .button {
         width: 98%;
     }
 }
+
+
+.btnhome{
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    padding: 2px 12px;
+    font-size: 14px;
+    color: #000000;
+    border-radius: 20px;
+}
+.btnhome:hover{
+    background-color: green;
+    color: #000000;
+}

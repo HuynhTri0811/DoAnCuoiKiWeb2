@@ -18,7 +18,7 @@
 
 <body>
     <div >
-        <div style="background-image: url('/public/image/footer_all/button.gif')">
+        <div style="background-image: url('/public/image/background_all/button.gif')">
             <div style="padding-left: 10%; padding-right: 10%">
                 <div class="col-main">
                     <div class="booking-progress">
@@ -82,8 +82,12 @@
                                         <div class="icon zone-vipprime" title="VIP(Prime)"> VIP(Prime) </div>
                                     </div>
                                 </div>
-                                <div class="ticketbox-notice" style="text-align: right; padding-right: 20%">
-                                    <button class="muave"> Mua vé </button>
+                                <div class="ticketbox-notice" style="text-align: right; padding-right: 5%">
+                                    <div style="text-align: right">
+                                        <a href="/phim/muave/comeback/<%= cinemaTimeShow.dataValues.Film.film_ID %>">
+                                            <button type="submit" class="btnhome">Quay lại</button>
+                                        </a>
+                                    </div>                                
                                 </div>
                             </li>
                         </ul>
@@ -193,11 +197,13 @@
                                                 </tr>
                                             </tfoot>
                                         </table>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    
+                                        <table class="info-wrapper">
+                                            <button class="muave"> Mua vé </button>
+                                        </table>                                        
+                                    </div>                                    
+                                </li>                                
+                            </ul>                            
+                        </div>                    
                         <div class="format-bg-bottom"></div>
                     </div>
                 </div>

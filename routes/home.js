@@ -111,7 +111,6 @@ router.get('/phim',async function(req,res){
 			film_Public : true ,
 		}
 	});
-	
 	const filmChieu = {  filmDangChieu : filmDangChieu , filmSapChieu : filmSapChieu } ;
 	res.render('home.ejs',{filmChieu , user});
 });
@@ -149,7 +148,9 @@ router.get('/film/:id',async function(req,res){
 		where :{
 			film_ID : id,  
 		},
-		order:['cinema_ID'],
+		order:[
+			['cinema_ID','ASC']
+		],
 		include:[
 			{ model : Cinema } , 
 			{ model : Film } , 
@@ -225,6 +226,12 @@ router.post('/phim/muave/:id',async function(req,res){
 		}
 	}
 });
+
+router.get('/phim/muave/comeback/:id',async function(req,res){
+	const id_req = String(req.params.id);
+	res.redirect('/film/'+id_req);
+});
+
 module.exports =router;
 
 router.get('/support',function(req,res){
