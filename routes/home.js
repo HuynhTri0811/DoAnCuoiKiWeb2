@@ -32,7 +32,10 @@ router.get('/',async function(req,res){
 				[Op.lte] : dateNow ,
 			},
 			film_Public : true ,
-		}
+		},
+		order:[
+			['film_DatePublic','DESC']
+		],
 	});
 	const filmNoPublic = await Film.findAll({
 		where :{
@@ -40,7 +43,10 @@ router.get('/',async function(req,res){
 				[Op.gt] : dateNow ,
 			},
 			film_Public : true ,
-		}
+		},
+		order:[
+			['film_DatePublic','ASC']
+		],
 	});
 	
 	const film = {  filmPublic : filmPublic , filmNoPublic : filmNoPublic } ;
@@ -101,7 +107,10 @@ router.get('/phim',async function(req,res){
 				[Op.lte] : dateNow ,
 			},
 			film_Public : true ,
-		}
+		},
+		order:[
+			['film_DatePublic','DESC']
+		],
 	});
 	const filmSapChieu = await Film.findAll({
 		where :{
@@ -109,13 +118,16 @@ router.get('/phim',async function(req,res){
 				[Op.gt] : dateNow ,
 			},
 			film_Public : true ,
-		}
+		},
+		order:[
+			['film_DatePublic','ASC']
+		],
 	});
 	const filmChieu = {  filmDangChieu : filmDangChieu , filmSapChieu : filmSapChieu } ;
 	res.render('home.ejs',{filmChieu , user});
 });
 
-router.get('/film/:id',async function(req,res){
+router.get('/phim/:id',async function(req,res){
 	const id = Number(req.params.id);
 	const filmID =await Film.findOne({
 		where :{
@@ -140,7 +152,7 @@ router.get('/film/:id',async function(req,res){
 				[Op.gt] : dateNow ,
 			},
 			film_Public : true ,
-		}
+		},
 	});
 	const cinema = await Cinema.findAll();
 	const cineplex = await Cineplex.findAll();
@@ -162,7 +174,7 @@ router.get('/film/:id',async function(req,res){
 });
 
 
-router.post('/film/:id',async function(req,res){
+router.post('/phim/:id',async function(req,res){
 	const id_reqfilm = Number(req.params.id);
 
 	var cinemaChosen = req.body.cinemaID;
@@ -234,20 +246,28 @@ router.get('/phim/muave/comeback/:id',async function(req,res){
 	res.redirect('/film/'+id_req);
 });
 
-router.get('/phim/muave/submit/:id',async function(req,res){
+router.post('/phim/muave/submit/:id',async function(req,res){
 	const id_cinemaTimeShow_req = Number(req.params.id);
 	const user_Id = req.session;
-	var txtDate, txtChairType, txtChair, txtTotalMoney;
-	txtDate = $('#txtDate').attr();
-	txtChairType = $('#txtChairType').attr();
-	txtChair = $('#txtChair').attr();
-	txtTotalMoney =  $('#txtTotalMoney').attr();
+	var { txtDate, txtChairType, txtChair, txtTotalMoney } = req.body;
 	
 	console.log("Du lieu doc duoc la:");
 	console.log(txtDate);
 	console.log(txtChairType);
 	console.log(txtChair);
 	console.log(txtTotalMoney);
+	var id_req;
+	var film_id;
+	if(id_cinemaTimeShow_req)
+	{
+		film_id = await CinemaTimeShow.findOne({
+			where :{
+				cinemaTimeShow_ID : id_cinemaTimeShow_req,
+			}
+		})
+	}
+	red_id = film_id.dataValues.film_ID;
+	res.redirect('/phim/muave/'+id_req);
 });
 
 module.exports =router;
