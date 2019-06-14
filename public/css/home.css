@@ -1,6 +1,7 @@
-html{
+html {
     height: 100%;
 }
+
 body {
     margin: 0;
     padding: 0;
@@ -37,9 +38,10 @@ header {
     width: 90px;
 }
 
-.menu_hover li:hover{
+.menu_hover li:hover {
     background-color: coral;
 }
+
 /*======================================================================================
                                          Content area
  =======================================================================================*/
@@ -75,7 +77,7 @@ header {
     overflow: hidden;
 }
 
-a:hover{
+a:hover {
     text-decoration: none;
     color: black;
 }
@@ -123,7 +125,7 @@ a:hover{
     transform: translateX(-98%) translateY(-25%) rotate(45deg);
 }
 
-.btns:hover{
+.btns:hover {
     color: black;
 }
 
@@ -175,7 +177,8 @@ a:hover{
     width: 90px;
 }
 
-.content-rap-box-btn:link, .content-rap-box-btn:visited {
+.content-rap-box-btn:link,
+.content-rap-box-btn:visited {
     font-family: "Times New Roman", Times, serif;
     color: black;
     text-align: center;
@@ -363,8 +366,13 @@ footer div div div ul h1 {
 .imgGioiThieu {
     margin-top: 10px;
 }
-.ctnGioiThieu{
+
+.ctnGioiThieu {
     margin-left: 20%;
     margin-right: 10%;
     margin-bottom: 40px;
+}
+
+.bgInfoUser {
+    background-image: url('/public/image/background_all/bgInfo.jpg');
 }
