@@ -32,7 +32,7 @@ router.post('/', async function (req, res) {
 	{	
 		if(User.accept_User === false)
 		{
-			const error = "Email chua xac nhan!";
+			const error = "Email chưa xác nhận!";
 			res.render('forgotPassword.ejs', { error });
 		}
 		else{
