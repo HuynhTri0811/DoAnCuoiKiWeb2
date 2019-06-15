@@ -211,7 +211,14 @@ router.get('/phim/muave/:id',async function(req,res)
 				{ model : TimeShow },
 			]
 		});
-		res.render('users/muave.ejs',{ user, cinemaTimeShow });
+		const ticket = await Ticket.findAll({
+			where :{
+				cinemaTimeShow_Date : cinemaTimeShow.cinemaTimeShow_Date,
+				timeShow_ID : cinemaTimeShow.timeShow_ID,
+				cinema_ID : cinemaTimeShow.cinema_ID,
+			}
+		})
+		res.render('users/muave.ejs',{ user, cinemaTimeShow, ticket });
 		//console.log(cinemaTimeShow.dataValues.Cinema.Cineplex);
 	} else {
 		res.render('Login.ejs');
@@ -255,7 +262,14 @@ router.post('/phim/muave/submit/:id',async function(req,res){
 	var timeShow_Chosen = await CinemaTimeShow.findOne({
 		where :{
 			cinemaTimeShow_ID : id_cinemaTimeShow_req,
-		}
+		},
+		include :[
+			{ model : Film },
+			{ model : TimeShow },
+			{ model : Cinema, include :[
+				{ model : Cineplex },
+			]},
+		],
 	})
 	var form = new formidable.IncomingForm();
 
@@ -265,19 +279,31 @@ router.post('/phim/muave/submit/:id',async function(req,res){
 			ticket_ChairType : txtChairType,
 			ticket_TotalMoney : txtTotalMoney,
 			cinemaTimeShow_Date : timeShow_Chosen.cinemaTimeShow_Date,
+			timeShow_ID : timeShow_Chosen.timeShow_ID,
 			film_ID : timeShow_Chosen.film_ID,
 			cinema_ID : timeShow_Chosen.cinema_ID,
 			user_ID : user_Chosen.user_Id,
 		}).then(async function(){
 			console.log("Đã lưu vào DB");
-			alert("Vé đã được thanh toán, thông tin vé đã được gửi đến mail của bạn, vui lòng kiểm tra mail của bạn!");
 			req.session.user_Id = user_Chosen.user_Id;
-			res.redirect('/phim/'+timeShow_Chosen.film_ID);
+
+			res.render('users/da_muave.ejs',{timeShow_Chosen, txtChair, txtChairType, txtTotalMoney});
 		}).catch(async function(err){
 			console.log("Lỗi bắt được là:");
 			console.log(err);
 		});
 	}	
+});
+
+router.post('/phim/muave/submit/back/:id', async function(req, res){
+	const req_cinemaTimeShow_ID = Number(req.params.id);
+	var timeShow_Chosen = await CinemaTimeShow.findOne({
+		where :{
+			cinemaTimeShow_ID : req_cinemaTimeShow_ID,
+		}
+	});
+	var film_id = timeShow_Chosen.film_ID;
+	res.redirect('/phim/'+film_id);
 });
 
 module.exports =router;

@@ -175,7 +175,7 @@
                                                 <thead>
                                                     <tr class="block-box">
                                                         <td class="label">Phim</td>
-                                                        <td class="price">0,00&nbsp;₫</td>
+                                                        <td class="price">0&nbsp;₫</td>
                                                         <td class="data">
                                                             <div class="truncated">
                                                                 <div class="truncated_full_value"></div>
@@ -188,7 +188,7 @@
                                                 <tbody>
                                                     <tr class="block-con">
                                                         <td class="label">Combo</td>
-                                                        <td class="price"><span class="price">0,00&nbsp;₫</span></td>
+                                                        <td class="price"><span class="price">0&nbsp;₫</span></td>
                                                         <td class="data">
                                                             <div class="truncated">
                                                                 <div class="truncated_full_value"></div>
@@ -201,7 +201,7 @@
                                                 <tfoot class="block-price">
                                                     <tr>
                                                         <td class="label">Tổng</td>
-                                                        <td class="price" colspan="2">0,00&nbsp;₫</td>
+                                                        <td class="price" colspan="2">0&nbsp;₫</td>
                                                         <input id="txtTotalMoney" class="item-options" name="txtTotalMoney" value="">
                                                     </tr>
                                                 </tfoot>
@@ -327,8 +327,6 @@
                             html_btn_muave = '<table class="info-wrapper"><button type="submit" class="muave" id="check_muave"> Mua vé </button></table>';
                             $j('#txtChairType').attr("value",index);
                             $j('#txtChair').attr("value",value);
-                            console.log(index);
-                            console.log(value);
                         });
                         
                         $j('#txtTotalMoney').attr("value",boxprice);
@@ -349,8 +347,8 @@
                     }
                     $j('.minicart-wrapper .block-box .data .truncated_full_value').empty();
                     $j('.minicart-wrapper .block-box .data .truncated_full_value').html(htmlbox);
-                    $j('.minicart-wrapper .block-box .price').html(formatCurrency(boxprice, { "pattern": "%s\u00a0\u20ab", "precision": 2, "requiredPrecision": 2, "decimalSymbol": ",", "groupSymbol": ".", "groupLength": 3, "integerRequired": 1 }));
-                    $j('.minicart-wrapper .block-price .price').html(formatCurrency(boxprice + conprice, { "pattern": "%s\u00a0\u20ab", "precision": 2, "requiredPrecision": 2, "decimalSymbol": ",", "groupSymbol": ".", "groupLength": 3, "integerRequired": 1 }));
+                    $j('.minicart-wrapper .block-box .price').html(formatCurrency(boxprice, { "pattern": "%s\u00a0\u20ab", "precision": 0, "requiredPrecision": 0, "decimalSymbol": ",", "groupSymbol": ".", "groupLength": 3, "integerRequired": 1 }));
+                    $j('.minicart-wrapper .block-price .price').html(formatCurrency(boxprice + conprice, { "pattern": "%s\u00a0\u20ab", "precision": 0, "requiredPrecision": 0, "decimalSymbol": ",", "groupSymbol": ".", "groupLength": 3, "integerRequired": 1 }));
                 };
 
             </script>

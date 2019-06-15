@@ -26,6 +26,10 @@ const tiket = db.define('Ticket' ,{
 		type : Sequelize.DATE,
 		allowNull : true,
     },
+    timeShow_ID :{
+        type : Sequelize.INTEGER,
+		allowNull : true ,
+    },
     film_ID : {
 		type : Sequelize.INTEGER,
 		allowNull : true ,
@@ -42,7 +46,7 @@ const tiket = db.define('Ticket' ,{
 
 tiket.belongsTo(cinemaTimeShow,{
     foreignKey : 'cinemaTimeShow_ID',
-    foreignKey : 'film_ID',
+    foreignKey : 'timeShow_ID',
     foreignKey : 'cinema_ID',
 });
 tiket.belongsTo(user,{
