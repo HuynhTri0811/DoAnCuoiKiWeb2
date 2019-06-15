@@ -216,10 +216,25 @@ router.get('/phim/muave/:id',async function(req,res)
 				cinemaTimeShow_Date : cinemaTimeShow.cinemaTimeShow_Date,
 				timeShow_ID : cinemaTimeShow.timeShow_ID,
 				cinema_ID : cinemaTimeShow.cinema_ID,
+			},
+			order :[
+				['ticket_Chair', 'ASC'],
+			]
+		});
+		if(ticket){
+			var i=0;
+			var ghe_da_dat="";
+			while(ticket[i]){
+				ghe_da_dat = ghe_da_dat + ticket[i].ticket_Chair;
+				ghe_da_dat = ghe_da_dat + ", ";
+				i++;
 			}
-		})
-		res.render('users/muave.ejs',{ user, cinemaTimeShow, ticket });
-		//console.log(cinemaTimeShow.dataValues.Cinema.Cineplex);
+			console.log("Chuỗi ghế đã đặt:")
+			console.log(ghe_da_dat);
+			res.render('users/muave.ejs',{ user, cinemaTimeShow, ticket, ghe_da_dat });
+		} else {
+			res.render('users/muave.ejs',{ user, cinemaTimeShow, ticket, ghe_da_dat });
+		}
 	} else {
 		res.render('Login.ejs');
 	}

@@ -32,13 +32,13 @@
                                     <img src="/public/image/screen.JPG" >
                                     <% var st1 = 'ABCDEFGHJKLMNOP'; %>
                                     <% var chuoiLayla1 = st1.substring(0,cinemaTimeShow.dataValues.Cinema.cinema_Length/2); %>
-                                   
                                     <% var chuoiLayla2 = st1.substring(cinemaTimeShow.dataValues.Cinema.cinema_Length/2,cinemaTimeShow.dataValues.Cinema.cinema_Length); %>
+
                                     <% if (cinemaTimeShow.dataValues.Cinema.cinema_Type == "2D") { %>
                                         <% for (var z in chuoiLayla1) { %>
                                         <div class="row">
                                             <% for (var i = 0; i < cinemaTimeShow.dataValues.Cinema.cinema_Width; i++) { %>
-                                            <div class="seat seat-standard active" onclick="selected(this)" zone="Thường" loc="<%= chuoiLayla1[z]%><%= i+1%>"
+                                            <div class="seat seat-standard active" onclick="selected(this)" zone="Thường" loc="<%= chuoiLayla1[z]%><%= i+1%>" id="<%= chuoiLayla1[z]%><%= i+1%>"
                                                 price="75000"> <%= chuoiLayla1[z]%><%= i+1 %> </div>
                                             <% } %>
                                         </div>
@@ -47,7 +47,7 @@
                                         <div class="row">
                                             <% for (var i = 0; i < cinemaTimeShow.dataValues.Cinema.cinema_Width ; i++) { %>
                                             <div class="seat seat-vipprime active" onclick="selected(this)" zone="Vipprime"
-                                                loc="<%= chuoiLayla2[z] %><%= i+1 %>" price="90000"> <%= chuoiLayla2[z] %><%=  i+1 %> </div>
+                                                loc="<%= chuoiLayla2[z] %><%= i+1 %>" id="<%= chuoiLayla2[z] %><%= i+1 %>" price="90000"> <%= chuoiLayla2[z] %><%=  i+1 %> </div>
                                             <% } %>
                                         </div>
                                         <% } %>
@@ -55,7 +55,7 @@
                                         <% for (var z in chuoiLayla1) { %>
                                         <div class="row">
                                             <% for (var i = 0; i < cinemaTimeShow.dataValues.Cinema.cinema_Width; i++) { %>
-                                            <div class="seat seat-standard active" onclick="selected(this)" zone="Thường" loc="<%= chuoiLayla1[z]%><%= i+1%>"
+                                            <div class="seat seat-standard active" onclick="selected(this)" zone="Thường" loc="<%= chuoiLayla1[z]%><%= i+1%>" id="<%= chuoiLayla1[z]%><%= i+1%>"
                                                 price="95000"> <%= chuoiLayla1[z]%><%= i+1 %> </div>
                                             <% } %>
                                         </div>
@@ -64,7 +64,7 @@
                                         <div class="row">
                                             <% for (var i = 0; i < cinemaTimeShow.dataValues.Cinema.cinema_Width ; i++) { %>
                                             <div class="seat seat-vipprime active" onclick="selected(this)" zone="Vipprime"
-                                                loc="<%= chuoiLayla2[z] %><%= i+1 %>" price="110000"> <%= chuoiLayla2[z] %><%=  i+1 %> </div>
+                                                loc="<%= chuoiLayla2[z] %><%= i+1 %>" id="<%= chuoiLayla2[z] %><%= i+1 %>" price="110000"> <%= chuoiLayla2[z] %><%=  i+1 %> </div>
                                             <% } %>
                                         </div>
                                         <% } %>
@@ -92,6 +92,9 @@
                                 </div>
                             </li>
                         </ul>
+                        <div id="ghe_da_dat" value="<%= ghe_da_dat %>" style="display: none"></div>
+                        <div id="chieu_dai" value="<%= cinemaTimeShow.dataValues.Cinema.cinema_Length %>" style="display: none"></div>
+                        <div id="chieu_rong" value="<%= cinemaTimeShow.dataValues.Cinema.cinema_Width %>" style="display: none"></div>
                     </div>
 
                     <div class="bottom-content">
@@ -222,10 +225,62 @@
 
             <script>
 
-                var boxprice = boxlimit = conprice = 0;
+                /* Xử lý chuỗi */
+                var string_df = $j("#ghe_da_dat").attr('value');
+                var string = string_df.slice(0,string_df.length-2);
+                var i = 0;
+                var chuoi = [];
 
-                /*SET tiền cho loại phòng*/
-                
+                while (i < string.length) {
+                    var tam = "";
+                    while (i < string.length) {
+                        if (string[i] != ",") {
+                            tam += string.slice(i, i + 1);
+                            i++;
+                        } else {
+                            break;
+                        }
+                    }
+                    chuoi.push(tam);
+                    i += 2;
+                };
+
+                /* Set ghế đã đặt*/
+                var chieu_dai = $j("#chieu_dai").attr('value');
+                var chieu_rong = $j("#chieu_rong").attr('value');
+                var chuoi_ghe = [];
+
+                var st1 = 'ABCDEFGHJKLMNOP';
+                var chuoi_dai = st1.slice(0,chieu_dai);
+                for(var j in chuoi_dai){
+                    var ghe = chuoi_dai[j] ;
+                    for (var z = 0; z < chieu_rong; z++) {
+                        ghe = ghe + String(z + 1);
+                        for (var k = 0; k < chuoi.length; k++) {
+                            if (ghe == chuoi[k]) {
+                                var ma_ghe = chuoi[k];
+                                $j("#" + ma_ghe).removeClass('active');
+                                
+                                $j("#" + ma_ghe).addClass('seat-disable');
+                                $j("#" + ma_ghe).addClass('disable');
+                                $j("#" + ma_ghe).attr('onclick', "");
+                                $j("#" + ma_ghe).attr('zone', "");
+                                $j("#" + ma_ghe).attr('loc', "");
+                                $j("#" + ma_ghe).attr('price', "");
+                                if(j < chuoi_dai.length/2){
+                                    $j("#" + ma_ghe).removeClass('seat-standard');
+                                } else {
+                                    $j("#" + ma_ghe).removeClass('seat-vipprime');
+                                }
+                                console.log("Đã set được ghế: " + chuoi[k]);
+                            }
+                        }
+                        ghe = chuoi_dai[j];
+                    }
+                }
+
+
+                var boxprice = boxlimit = conprice = 0;
 
                 function selected(obj) {
                     /* Giới hạn chọn ghế cùng loại */
