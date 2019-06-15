@@ -9,7 +9,8 @@
         </div>
         <form action="/updateInfo/numberphone" method="POST">
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                <input type="text" name='txtUserNumberPhone' placeholder="<%= user.dataValues.user_NumberPhone %>">
+                <input type="text" class="radiusInfo" name='txtUserNumberPhone'
+                    placeholder="<%= user.dataValues.user_NumberPhone %>">
                 <br />
                 <br />
             </div>
@@ -21,7 +22,8 @@
         </form>
         <form action="/updateInfo/email" method="POST">
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                <input type="email" name='txtUserEmail' placeholder="<%= user.dataValues.user_Email %>">
+                <input type="email" class="radiusInfo" name='txtUserEmail'
+                    placeholder="<%= user.dataValues.user_Email %>">
                 <br />
                 <br />
             </div>
@@ -32,7 +34,7 @@
             </div>
         </form>
         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-            <input id="input_pass" type='password' placeholder="*************************">
+            <input id="input_pass" class="radiusInfo" type='password' placeholder="*************************">
             <br />
             <br />
         </div>
