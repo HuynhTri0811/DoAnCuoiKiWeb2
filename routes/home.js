@@ -254,7 +254,7 @@ router.get('/phim/muave/comeback/:id',async function(req,res){
 	res.redirect('/film/'+id_req);
 });
 
-router.post('/phim/muave/submit/:id',async function(req,res){
+router.post('/phim/muave/thongtinve/:id',async function(req,res){
 	const id_cinemaTimeShow_req = Number(req.params.id);
 	const user_Chosen = req.session;
 	var { txtChair, txtChairType, txtTotalMoney } = req.body;
@@ -295,7 +295,7 @@ router.post('/phim/muave/submit/:id',async function(req,res){
 	}	
 });
 
-router.post('/phim/muave/submit/back/:id', async function(req, res){
+router.post('/phim/muave/thongtinve/back/:id', async function(req, res){
 	const req_cinemaTimeShow_ID = Number(req.params.id);
 	var timeShow_Chosen = await CinemaTimeShow.findOne({
 		where :{
