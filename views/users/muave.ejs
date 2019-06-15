@@ -142,7 +142,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="label">Ngày chiếu</td>
-                                                        <td id="txtDate">
+                                                        <td>
                                                             <% var d = new Date(cinemaTimeShow.dataValues.cinemaTimeShow_Date); %>
                                                             <%= d.getDate(); %>
                                                             /
@@ -158,7 +158,11 @@
                                                     </tr>
                                                     <tr class="block-seats" style="display: none;">
                                                         <td class="label">Ghế</td>
-                                                        <td class="data"></td>
+                                                        <td class="data">
+                                                            
+                                                        </td>
+                                                        <input id="txtChairType" class="item-options" name="txtChairType" value="">
+                                                            <input id="txtChair" class="item-options" name="txtChair" value="">
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -197,7 +201,8 @@
                                                 <tfoot class="block-price">
                                                     <tr>
                                                         <td class="label">Tổng</td>
-                                                        <td class="price" colspan="2" id="txtTotalMoney">0,00&nbsp;₫</td>
+                                                        <td class="price" colspan="2">0,00&nbsp;₫</td>
+                                                        <input id="txtTotalMoney" class="item-options" name="txtTotalMoney" value="">
                                                     </tr>
                                                 </tfoot>
                                             </table>
@@ -291,7 +296,7 @@
                         htmlbox = '<dl class="item-options">';
                         for (var key in box) {
                             if (box.hasOwnProperty(key)) {
-                                var qty = 0;
+                                var so_ghe_da_chon = 0;
                                 $j.each(box[key], function (index, value) {
                                     if (!label[key]) {
                                         label[key] = value.label;
@@ -299,11 +304,13 @@
                                         label[key] += ', ' + value.label;
                                     }
 
-                                    if (value.price > 0) boxprice += value.price;
-                                    qty += 1;
+                                    if (value.price > 0){
+                                        boxprice += value.price;
+                                    } 
+                                    so_ghe_da_chon += 1;
                                 });
                                 htmlbox += '<dt>' + key + '</dt>';
-                                htmlbox += '<dd>' + qty + '</dd>';
+                                htmlbox += '<dd>' + so_ghe_da_chon + '</dd>';
                             }
                         }
                         htmlbox += '</dl>';
@@ -312,19 +319,28 @@
                         var html_btn_muave;
                         $j.each(label, function (index, value) {
                             if (!html) {
-                                html = '<span style="clear: both; float: left;" id="txtChairType">' + index + '</span>';                                
+                                html = '<span style="clear: both; float: left;" >' + index + '</span>';                  
                             } else {
-                                html += '<span style="clear: both; float: left;" id="txtChairType">' + index + '</span>';
+                                html += '<span style="clear: both; float: left;" >' + index + '</span>';
                             }
-                            html += '<span style="clear: both; float: left;" id="txtChair">' + value + '</span>';
+                            html += '<span style="clear: both; float: left;">' + value + '</span>';
                             html_btn_muave = '<table class="info-wrapper"><button type="submit" class="muave" id="check_muave"> Mua vé </button></table>';
+                            $j('#txtChairType').attr("value",index);
+                            $j('#txtChair').attr("value",value);
+                            console.log(index);
+                            console.log(value);
                         });
+                        
+                        $j('#txtTotalMoney').attr("value",boxprice);
+
+                        
                         
 
                         $j('.minicart-wrapper .block-seats .data').html(html);
                         $j('.minicart-wrapper .product-details .button_muave').html(html_btn_muave);
                         $j('.block-seats').show();
                         $j('.button_muave').show();
+
                     } else {
                         $j('.minicart-wrapper .block-seats .data').empty();
                         $j('.minicart-wrapper .product-details .button_muave').empty();

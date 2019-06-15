@@ -4,32 +4,36 @@ const cinemaTimeShow = require('./CinemaTimeShow.js');
 const user = require('./User.js');
 
 const tiket = db.define('Ticket' ,{
-	tiket_ID :{
+	ticket_ID :{
 		type : Sequelize.INTEGER ,
-		allowNull : true ,
-		primaryKey : true ,
+		allowNull : false ,
+        primaryKey : true ,
+        autoIncrement : true,
 	},
-	tiket_Date :{
-		type : Sequelize.DATE,
-		allowNull : true,
-		defaultValue : null,
-    },
-    tiket_ChairType :{
+    ticket_ChairType :{
         type : Sequelize.STRING,
         allowNull : true,
     },
-    tiket_Chair :{
+    ticket_Chair :{
         type : Sequelize.STRING,
         allowNull : true,
     },
-    tiket_TotalMoney :{
+    ticket_TotalMoney :{
         type : Sequelize.INTEGER,
         allowNull : true,
     },
-	cinemaTimeShow_ID :{
-		type : Sequelize.INTEGER,
-		allowNull : false ,
+	cinemaTimeShow_Date :{
+		type : Sequelize.DATE,
+		allowNull : true,
     },
+    film_ID : {
+		type : Sequelize.INTEGER,
+		allowNull : true ,
+    },
+    cinema_ID :{
+		type : Sequelize.INTEGER,
+		allowNull : true ,
+	},
     user_ID :{
         type : Sequelize.INTEGER,
         allowNull : false,
@@ -37,7 +41,9 @@ const tiket = db.define('Ticket' ,{
 });
 
 tiket.belongsTo(cinemaTimeShow,{
-	foreignKey : 'cinemaTimeShow_ID',
+    foreignKey : 'cinemaTimeShow_ID',
+    foreignKey : 'film_ID',
+    foreignKey : 'cinema_ID',
 });
 tiket.belongsTo(user,{
     foreignKey : 'user_ID',

@@ -8,9 +8,10 @@ const Cineplex = require('../models/Cineplex.js');
 const Cinema = require('../models/Cinema.js');
 const TimeShow = require('../models/TimeShow.js');
 const CinemaTimeShow = require('../models/CinemaTimeShow.js');
+const Ticket = require('../models/Ticket.js');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-
+var formidable = require('formidable'); 
 
 
 const router = new Router();
@@ -248,26 +249,35 @@ router.get('/phim/muave/comeback/:id',async function(req,res){
 
 router.post('/phim/muave/submit/:id',async function(req,res){
 	const id_cinemaTimeShow_req = Number(req.params.id);
-	const user_Id = req.session;
-	var { txtDate, txtChairType, txtChair, txtTotalMoney } = req.body;
-	
-	console.log("Du lieu doc duoc la:");
-	console.log(txtDate);
-	console.log(txtChairType);
-	console.log(txtChair);
-	console.log(txtTotalMoney);
-	var id_req;
-	var film_id;
-	if(id_cinemaTimeShow_req)
-	{
-		film_id = await CinemaTimeShow.findOne({
-			where :{
-				cinemaTimeShow_ID : id_cinemaTimeShow_req,
-			}
-		})
-	}
-	red_id = film_id.dataValues.film_ID;
-	res.redirect('/phim/muave/'+id_req);
+	const user_Chosen = req.session;
+	var { txtChair, txtChairType, txtTotalMoney } = req.body;
+
+	var timeShow_Chosen = await CinemaTimeShow.findOne({
+		where :{
+			cinemaTimeShow_ID : id_cinemaTimeShow_req,
+		}
+	})
+	var form = new formidable.IncomingForm();
+
+	if(form){
+		await Ticket.create({
+			ticket_Chair : txtChair,
+			ticket_ChairType : txtChairType,
+			ticket_TotalMoney : txtTotalMoney,
+			cinemaTimeShow_Date : timeShow_Chosen.cinemaTimeShow_Date,
+			film_ID : timeShow_Chosen.film_ID,
+			cinema_ID : timeShow_Chosen.cinema_ID,
+			user_ID : user_Chosen.user_Id,
+		}).then(async function(){
+			console.log("Đã lưu vào DB");
+			alert("Vé đã được thanh toán, thông tin vé đã được gửi đến mail của bạn, vui lòng kiểm tra mail của bạn!");
+			req.session.user_Id = user_Chosen.user_Id;
+			res.redirect('/phim/'+timeShow_Chosen.film_ID);
+		}).catch(async function(err){
+			console.log("Lỗi bắt được là:");
+			console.log(err);
+		});
+	}	
 });
 
 module.exports =router;

@@ -26,6 +26,7 @@
     "express-promise-router": "^3.0.3",
     "express-session": "^1.16.1",
     "formidable": "^1.2.1",
+    "jsdom": "^15.1.1",
     "long-stack-traces": "^0.1.2",
     "multer": "^1.4.1",
     "nodejs": "0.0.0",
