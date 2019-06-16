@@ -56,14 +56,35 @@ router.get('/',async function(req,res){
 });
 
 router.get('/filmSearch',async function(req,res){
-
+	var dateNow = Date.now();
 	const NameFilm = req.query.txtSearch ;
-	const searchNameFilm = await Film.findAll({
+	const searchNameFilmPublic = await Film.findAll({
 		where :{
+			film_DatePublic :{
+				[Op.lte] : dateNow ,
+			},
 			film_Public : true ,
-		film_Name : {
-			[Op.substring] : NameFilm,
-		}},
+			film_Name : {
+				[Op.substring] : NameFilm,
+			},
+		},
+		order:[
+			['film_DatePublic','DESC']
+		],
+	});
+	const searchNameFilmNoPublic = await Film.findAll({
+		where :{
+			film_DatePublic :{
+				[Op.gt] : dateNow ,
+			},
+			film_Public : true ,
+			film_Name : {
+				[Op.substring] : NameFilm,
+			},
+		},
+		order:[
+			['film_DatePublic','ASC']
+		],
 	});
 	var user ;
 	const { user_Id } = req.session;
@@ -75,7 +96,8 @@ router.get('/filmSearch',async function(req,res){
 			},
 		});
 	};
-	res.render('home.ejs',{searchNameFilm,user});
+	const searchNameFilm = { searchNameFilmPublic : searchNameFilmPublic, searchNameFilmNoPublic : searchNameFilmNoPublic}
+	res.render('home.ejs',{searchNameFilm, user});
 });
 
 router.get('/forgotPassword',function(req,res){
