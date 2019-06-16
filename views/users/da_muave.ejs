@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Chỉnh sửa thông tin cá nhân </title>
+    <title>Thông tin vé</title>
 
     <script src="//maxcdn.  bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="/public/js/jquery/user/jquery-1.11.1.min.js"></script>
@@ -40,12 +40,19 @@
             </div>
 
             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-                <img src="<%= timeShow_Chosen.dataValues.Film.film_Image %>" alt="Không load được ảnh" style="object-fit: contain">
+                <img src="<%= timeShow_Chosen.dataValues.Film.film_Image %>" alt="Không load được ảnh" style="object-fit: contain; height: 460px">
             </div>
 
             <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
                 <div class="profile-content">
-                    <h2 style="text-align: center; color: red; font-weight: bold; margin-bottom: 15px; margin-top: 5px">ĐẶT VÉ THÀNH CÔNG!</h2>
+                    <h2 style="text-align: center; color: red; font-weight: bold; margin-bottom: 10px; margin-top: 0">ĐẶT VÉ THÀNH CÔNG!</h2>
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                        <strong>Mã vé : </strong>
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                        <p><%= txtMave %></p>
+                    </div>
+
                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
                             <strong>Tên phim : </strong>
                     </div>
@@ -85,6 +92,18 @@
                             <p><%= txtChair %></p>
                     </div>
 
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                        <strong>Ngày chiếu : </strong>
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                        <p><% var day = new Date(timeShow_Chosen.dataValues.cinemaTimeShow_Date) %>
+                            <%= day.getDate(); %>
+                            /
+                            <%= day.getMonth()+1; %>
+                            /
+                            <%= day.getFullYear(); %>
+                        </p>
+                    </div>
 
                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
                             <strong>Giờ chiếu : </strong>

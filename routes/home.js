@@ -9,6 +9,7 @@ const Cinema = require('../models/Cinema.js');
 const TimeShow = require('../models/TimeShow.js');
 const CinemaTimeShow = require('../models/CinemaTimeShow.js');
 const Ticket = require('../models/Ticket.js');
+const sendEmail  = require('../models/email.js');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 var formidable = require('formidable'); 
@@ -162,7 +163,8 @@ router.get('/phim/:id',async function(req,res){
 			film_ID : id,  
 		},
 		order:[
-			['cinema_ID','ASC']
+			['cinema_ID','ASC'],
+			['timeShow_ID', 'ASC'],
 		],
 		include:[
 			{ model : Cinema } , 
@@ -287,10 +289,81 @@ router.post('/phim/muave/thongtinve/:id',async function(req,res){
 			]},
 		],
 	})
+	var user = await User.findOne({
+		where:{
+			user_ID : user_Chosen.user_Id,
+		}
+	})
+	
+	/* Định dạng tiền */
+	function format_number(num_format) {
+		if (isNaN(num_format)) { 
+			return 0 ;
+		};
+		if (num_format == '') { 
+			return 0 ;
+		};
+		var string_num_format = new String(num_format);
+		var result_df = "";
+		var dem = 0;
+		for(var i = string_num_format.length -1 ; i >= 0 ; i--){
+			dem ++;
+			if(dem % 3 == 0){
+				result_df = result_df + string_num_format[i];
+				result_df = result_df + ".";
+			} else {
+				result_df = result_df + string_num_format[i];
+			}
+		}
+		var result = "";
+
+		if(string_num_format.length % 3 == 0){
+			result_df = result_df.slice(0,(result_df.length-1));
+		}
+		for(var j = result_df.length-1; j>=0; j--){
+			result = result + result_df[j];
+		}
+
+		return result;
+	}
+
+	/* Định dạng ngày/tháng/năm */
+	function format_date(day_df){
+		var day = new Date(day_df);
+		var day_result = "";
+		day_result = day_result + day.getDay();
+		day_result = day_result + "/";
+		day_result = day_result + (day.getMonth()+1);
+		day_result = day_result + "/";
+		day_result = day_result + day.getFullYear();
+
+		return day_result;
+	}
+
 	var form = new formidable.IncomingForm();
 
 	if(form){
+		var txtMave = "VNC_";
+		txtMave = txtMave + timeShow_Chosen.dataValues.Cinema.Cineplex.cineplex_Name.slice(0,1);
+		txtMave = txtMave + timeShow_Chosen.dataValues.Cinema.cinema_Name.slice(0,1);
+		txtMave = txtMave + timeShow_Chosen.dataValues.Film.film_Name.slice(0,1);
+		txtMave = txtMave + user_Chosen.user_Id;
+		var ve = await Ticket.max('ticket_Num',{
+			where: {
+				user_ID: user_Chosen.user_Id,
+			},
+		});
+
+		if(ve > 0){
+			var num_of = ve + 1;
+			txtMave = txtMave + num_of;
+		} else {
+			txtMave = txtMave + "1";
+		}
+
+
 		await Ticket.create({
+			ticket_ID : txtMave,
 			ticket_Chair : txtChair,
 			ticket_ChairType : txtChairType,
 			ticket_TotalMoney : txtTotalMoney,
@@ -299,8 +372,9 @@ router.post('/phim/muave/thongtinve/:id',async function(req,res){
 		}).then(async function(){
 			console.log("Đã lưu vào DB");
 			req.session.user_Id = user_Chosen.user_Id;
+			await sendEmail(user.user_Email, 'Thông tin vé', 'Mã vé: ' + txtMave + '\nPhim: ' + timeShow_Chosen.dataValues.Film.film_Name + '\nXuất chiếu: ' + timeShow_Chosen.dataValues.TimeShow.timeShow_Start + '\nNgày chiếu: ' + format_date(timeShow_Chosen.dataValues.cinemaTimeShow_Date) + '\nCụm rạp/Rạp: ' + timeShow_Chosen.dataValues.Cinema.Cineplex.cineplex_Name + ' / ' + timeShow_Chosen.dataValues.Cinema.cinema_Name + '\nLoại ghế: ' + txtChairType + '\nGhế: ' + txtChair + '\nGiá vé: ' + format_number(txtTotalMoney,0) + ' ₫\n\nVNCinema xin chân thành cảm ơn bạn đã tin tưởng lựa chọn chúng tôi!');
 
-			res.render('users/da_muave.ejs',{timeShow_Chosen, txtChair, txtChairType, txtTotalMoney});
+			res.render('users/da_muave.ejs',{timeShow_Chosen, txtChair, txtChairType, txtTotalMoney, txtMave});
 		}).catch(async function(err){
 			console.log("Lỗi bắt được là:");
 			console.log(err);

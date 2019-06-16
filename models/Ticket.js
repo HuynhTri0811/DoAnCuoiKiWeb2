@@ -5,11 +5,15 @@ const user = require('./User.js');
 
 const tiket = db.define('Ticket' ,{
 	ticket_ID :{
-		type : Sequelize.INTEGER ,
+		type : Sequelize.STRING ,
 		allowNull : false ,
         primaryKey : true ,
-        autoIncrement : true,
-	},
+    },
+    ticket_Num :{
+        type : Sequelize.INTEGER ,
+        allowNull : false ,
+        autoIncrement :true ,
+    },
     ticket_ChairType :{
         type : Sequelize.STRING,
         allowNull : true,

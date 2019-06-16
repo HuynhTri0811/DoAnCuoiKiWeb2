@@ -49,7 +49,7 @@ router.post('/',async function(req,res){
 						user_Address : "chưa cập nhật",
 						user_Code : text ,
 					}).then(async function(user){
-						const info = await sendEmail(req.body.user_Email, 'Xác nhận tài khoản', 'Đây là email tự động, vui lòng không gửi mail qua địa chỉ này. Mã xác nhận của bạn: ' + text	);
+						const info = await sendEmail(req.body.user_Email, 'Xác nhận tài khoản', 'Đây là email tự động, vui lòng không gửi mail qua địa chỉ này.\nMã xác nhận của bạn: ' + text	);
 						res.render('loginConfirm.ejs',{user_Email});
 					}).catch(function(err){
 						console.log(err,req.body);

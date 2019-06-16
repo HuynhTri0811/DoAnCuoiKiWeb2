@@ -1,25 +1,10 @@
 <div class="content-area">
     <div class="row">
         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-            <div class="title-info">Số điện thoại : </div>
-            <br />
             <div class="title-info">Email : </div>
             <br />
             <div class="title-info">Mật khẩu : </div>
         </div>
-        <form action="/updateInfo/numberphone" method="POST">
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                <input type="text" class="radiusInfo" name='txtUserNumberPhone'
-                    placeholder="<%= user.dataValues.user_NumberPhone %>">
-                <br />
-                <br />
-            </div>
-            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-                <button type="submit" class="btnuser">Cập nhật</button>
-                <br />
-                <br />
-            </div>
-        </form>
         <form action="/updateInfo/email" method="POST">
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                 <input type="email" class="radiusInfo" name='txtUserEmail'
