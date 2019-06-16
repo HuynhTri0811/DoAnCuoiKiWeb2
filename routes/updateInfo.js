@@ -3,6 +3,13 @@ const fs = require('fs');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const User = require('../models/User.js');
+const Film = require('../models/Film.js');
+const Cineplex = require('../models/Cineplex.js');
+const Cinema = require('../models/Cinema.js');
+const TimeShow = require('../models/TimeShow.js');
+const CinemaTimeShow = require('../models/CinemaTimeShow.js');
+const Ticket = require('../models/Ticket.js');
+
 var formidable = require('formidable'); 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -24,7 +31,42 @@ router.get('/',async function(req,res){
     }
     if(user_Id)
     {
-        res.render('infoUser.ejs',{user});
+        var totalMoney = await Ticket.sum('ticket_TotalMoney',{
+            where :{
+                user_ID : user_Id,
+            }
+        });
+
+        var all_ve = await Ticket.findAll({
+            where :{
+                user_ID : user_Id,
+            }
+        }).catch(async function(err){
+			console.log("Lỗi bắt được là:");
+           
+        });
+
+        var cinema_TimeShow = await CinemaTimeShow.findAll({
+            where :{
+                cinemaTimeShow_Date : all_ve[0].cinemaTimeShow_Date,
+                cinema_ID : all_ve[0].cinema_ID,
+                timeShow_ID : all_ve[0].timeShow_ID,
+            },
+            include :[
+                { model : Film },
+			    { model : TimeShow },
+			    { model : Cinema, include :[
+                    { model : Cineplex },
+                ]},
+            ]
+        });
+
+        console.log("Giá trị đọc được của all_ve:");
+        console.log(all_ve);
+        console.log("Giá trị đọc được của cinema_TimeShow:");
+        console.log(cinema_TimeShow);
+
+        res.render('infoUser.ejs',{user, totalMoney, all_ve, cinema_TimeShow});
     }
     else{
         res.redirect('/');

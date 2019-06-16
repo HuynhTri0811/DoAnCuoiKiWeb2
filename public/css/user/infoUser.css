@@ -215,3 +215,96 @@ a:link {
     border-radius: 20px;
     width: 100%;
 }
+
+
+/* table top*/
+.table_top table{
+    border-collapse: collapse;
+    width: 100%;
+    border: #4CAF50 1px solid;
+    background: seashell;
+}
+
+.table_top table th, td {
+    text-align: center;
+    padding:8px;
+    border: #4CAF50 1px solid;
+}
+
+.table_top table tr th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+
+/* table bottom*/
+.table{
+    padding-top: 95px;
+}
+.table table{
+    border-collapse: collapse;
+    width: 100%;
+    border: #4CAF50 1px solid;
+    background: seashell;
+}
+
+.table table th, td {
+    text-align: center;
+    padding:8px;
+    border: #4CAF50 1px solid;
+}
+
+.table table tr th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+
+.table table tr td img {
+    width: 50px;
+    height: 50px;
+}
+
+.modal2 {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 2%;
+    top: 10%;
+    width: 96%;
+    height: 80%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.title{
+    position: fixed;
+    background: seashell;
+    width: 96%;
+    font-weight: bold;
+    text-align: center;
+}
+.top_title{
+    color: black;
+    font-size: 40px;
+}
+
+.modal button:hover {
+    opacity: 0.8;
+}
+.cancelbtn{
+    position: absolute;
+    right: 3%;
+    top: 7%;
+    text-align: center;
+    width: fit-content;
+    padding: 10px 18px;
+    background-color: rgb(109, 109, 109);
+    color: white;
+    border-radius: 10px;
+}
+.cancelbtn:hover{
+    padding: 10px 18px;
+    background-color: #f44336;
+    color: black;
+}
