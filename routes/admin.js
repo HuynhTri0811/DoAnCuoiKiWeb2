@@ -3,6 +3,7 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const fs = require('fs');
 const user = require('../models/User.js');
+const ticket = require('../models/Ticket.js');
 const Cinema = require('../models/Cinema.js');
 const Cineplex = require('../models/Cineplex.js');
 const Film = require('../models/Film.js');
@@ -193,7 +194,7 @@ router.get('/delete/user/:id',async function(req,res){
             }
         }).then(function(){
             res.redirect('/admin/update/user/');
-        }).catch(function(){
+        }).catch(function(err){
             res.render('404NotFound.ejs');
         });
     }else{
@@ -283,10 +284,17 @@ router.get('/create/film/',async function(req,res){
 router.get('/update/cineplex',async function(req,res){
     const { Admin } = req.session;
     if( Admin ){
-        const cineplex = await Cineplex.findAll({
 
+        const TicketAll =  await ticket.findAll({
+            include :[
+                { model : CinemaTimeShow }
+            ]
+        }).then(async function(TicketAll){
+            console.log(TicketAll)
+        }).catch(async function(err){
+            console.log(err);
         });
-        res.render('admin.ejs',{cineplex});
+        
     } else {
         res.redirect('/');
     }
@@ -433,18 +441,33 @@ router.post('/create/cinemaTimeShow/',async function(req,res){
     const { Admin } = req.session;
     if(Admin){
         var {txtcinema_ID,txtCinemaTimeShow_Date,timeShowID,filmID} = req.body;
-        await CinemaTimeShow.create({
-            cinema_ID : txtcinema_ID ,
-            cinemaTimeShow_Date : txtCinemaTimeShow_Date ,
-            timeShow_ID : timeShowID ,
-            film_ID : filmID ,
-        }).then(async function(){
-            await delete req.session.loi;
-            res.redirect('/admin/update/cinemaTimeShow/cinema/'+String(txtcinema_ID));
-        }).catch(async function(){
+        console.log(txtCinemaTimeShow_Date);
+        const cinemaTonTai = await CinemaTimeShow.findOne({
+            where :{
+                cinema_ID : txtcinema_ID ,
+                cinemaTimeShow_Date : txtCinemaTimeShow_Date ,
+                timeShow_ID : timeShowID, 
+            }
+        }).catch(async function(err){
+            console.log(err);
+        });
+        if(cinemaTonTai){
             req.session.loi = 'bạn đã nhập xuất chiếu xày rồi . xin mời nhập lại';
             res.redirect('/admin/update/cinemaTimeShow/cinema/'+String(txtcinema_ID));
-        });
+        }else{
+            await CinemaTimeShow.create({
+                cinema_ID : txtcinema_ID ,
+                cinemaTimeShow_Date : txtCinemaTimeShow_Date ,
+                timeShow_ID : timeShowID ,
+                film_ID : filmID ,
+            }).then(async function(){
+                await delete req.session.loi;
+                res.redirect('/admin/update/cinemaTimeShow/cinema/'+String(txtcinema_ID));
+            }).catch(async function(){
+                req.session.loi = 'bạn đã nhập xuất chiếu xày rồi . xin mời nhập lại';
+                res.redirect('/admin/update/cinemaTimeShow/cinema/'+String(txtcinema_ID));
+            });
+        }
     }
     else {
         res.redirect('/');
@@ -489,4 +512,6 @@ router.get('/delete/cinemaTimeShow/cinema/:id',async function(req,res){
     }
 });
 
+
+//statistical
 module.exports = router;

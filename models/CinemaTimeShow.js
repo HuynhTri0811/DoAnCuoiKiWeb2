@@ -3,23 +3,21 @@ const db = require('./db.js');
 const cinema = require('./Cinema.js');
 const film = require('./Film.js');
 const TimeShow = require('./TimeShow.js');
-
 const cinemaTimeShow = db.define('CinemaTimeShow' ,{
 	cinemaTimeShow_ID :{
 		type : Sequelize.INTEGER ,
 		allowNull : true ,
 		autoIncrement :true ,
+		primaryKey : true ,
 	},
 	cinemaTimeShow_Date :{
-		type : Sequelize.DATE,
+		type : Sequelize.DATEONLY,
 		allowNull : true,
-		primaryKey : true,
 		defaultValue : null,
 	},
 	timeShow_ID :{
 		type : Sequelize.INTEGER ,
 		allowNull : true ,
-		primaryKey : true ,
 	},
 	film_ID : {
 		type : Sequelize.INTEGER,
@@ -27,7 +25,6 @@ const cinemaTimeShow = db.define('CinemaTimeShow' ,{
 	},
 	cinema_ID :{
 		type : Sequelize.INTEGER,
-		primaryKey : true ,
 		allowNull : true ,
 	}
 });

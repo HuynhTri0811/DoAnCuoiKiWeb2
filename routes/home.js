@@ -213,10 +213,11 @@ router.get('/phim/muave/:id',async function(req,res)
 		});
 		const ticket = await Ticket.findAll({
 			where :{
-				cinemaTimeShow_Date : cinemaTimeShow.cinemaTimeShow_Date,
-				timeShow_ID : cinemaTimeShow.timeShow_ID,
-				cinema_ID : cinemaTimeShow.cinema_ID,
+				cinemaTimeShow_ID : id_Chosen ,
 			},
+			include :[
+				{model : CinemaTimeShow}
+			],
 			order :[
 				['ticket_Chair', 'ASC'],
 			]
@@ -293,10 +294,7 @@ router.post('/phim/muave/thongtinve/:id',async function(req,res){
 			ticket_Chair : txtChair,
 			ticket_ChairType : txtChairType,
 			ticket_TotalMoney : txtTotalMoney,
-			cinemaTimeShow_Date : timeShow_Chosen.cinemaTimeShow_Date,
-			timeShow_ID : timeShow_Chosen.timeShow_ID,
-			film_ID : timeShow_Chosen.film_ID,
-			cinema_ID : timeShow_Chosen.cinema_ID,
+			cinemaTimeShow_ID : id_cinemaTimeShow_req ,
 			user_ID : user_Chosen.user_Id,
 		}).then(async function(){
 			console.log("Đã lưu vào DB");

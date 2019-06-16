@@ -22,35 +22,20 @@ const tiket = db.define('Ticket' ,{
         type : Sequelize.INTEGER,
         allowNull : true,
     },
-	cinemaTimeShow_Date :{
-		type : Sequelize.DATE,
-		allowNull : true,
+	cinemaTimeShow_ID :{
+        type : Sequelize.INTEGER ,
+        allowNull : true ,
     },
-    timeShow_ID :{
-        type : Sequelize.INTEGER,
-		allowNull : true ,
-    },
-    film_ID : {
-		type : Sequelize.INTEGER,
-		allowNull : true ,
-    },
-    cinema_ID :{
-		type : Sequelize.INTEGER,
-		allowNull : true ,
-	},
     user_ID :{
         type : Sequelize.INTEGER,
         allowNull : false,
     },
 });
-
-tiket.belongsTo(cinemaTimeShow,{
-    foreignKey : 'cinemaTimeShow_ID',
-    foreignKey : 'timeShow_ID',
-    foreignKey : 'cinema_ID',
-});
 tiket.belongsTo(user,{
     foreignKey : 'user_ID',
+});
+tiket.belongsTo(cinemaTimeShow,{
+    foreignKey : 'cinemaTimeShow_ID',
 });
 
 module.exports = tiket;
