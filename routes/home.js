@@ -467,7 +467,7 @@ router.post('/phim/muave/thongtinve/:id',async function(req,res){
 			const sms_to = nb_user;
 			const sms_content = "Ban da dat ve thanh cong!\nMa ve: " + txtMave + "\nPhim: " + xoa_dau(timeShow_Chosen.dataValues.Film.film_Name) + "\nNgay chieu: " + format_date(timeShow_Chosen.dataValues.cinemaTimeShow_Date) + "\nCum rap/Rap: " + xoa_dau(timeShow_Chosen.dataValues.Cinema.Cineplex.cineplex_Name) + " / " + xoa_dau(timeShow_Chosen.dataValues.Cinema.cinema_Name) + "\nLoai ghe: " + xoa_dau(txtChairType) + "\nGhe: " + txtChair + "\nGia ve: " + format_number(txtTotalMoney,0) + " ₫\nVNCinema Xin Cam On!\n";
 
-			nexmo.message.sendSms(sms_from, sms_to, sms_content);
+			/*nexmo.message.sendSms(sms_from, sms_to, sms_content);*/
 
 			res.render('users/da_muave.ejs',{timeShow_Chosen, txtChair, txtChairType, txtTotalMoney, txtMave});
 		}).catch(async function(err){
