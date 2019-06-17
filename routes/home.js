@@ -50,8 +50,19 @@ router.get('/',async function(req,res){
 			['film_DatePublic','ASC']
 		],
 	});
+	const filmViewHigh = await Film.findAll({
+		where :{
+			film_DatePublic :{
+				[Op.lte] : dateNow ,
+			},
+			film_Public : true ,
+		},
+		order :[
+			['film_ViewCount','DESC'],
+		]
+	});
 	
-	const film = {  filmPublic : filmPublic , filmNoPublic : filmNoPublic } ;
+	const film = {  filmPublic : filmPublic , filmNoPublic : filmNoPublic, filmViewHigh : filmViewHigh } ;
 	res.render('home.ejs',{film , user});
 });
 
@@ -147,7 +158,18 @@ router.get('/phim',async function(req,res){
 			['film_DatePublic','ASC']
 		],
 	});
-	const filmChieu = {  filmDangChieu : filmDangChieu , filmSapChieu : filmSapChieu } ;
+	const filmXemNhieu = await Film.findAll({
+		where :{
+			film_DatePublic :{
+				[Op.lte] : dateNow ,
+			},
+			film_Public : true ,
+		},
+		order :[
+			['film_ViewCount','DESC'],
+		]
+	});
+	const filmChieu = {  filmDangChieu : filmDangChieu , filmSapChieu : filmSapChieu, filmXemNhieu : filmXemNhieu } ;
 	res.render('home.ejs',{filmChieu , user});
 });
 
@@ -291,7 +313,7 @@ router.post('/phim/muave/:id',async function(req,res){
 
 router.get('/phim/muave/comeback/:id',async function(req,res){
 	const id_req = String(req.params.id);
-	res.redirect('/film/'+id_req);
+	res.redirect('/phim/'+id_req);
 });
 
 router.post('/phim/muave/thongtinve/:id',async function(req,res){
