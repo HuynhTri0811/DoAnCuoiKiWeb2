@@ -13,6 +13,13 @@ const sendEmail  = require('../models/email.js');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 var formidable = require('formidable'); 
+const Nexmo = require('nexmo');
+
+const nexmo = new Nexmo({
+  apiKey: 'fe072a5f',
+  apiSecret: 'id5zkHyT3AOaJEWh',
+});
+
 
 
 const router = new Router();
@@ -397,6 +404,24 @@ router.post('/phim/muave/thongtinve/:id',async function(req,res){
 		return day_result;
 	}
 
+	/* Xóa dấu tiếng việt */
+	function xoa_dau(str) {
+		str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+		str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+		str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+		str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+		str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+		str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+		str = str.replace(/đ/g, "d");
+		str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
+		str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
+		str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
+		str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
+		str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
+		str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
+		str = str.replace(/Đ/g, "D");
+		return str;
+	}
 	var form = new formidable.IncomingForm();
 
 	if(form){
@@ -430,6 +455,19 @@ router.post('/phim/muave/thongtinve/:id',async function(req,res){
 			console.log("Đã lưu vào DB");
 			req.session.user_Id = user_Chosen.user_Id;
 			await sendEmail(user.user_Email, 'Thông tin vé', 'Mã vé: ' + txtMave + '\nPhim: ' + timeShow_Chosen.dataValues.Film.film_Name + '\nXuất chiếu: ' + timeShow_Chosen.dataValues.TimeShow.timeShow_Start + '\nNgày chiếu: ' + format_date(timeShow_Chosen.dataValues.cinemaTimeShow_Date) + '\nCụm rạp/Rạp: ' + timeShow_Chosen.dataValues.Cinema.Cineplex.cineplex_Name + ' / ' + timeShow_Chosen.dataValues.Cinema.cinema_Name + '\nLoại ghế: ' + txtChairType + '\nGhế: ' + txtChair + '\nGiá vé: ' + format_number(txtTotalMoney,0) + ' ₫\n\nVNCinema xin chân thành cảm ơn bạn đã tin tưởng lựa chọn chúng tôi!');
+			var number_phone_user = await User.findOne({
+				where :{
+					user_ID : user_Chosen.user_Id,
+				}
+			})
+			var str_nb_user = new String(number_phone_user.dataValues.user_NumberPhone);
+			var nb_user = "84" + str_nb_user.slice(1,str_nb_user.length);
+			console.log(nb_user);
+			const sms_from = 'VNCinema';
+			const sms_to = nb_user;
+			const sms_content = "Ban da dat ve thanh cong!\nMa ve: " + txtMave + "\nPhim: " + xoa_dau(timeShow_Chosen.dataValues.Film.film_Name) + "\nNgay chieu: " + format_date(timeShow_Chosen.dataValues.cinemaTimeShow_Date) + "\nCum rap/Rap: " + xoa_dau(timeShow_Chosen.dataValues.Cinema.Cineplex.cineplex_Name) + " / " + xoa_dau(timeShow_Chosen.dataValues.Cinema.cinema_Name) + "\nLoai ghe: " + xoa_dau(txtChairType) + "\nGhe: " + txtChair + "\nGia ve: " + format_number(txtTotalMoney,0) + " ₫\nVNCinema Xin Cam On!\n";
+
+			nexmo.message.sendSms(sms_from, sms_to, sms_content);
 
 			res.render('users/da_muave.ejs',{timeShow_Chosen, txtChair, txtChairType, txtTotalMoney, txtMave});
 		}).catch(async function(err){
