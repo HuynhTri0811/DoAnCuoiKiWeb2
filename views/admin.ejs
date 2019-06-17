@@ -25,6 +25,9 @@
         </ul>
     </div>
     <div id="content_admin">
+    <% if(typeof thuocTinhFilm !== 'undefined' && typeof thuocTinhCumRap !== 'undefined') { %>
+        <% include admin/BangDoanhThu.ejs %>
+    <% } %>
     <% if(typeof cinema !== 'undefined') { %>
         <% include admin/cinema.ejs %>
     <% } %>

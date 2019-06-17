@@ -19,9 +19,216 @@ const upload = multer({dest: __dirname + '/uploads/images'});
 
 router.get('/',async function(req,res){
     const { Admin } = req.session;
+    var D = new Date();
+    var month = D.getMonth() + 1;
+    var year = D.getFullYear() +1;
+    var F = new Date();
+    F.setDate(1);
     if(Admin)
     {
-        res.render('admin.ejs');
+        // tính theo film
+        const TongTienCuaXuatChieu = await ticket.findAll({
+            attributes:['CinemaTimeShow.film_ID','CinemaTimeShow.cinemaTimeShow_ID',[Sequelize.fn('SUM', Sequelize.col('ticket_TotalMoney')), 'TongTien'],[Sequelize.fn('COUNT',Sequelize.col('ticket_TotalMoney')),'SoVeBanDuoc']],
+            group :['CinemaTimeShow.film_ID','CinemaTimeShow.cinemaTimeShow_ID'],
+            include :[
+                { model : CinemaTimeShow , where :{ cinemaTimeShow_Date : {
+                        [Op.between] :[ F,D], 
+                } }}
+            ]
+        }).catch(async function(err){
+            console.log(err);
+        }); 
+        var thuocTinhFilm = [];
+        var TongXuatChieu =  TongTienCuaXuatChieu.length;
+        const dateNow = Date.now();
+        const SoFilm = await Film.findAll({
+            where :{
+                film_DatePublic :{
+                    [Op.lte] : dateNow ,
+                },
+                film_Public : true ,
+            },    
+        }).catch(async function(err){
+            console.log(err);
+        });
+        for(let temp = 0; temp < SoFilm.length ;temp++){
+            var filmTemp ={
+                ID_film :  SoFilm[temp].film_ID ,
+                Name_film :  SoFilm[temp].film_Name ,
+                TotalMoney_film : 0,
+                CountTicket_film : 0,
+            }
+            thuocTinhFilm.push(filmTemp);
+        }
+        for(let temp = 0;temp <thuocTinhFilm.length;temp++){
+            for( let i = 0 ;i < TongXuatChieu ; i++){
+                if(thuocTinhFilm[temp].ID_film === TongTienCuaXuatChieu[i].CinemaTimeShow.film_ID){
+                    thuocTinhFilm[temp].TotalMoney_film += Number(TongTienCuaXuatChieu[i].dataValues.TongTien);
+                    thuocTinhFilm[temp].CountTicket_film += Number(TongTienCuaXuatChieu[i].dataValues.SoVeBanDuoc);
+                }
+            }
+        }
+        // tinh theo cụm rạp        
+        const TongTienCuaXuatChieuCinema = await ticket.findAll({
+            attributes:['CinemaTimeShow.cinema_ID','CinemaTimeShow.cinemaTimeShow_ID',[Sequelize.fn('SUM', Sequelize.col('ticket_TotalMoney')), 'TongTien'],[Sequelize.fn('COUNT',Sequelize.col('ticket_TotalMoney')),'SoVeBanDuoc']],
+            group :['CinemaTimeShow.cinema_ID','CinemaTimeShow.cinemaTimeShow_ID'],
+            include :[
+                { model : CinemaTimeShow , where :{ cinemaTimeShow_Date : {
+                    [Op.between] :[ F,D], 
+            } }}
+            ]
+        }).catch(async function(err){
+            console.log(err);
+        });
+        var thuocTinhRap = [];
+        var thuocTinhCumRap = [];
+        const TimRap = await Cinema.findAll({});
+        const TimCumRap = await Cineplex.findAll({});
+        for(let temp = 0 ;temp < TimRap.length ; temp++){
+            var RapTemp = {
+                ID_cinema :  TimRap[temp].cinema_ID,
+                Name_cinema : TimRap[temp].cinema_Name ,
+                ID_cineplex : TimRap[temp].CineplexCineplexID,
+                TotalMoney_cinema : 0,
+                CountTicket_cinema : 0,
+            }
+            thuocTinhRap.push(RapTemp);
+        }
+        for(let temp = 0 ;temp <TimCumRap.length ;temp++){
+            var CumRap ={
+                ID_cineplex : TimCumRap[temp].cineplex_ID ,
+                Name_cineplex : TimCumRap[temp].cineplex_Name,
+                TotalMoney_cineplex : 0,
+                CountTicket_cineplex :0,
+            }
+            thuocTinhCumRap.push(CumRap);
+        }
+        for(let temp = 0 ;temp < thuocTinhRap.length ; temp++){
+            for(let i = 0 ; i < TongTienCuaXuatChieuCinema.length ; i++){
+                if(thuocTinhRap[temp].ID_cinema === TongTienCuaXuatChieuCinema[i].CinemaTimeShow.cinema_ID){
+                    thuocTinhRap[temp].TotalMoney_cinema += Number(TongTienCuaXuatChieuCinema[i].dataValues.TongTien);
+                    thuocTinhRap[temp].CountTicket_cinema += Number(TongTienCuaXuatChieuCinema[i].dataValues.SoVeBanDuoc);
+                }
+            }
+        }
+        for(let temp=0;temp < thuocTinhCumRap.length ;temp++){
+            for( let i = 0 ;i < thuocTinhRap.length ;i++){
+                if(thuocTinhCumRap[temp].ID_cineplex === thuocTinhRap[i].ID_cineplex){
+                    thuocTinhCumRap[temp].TotalMoney_cineplex += Number(thuocTinhRap[i].TotalMoney_cinema);
+                    thuocTinhCumRap[temp].CountTicket_cineplex += Number(thuocTinhRap[i].CountTicket_cinema);
+                }
+            }
+        }
+
+        res.render('admin.ejs',{thuocTinhFilm ,thuocTinhCumRap});
+    }
+    else{
+        res.redirect('/');
+    }
+});
+router.post('/',async function(req,res){
+    const { Admin } = req.session;
+    const { txtDateOne ,txtDateTwo } = req.body;
+    if(Admin)
+    {
+        // tính theo film
+        const TongTienCuaXuatChieu = await ticket.findAll({
+            attributes:['CinemaTimeShow.film_ID','CinemaTimeShow.cinemaTimeShow_ID',[Sequelize.fn('SUM', Sequelize.col('ticket_TotalMoney')), 'TongTien'],[Sequelize.fn('COUNT',Sequelize.col('ticket_TotalMoney')),'SoVeBanDuoc']],
+            group :['CinemaTimeShow.film_ID','CinemaTimeShow.cinemaTimeShow_ID'],
+            where:{
+                
+            },
+            include :[
+                { model : CinemaTimeShow , where :{ cinemaTimeShow_Date : {
+                    [Op.between] :[txtDateOne,txtDateTwo],
+                } } }
+            ]
+        }).catch(async function(err){
+            console.log(err);
+        }); 
+        var thuocTinhFilm = [];
+        var TongXuatChieu =  TongTienCuaXuatChieu.length;
+        const dateNow = Date.now();
+        const SoFilm = await Film.findAll({
+            where :{
+                film_DatePublic :{
+                    [Op.lte] : dateNow ,
+                },
+                film_Public : true ,
+            },    
+        }).catch(async function(err){
+            console.log(err);
+        });
+        for(let temp = 0; temp < SoFilm.length ;temp++){
+            var filmTemp ={
+                ID_film :  SoFilm[temp].film_ID ,
+                Name_film :  SoFilm[temp].film_Name ,
+                TotalMoney_film : 0,
+                CountTicket_film : 0,
+            }
+            thuocTinhFilm.push(filmTemp);
+        }
+        for(let temp = 0;temp <thuocTinhFilm.length;temp++){
+            for( let i = 0 ;i < TongXuatChieu ; i++){
+                if(thuocTinhFilm[temp].ID_film === TongTienCuaXuatChieu[i].CinemaTimeShow.film_ID){
+                    thuocTinhFilm[temp].TotalMoney_film += Number(TongTienCuaXuatChieu[i].dataValues.TongTien);
+                    thuocTinhFilm[temp].CountTicket_film += Number(TongTienCuaXuatChieu[i].dataValues.SoVeBanDuoc);
+                }
+            }
+        }
+        // tinh theo cụm rạp        
+        const TongTienCuaXuatChieuCinema = await ticket.findAll({
+            attributes:['CinemaTimeShow.cinema_ID','CinemaTimeShow.cinemaTimeShow_ID',[Sequelize.fn('SUM', Sequelize.col('ticket_TotalMoney')), 'TongTien'],[Sequelize.fn('COUNT',Sequelize.col('ticket_TotalMoney')),'SoVeBanDuoc']],
+            group :['CinemaTimeShow.cinema_ID','CinemaTimeShow.cinemaTimeShow_ID'],
+            include :[
+                { model : CinemaTimeShow , where :{ cinemaTimeShow_Date : {
+                    [Op.between] :[txtDateOne,txtDateTwo],
+                } } }
+            ]
+        }).catch(async function(err){
+            console.log(err);
+        });
+        var thuocTinhRap = [];
+        var thuocTinhCumRap = [];
+        const TimRap = await Cinema.findAll({});
+        const TimCumRap = await Cineplex.findAll({});
+        for(let temp = 0 ;temp < TimRap.length ; temp++){
+            var RapTemp = {
+                ID_cinema :  TimRap[temp].cinema_ID,
+                Name_cinema : TimRap[temp].cinema_Name ,
+                ID_cineplex : TimRap[temp].CineplexCineplexID,
+                TotalMoney_cinema : 0,
+                CountTicket_cinema : 0,
+            }
+            thuocTinhRap.push(RapTemp);
+        }
+        for(let temp = 0 ;temp <TimCumRap.length ;temp++){
+            var CumRap ={
+                ID_cineplex : TimCumRap[temp].cineplex_ID ,
+                Name_cineplex : TimCumRap[temp].cineplex_Name,
+                TotalMoney_cineplex : 0,
+                CountTicket_cineplex :0,
+            }
+            thuocTinhCumRap.push(CumRap);
+        }
+        for(let temp = 0 ;temp < thuocTinhRap.length ; temp++){
+            for(let i = 0 ; i < TongTienCuaXuatChieuCinema.length ; i++){
+                if(thuocTinhRap[temp].ID_cinema === TongTienCuaXuatChieuCinema[i].CinemaTimeShow.cinema_ID){
+                    thuocTinhRap[temp].TotalMoney_cinema += Number(TongTienCuaXuatChieuCinema[i].dataValues.TongTien);
+                    thuocTinhRap[temp].CountTicket_cinema += Number(TongTienCuaXuatChieuCinema[i].dataValues.SoVeBanDuoc);
+                }
+            }
+        }
+        for(let temp=0;temp < thuocTinhCumRap.length ;temp++){
+            for( let i = 0 ;i < thuocTinhRap.length ;i++){
+                if(thuocTinhCumRap[temp].ID_cineplex === thuocTinhRap[i].ID_cineplex){
+                    thuocTinhCumRap[temp].TotalMoney_cineplex += Number(thuocTinhRap[i].TotalMoney_cinema);
+                    thuocTinhCumRap[temp].CountTicket_cineplex += Number(thuocTinhRap[i].CountTicket_cinema);
+                }
+            }
+        }
+
+        res.render('admin.ejs',{thuocTinhFilm ,thuocTinhCumRap});
     }
     else{
         res.redirect('/');
@@ -284,17 +491,30 @@ router.get('/create/film/',async function(req,res){
 router.get('/update/cineplex',async function(req,res){
     const { Admin } = req.session;
     if( Admin ){
-
-        const TicketAll =  await ticket.findAll({
+        /* const TongTienCineplex =  await ticket.findAll({
             include :[
-                { model : CinemaTimeShow }
+                { model : CinemaTimeShow   , include : [{ model :  Cinema  }] }
             ]
-        }).then(async function(TicketAll){
-            console.log(TicketAll)
+        }).then(function(TongTien){
+            console.TongTien();
+            for(let i = 0 ; i < TongTien.length ;i++){
+                console.log(TongTien[i].CinemaTimeShow.Cinema.Cineplex.cineplex_Name);
+                console.log(TongTien[i].CinemaTimeShow.Cinema.Cineplex.cineplex_ID);
+            }
         }).catch(async function(err){
             console.log(err);
+        }); */
+        /* var tempPhim = 0;
+        while(SoFilm[tempPhim] !== undefined){
+
+        } */
+
+        const cineplex = await Cineplex.findAll({
+        }).catch(async function(){
+            console.log('da bi loi');
+            res.redirect('/admin');
         });
-        
+        res.render('admin.ejs' ,{ cineplex });
     } else {
         res.redirect('/');
     }
