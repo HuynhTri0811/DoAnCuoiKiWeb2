@@ -175,6 +175,18 @@ router.get('/phim',async function(req,res){
 
 router.get('/phim/:id',async function(req,res){
 	const id = Number(req.params.id);
+
+	var viewCount_new = await Film.findOne({
+		where :{
+			film_ID : id,
+		}
+	})
+	await Film.update(
+		{ film_ViewCount : viewCount_new.dataValues.film_ViewCount + 1},
+		{where :{
+			film_ID : id,
+		}}
+		)
 	const filmID =await Film.findOne({
 		where :{
 			film_ID : id ,
@@ -216,6 +228,7 @@ router.get('/phim/:id',async function(req,res){
 			{ model : TimeShow },
 		]
 	});
+
 	//console.log(cinemaTimeShow);
 	res.render('home.ejs',{filmID,user,filmDangChieu2,cinemaTimeShow,cinema,cineplex});
 });
