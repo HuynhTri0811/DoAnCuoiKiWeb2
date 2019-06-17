@@ -62,7 +62,12 @@ router.get('/',async function(req,res){
 		]
 	});
 	
+<<<<<<< Updated upstream
 	const film = {  filmPublic : filmPublic , filmNoPublic : filmNoPublic, filmViewHigh : filmViewHigh } ;
+=======
+	
+	const film = {  filmPublic : filmPublic , filmNoPublic : filmNoPublic } ;
+>>>>>>> Stashed changes
 	res.render('home.ejs',{film , user});
 });
 

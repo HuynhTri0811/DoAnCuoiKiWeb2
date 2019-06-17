@@ -128,4 +128,25 @@
 }
   
   
-  
+.table table{
+    border-collapse: collapse;
+    width: 100%;
+    border: #4CAF50 1px solid;
+}
+
+.table table th,td {
+    text-align: center;
+    padding:8px;
+    border: #4CAF50 1px solid;
+}
+
+.table table tr th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+
+.table table tr td img {
+    width: 50px;
+    height: 50px;
+}
