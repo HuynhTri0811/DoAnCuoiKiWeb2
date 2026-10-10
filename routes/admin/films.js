@@ -1,80 +1,154 @@
-const router = require('express').Router();
+const router = require('./utils/createRouter')();
 const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
 const formidable = require('formidable');
 const { Film } = require('./utils/models');
 
-router.get('/update/film/',async function(req,res){
-    const { Admin } = req.session;
-    if(Admin){
-        const filmAll= await Film.findAll({
-            order : [
-                ['film_ID','ASC']
-            ]
+const imageDirectory = path.join(__dirname, '../../public/image');
+const allowedImageExtensions = new Set(['.jpg', '.jpeg', '.png', '.gif', '.webp']);
+
+async function parseFilmForm(req) {
+    await fs.promises.mkdir(imageDirectory, { recursive: true });
+    return new Promise((resolve, reject) => {
+        const form = new formidable.IncomingForm({
+            uploadDir: imageDirectory,
+            keepExtensions: true,
+            maxFileSize: 10 * 1024 * 1024,
         });
-        res.render('admin.ejs',{filmAll});
+        form.parse(req, (error, fields, files) => {
+            if (error) {
+                const uploads = Object.values(files || {}).flat();
+                uploads.forEach(upload => {
+                    if (upload && upload.path) fs.promises.unlink(upload.path).catch(() => {});
+                });
+                return reject(error);
+            }
+            resolve({ fields, files });
+        });
+    });
+}
+
+function getSingleValue(value) {
+    return Array.isArray(value) ? value[0] : value;
+}
+
+async function saveFilmImage(upload) {
+    if (!upload || !upload.path || !upload.name) {
+        throw new Error('A film image is required.');
     }
-    else{
-        res.redirect('/');
+
+    const extension = path.extname(upload.name).toLowerCase();
+    if (!allowedImageExtensions.has(extension)) {
+        throw new Error('Unsupported film image type.');
     }
+
+    await fs.promises.mkdir(imageDirectory, { recursive: true });
+    const filename = `film-${Date.now()}-${crypto.randomBytes(6).toString('hex')}${extension}`;
+    const destination = path.join(imageDirectory, filename);
+    await fs.promises.rename(upload.path, destination);
+    return `/public/image/${filename}`;
+}
+
+async function removeTemporaryUpload(upload) {
+    if (!upload || !upload.path) return;
+    await fs.promises.unlink(upload.path).catch(() => {});
+}
+
+router.get('/update/film/', async function(req, res) {
+    if (!req.session || !req.session.Admin) return res.redirect('/');
+
+    const filmAll = await Film.findAll({ order: [['film_ID', 'ASC']] });
+    res.render('admin.ejs', { filmAll });
 });
-router.post('/update/film/:id',async function(req,res){
-    const { Admin } = req.session;
-    const id = req.params.id;
-    if(Admin){
-        res.redirect('/admin/');
-    }else{
-        res.redirect('/');
-    }
-});
-router.get('/delete/film/:id',async function(req,res){
-    const { Admin } = req.session;
+
+router.post('/update/film/:id', async function(req, res) {
+    if (!req.session || !req.session.Admin) return res.redirect('/');
+
     const id = Number(req.params.id);
-    if(Admin){
-        await Film.destroy({
-            where :{
-                film_ID : id ,
-            },
-        });
-        res.redirect('/admin/update/film/');
-    } else {
-        res.redirect('/');
-    }
-});
-router.post('/create/film/',async function(req,res){
-    const { Admin } = req.session;
-    if(Admin){
-        var form = new formidable.IncomingForm();
-        await form.parse(req,function(err,filds,files){
-            var oldpath ="dasdasdas";
-            var newpath = 'public/image' + file.filetoupload.name ;
-            fs.rename(oldpath, newpath, function (err) {
-                if (err) throw err;
-                res.write('File uploaded and moved!');
-                res.end();
-            });
-        });
-        var {txtFilmName ,txtFilmDatePublic ,txtFilmTime,txtFilmImage} = req.body;
-        if(form){
-            await Film.create({
-                film_Name : txtFilmName ,
-                film_Image : '/public/image/'+ txtFilmImage ,
-                film_DatePublic : txtFilmDatePublic,
-                film_Time : txtFilmTime ,
-            });
-            res.redirect('/admin/update/film');
-        }else{
-            console.log("loi cmnr 2");
-            res.redirect('/admin/update/film');
+    if (!Number.isInteger(id) || id <= 0) return res.render('404NotFound.ejs');
+
+    let upload;
+    let imagePath;
+    try {
+        const { fields, files } = await parseFilmForm(req);
+        upload = getSingleValue(files.txtFilmImage);
+        const filmName = getSingleValue(fields.txtFilmName);
+        if (typeof filmName !== 'string' || !filmName.trim()) {
+            throw new Error('Film name is required.');
         }
+        const updates = { film_Name: filmName.trim() };
+        if (upload && upload.size > 0) {
+            imagePath = await saveFilmImage(upload);
+            updates.film_Image = imagePath;
+        } else {
+            await removeTemporaryUpload(upload);
+        }
+
+        const [updatedCount] = await Film.update(updates, { where: { film_ID: id } });
+        if (!updatedCount) {
+            if (imagePath) await fs.promises.unlink(path.join(imageDirectory, path.basename(imagePath))).catch(() => {});
+            return res.render('404NotFound.ejs');
+        }
+        return res.redirect('/admin/update/film/');
+    } catch (error) {
+        await removeTemporaryUpload(upload);
+        if (imagePath) await fs.promises.unlink(path.join(imageDirectory, path.basename(imagePath))).catch(() => {});
+        console.error('Unable to update film:', error);
+        return res.render('404NotFound.ejs');
     }
 });
-router.get('/create/film/',async function(req,res){
-    const { Admin } = req.session;
-    if(Admin){
-        res.redirect('/admin/update/film');
-    }else{
-        res.redirect('/');
+
+router.post('/delete/film/:id', async function(req, res) {
+    if (!req.session || !req.session.Admin) return res.redirect('/');
+
+    const id = Number(req.params.id);
+    if (!Number.isInteger(id) || id <= 0) return res.render('404NotFound.ejs');
+    try {
+        await Film.destroy({ where: { film_ID: id } });
+        return res.redirect('/admin/update/film/');
+    } catch (error) {
+        console.error('Unable to delete film:', error);
+        return res.render('404NotFound.ejs');
     }
+});
+
+router.post('/create/film/', async function(req, res) {
+    if (!req.session || !req.session.Admin) return res.redirect('/');
+
+    let upload;
+    let imagePath;
+    try {
+        const { fields, files } = await parseFilmForm(req);
+        upload = getSingleValue(files.txtFilmImage);
+        const filmName = getSingleValue(fields.txtFilmName);
+        const releaseDate = getSingleValue(fields.txtFilmDatePublic);
+        const duration = Number(getSingleValue(fields.txtFilmTime));
+        if (typeof filmName !== 'string' || !filmName.trim()
+            || !releaseDate || Number.isNaN(Date.parse(releaseDate))
+            || !Number.isInteger(duration) || duration <= 0) {
+            throw new Error('Film details are invalid.');
+        }
+        imagePath = await saveFilmImage(upload);
+
+        await Film.create({
+            film_Name: filmName.trim(),
+            film_Image: imagePath,
+            film_DatePublic: releaseDate,
+            film_Time: duration,
+        });
+        return res.redirect('/admin/update/film/');
+    } catch (error) {
+        await removeTemporaryUpload(upload);
+        if (imagePath) await fs.promises.unlink(path.join(imageDirectory, path.basename(imagePath))).catch(() => {});
+        console.error('Unable to create film:', error);
+        return res.render('404NotFound.ejs');
+    }
+});
+
+router.get('/create/film/', function(req, res) {
+    if (!req.session || !req.session.Admin) return res.redirect('/');
+    return res.redirect('/admin/update/film/');
 });
 
 module.exports = router;

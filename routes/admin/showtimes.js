@@ -1,12 +1,14 @@
-const router = require('express').Router();
+const router = require('./utils/createRouter')();
 const { Op, Cinema, Film, timeShow, CinemaTimeShow } = require('./utils/models');
 
 router.get('/update/cinemaTimeShow/cinema/:id',async function(req,res){
     const { Admin } = req.session ;
     const id = Number(req.params.id);
-    req.session.cinemaID = id ;
     if( Admin ){
-       const loi = req.session.loi ;
+        if (!Number.isInteger(id) || id <= 0) return res.render('404NotFound.ejs');
+        req.session.cinemaTimeShowReturnPath = `/admin/update/cinemaTimeShow/cinema/${id}`;
+        const loi = req.session.loi;
+        delete req.session.loi;
         const timeShowCinemaIDcinema =  await CinemaTimeShow.findAll({
             where :{
                 cinema_ID : id  
@@ -43,9 +45,11 @@ router.get('/update/cinemaTimeShow/cinema/:id',async function(req,res){
 router.get('/update/cinemaTimeShow/film/:id',async function(req,res){
     const { Admin } = req.session ;
     const id = Number(req.params.id);
-    req.session.cinemaID = id ;
     if( Admin ){
-        const loi = req.session.loi ;
+        if (!Number.isInteger(id) || id <= 0) return res.render('404NotFound.ejs');
+        req.session.cinemaTimeShowReturnPath = `/admin/update/cinemaTimeShow/film/${id}`;
+        const loi = req.session.loi;
+        delete req.session.loi;
         const timeShowCinemaIDcinema =  await CinemaTimeShow.findAll({
             where :{
                 film_ID : id  
@@ -69,7 +73,7 @@ router.get('/update/cinemaTimeShow/film/:id',async function(req,res){
                 film_ID : id ,
             }
         });
-        res.render('admin.ejs',{timeShowCinemaIDcinema,cinemaAll,filmCinemaTimeShow,TimeShow});
+        res.render('admin.ejs',{timeShowCinemaIDcinema,cinemaAll,filmCinemaTimeShow,TimeShow,loi});
     }
     else{
         res.redirect('/');
@@ -78,33 +82,42 @@ router.get('/update/cinemaTimeShow/film/:id',async function(req,res){
 router.post('/create/cinemaTimeShow/',async function(req,res){
     const { Admin } = req.session;
     if(Admin){
-        var {txtcinema_ID,txtCinemaTimeShow_Date,timeShowID,filmID} = req.body;
-        console.log(txtCinemaTimeShow_Date);
-        const cinemaTonTai = await CinemaTimeShow.findOne({
-            where :{
-                cinema_ID : txtcinema_ID ,
-                cinemaTimeShow_Date : txtCinemaTimeShow_Date ,
-                timeShow_ID : timeShowID, 
-            }
-        }).catch(async function(err){
-            console.log(err);
-        });
-        if(cinemaTonTai){
-            req.session.loi = 'bạn đã nhập xuất chiếu xày rồi . xin mời nhập lại';
-            res.redirect('/admin/update/cinemaTimeShow/cinema/'+String(txtcinema_ID));
-        }else{
-            await CinemaTimeShow.create({
-                cinema_ID : txtcinema_ID ,
-                cinemaTimeShow_Date : txtCinemaTimeShow_Date ,
-                timeShow_ID : timeShowID ,
-                film_ID : filmID ,
-            }).then(async function(){
-                await delete req.session.loi;
-                res.redirect('/admin/update/cinemaTimeShow/cinema/'+String(txtcinema_ID));
-            }).catch(async function(){
-                req.session.loi = 'bạn đã nhập xuất chiếu xày rồi . xin mời nhập lại';
-                res.redirect('/admin/update/cinemaTimeShow/cinema/'+String(txtcinema_ID));
+        const { txtcinema_ID, txtCinemaTimeShow_Date, timeShowID, filmID } = req.body;
+        const cinemaId = Number(txtcinema_ID);
+        const showtimeId = Number(timeShowID);
+        const movieId = Number(filmID);
+        const returnPath = getShowtimeReturnPath(req, cinemaId);
+        if (![cinemaId, showtimeId, movieId].every(value => Number.isInteger(value) && value > 0)
+            || !txtCinemaTimeShow_Date) {
+            req.session.loi = 'Thông tin xuất chiếu không hợp lệ. Vui lòng kiểm tra lại.';
+            return res.redirect(returnPath);
+        }
+
+        try {
+            const existingShowtime = await CinemaTimeShow.findOne({
+                where: {
+                    cinema_ID: cinemaId,
+                    cinemaTimeShow_Date: txtCinemaTimeShow_Date,
+                    timeShow_ID: showtimeId,
+                },
             });
+            if (existingShowtime) {
+                req.session.loi = 'Suất chiếu này đã tồn tại. Vui lòng chọn thời gian khác.';
+                return res.redirect(returnPath);
+            }
+
+            await CinemaTimeShow.create({
+                cinema_ID: cinemaId,
+                cinemaTimeShow_Date: txtCinemaTimeShow_Date,
+                timeShow_ID: showtimeId,
+                film_ID: movieId,
+            });
+            delete req.session.loi;
+            return res.redirect(returnPath);
+        } catch (error) {
+            console.error('Unable to create showtime:', error);
+            req.session.loi = 'Không thể tạo suất chiếu. Vui lòng kiểm tra lại thông tin.';
+            return res.redirect(returnPath);
         }
     }
     else {
@@ -119,21 +132,36 @@ router.get('/create/cinemaTimeShow/',async function(req,res){
         res.redirect('/');
     }
 });
-router.get('/delete/cinemaTimeShow/cinema/:id',async function(req,res){
+router.post('/delete/cinemaTimeShow/cinema/:id',async function(req,res){
     const { Admin } = req.session ;
     const id = Number(req.params.id);
-    const cinemaID = req.session ;
     if( Admin ){
-        await CinemaTimeShow.destroy({
-            where : {
-                cinemaTimeShow_ID :  id ,
-            }
-        });
-        res.redirect('/update/cinemaTimeShow/cinema/'+String(cinemaID));
+        if (!Number.isInteger(id) || id <= 0) return res.render('404NotFound.ejs');
+        const returnPath = getShowtimeReturnPath(req);
+        try {
+            await CinemaTimeShow.destroy({
+                where: { cinemaTimeShow_ID: id },
+            });
+            return res.redirect(returnPath);
+        } catch (error) {
+            console.error('Unable to delete showtime:', error);
+            return res.render('404NotFound.ejs');
+        }
     }
     else{
         res.redirect('/');
     }
 });
+
+function getShowtimeReturnPath(req, fallbackCinemaId) {
+    const returnPath = req.session.cinemaTimeShowReturnPath;
+    if (/^\/admin\/update\/cinemaTimeShow\/(cinema|film)\/\d+$/.test(returnPath || '')) {
+        return returnPath;
+    }
+    if (Number.isInteger(fallbackCinemaId) && fallbackCinemaId > 0) {
+        return `/admin/update/cinemaTimeShow/cinema/${fallbackCinemaId}`;
+    }
+    return '/admin/update/cinema';
+}
 
 module.exports = router;
