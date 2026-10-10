@@ -1,47 +1,26 @@
-const router = require('express').Router();
+const router = require('./utils/createRouter')();
 const { Cineplex } = require('./utils/models');
 
 router.get('/update/cineplex',async function(req,res){
     const { Admin } = req.session;
     if( Admin ){
-        /* const TongTienCineplex =  await ticket.findAll({
-            include :[
-                { model : CinemaTimeShow   , include : [{ model :  Cinema  }] }
-            ]
-        }).then(function(TongTien){
-            console.TongTien();
-            for(let i = 0 ; i < TongTien.length ;i++){
-                console.log(TongTien[i].CinemaTimeShow.Cinema.Cineplex.cineplex_Name);
-                console.log(TongTien[i].CinemaTimeShow.Cinema.Cineplex.cineplex_ID);
-            }
-        }).catch(async function(err){
-            console.log(err);
-        }); */
-        /* var tempPhim = 0;
-        while(SoFilm[tempPhim] !== undefined){
-
-        } */
-
-        const cineplex = await Cineplex.findAll({
-        }).catch(async function(){
-            console.log('da bi loi');
-            res.redirect('/admin');
-        });
+        const cineplex = await Cineplex.findAll();
         res.render('admin.ejs' ,{ cineplex });
     } else {
         res.redirect('/');
     }
 });
-router.get('/delete/cineplex/:id',async function(req,res){
+router.post('/delete/cineplex/:id',async function(req,res){
     const { Admin } =req.session;
     const id =Number(req.params.id);
     if(Admin){
-        await Cineplex.destroy({
-            where :{
-                cineplex_ID : id,
-            }
-        });
-        res.redirect('/admin/update/cineplex');
+        try {
+            await Cineplex.destroy({ where: { cineplex_ID: id } });
+            return res.redirect('/admin/update/cineplex');
+        } catch (error) {
+            console.error('Unable to delete cineplex:', error);
+            return res.render('404NotFound.ejs');
+        }
     } else {
         res.redirect('/');
     }
@@ -51,15 +30,16 @@ router.post('/update/cineplex/:id',async function(req,res){
     const id = Number(req.params.id);
     if(Admin){
         var { txtCineplexName , txtCineplexAdress} = req.body ;
-        await Cineplex.update({
-            cineplex_Name : txtCineplexName ,
-            cineplex_Adress :txtCineplexAdress ,
-        },{
-            where :{
-                cineplex_ID : id ,
-            }
-        });
-        res.redirect('/admin/update/cineplex');
+        try {
+            await Cineplex.update({
+                cineplex_Name: txtCineplexName,
+                cineplex_Adress: txtCineplexAdress,
+            }, { where: { cineplex_ID: id } });
+            return res.redirect('/admin/update/cineplex');
+        } catch (error) {
+            console.error('Unable to update cineplex:', error);
+            return res.render('404NotFound.ejs');
+        }
     }else{
         res.redirect('/');
     }
@@ -75,12 +55,14 @@ router.get('/update/cineplex/:id',async function(req,res){
 router.post('/create/cineplex/',async function(req,res){
     const { Admin } = req.session ;
     if(Admin){
-        var { cineplex_Name , cineplex_Adress } = req.body ;
-        await Cineplex.create({
-            cineplex_Name ,
-            cineplex_Adress ,
-        });
-        res.redirect('/admin/update/cineplex');
+        const { cineplex_Name, cineplex_Adress } = req.body;
+        try {
+            await Cineplex.create({ cineplex_Name, cineplex_Adress });
+            return res.redirect('/admin/update/cineplex');
+        } catch (error) {
+            console.error('Unable to create cineplex:', error);
+            return res.render('404NotFound.ejs');
+        }
     }else{
         res.redirect('/');
     }

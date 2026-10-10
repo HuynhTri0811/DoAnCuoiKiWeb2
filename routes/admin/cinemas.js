@@ -1,5 +1,5 @@
-const router = require('express').Router();
-const { Op, Cinema, Cineplex } = require('./utils/models');
+const router = require('./utils/createRouter')();
+const { Cinema, Cineplex } = require('./utils/models');
 
 router.get('/update/cinema',async function(req,res){
     const { Admin } = req.session ;
@@ -19,7 +19,7 @@ router.get('/update/cinema',async function(req,res){
         res.redirect('/');
     }
 });
-router.get('/delete/cinema/:id',async function(req,res){
+router.post('/delete/cinema/:id',async function(req,res){
     const { Admin } = req.session ;
     const id = Number(req.params.id);
     if(Admin){
@@ -44,19 +44,18 @@ router.post('/update/cinema/:id',async function(req,res){
     const { Admin } = req.session;
     const id =Number(req.params.id);
     if(Admin){
-        var {txtCinemaName, txtCinemaType ,txtCinemaLength,txtCinemaWidth,txtCineplexName } =req.body;
-        var cineplex_Name_id = await Cineplex.findOne({
-            where :{ cineplex_Name :{
-                [Op.substring]: txtCineplexName ,
-            }}
-        });
-        if(cineplex_Name_id){
+        const { txtCinemaName, txtCinemaType, txtCinemaLength, txtCinemaWidth, txtCineplexName } = req.body;
+        const cineplexId = Number(txtCineplexName);
+        if (!Number.isInteger(cineplexId) || cineplexId <= 0) return res.render('404NotFound.ejs');
+
+        const cineplex = await Cineplex.findOne({ where: { cineplex_ID: cineplexId } });
+        if(cineplex){
             await Cinema.update({
                 cinema_Name : txtCinemaName ,
                 cinema_Type : txtCinemaType ,
                 cinema_Length :  txtCinemaLength ,
                 cinema_Width :  txtCinemaWidth ,
-                CineplexCineplexID : cineplex_Name_id.dataValues.cineplex_ID } , 
+                CineplexCineplexID : cineplex.cineplex_ID },
                 {
                     where :{
                         cinema_ID : id,

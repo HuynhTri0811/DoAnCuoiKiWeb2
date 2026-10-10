@@ -1,4 +1,4 @@
-const router = require('express').Router();
+const router = require('./utils/createRouter')();
 const { user } = require('./utils/models');
 
 router.get('/update/user',async function(req,res){
@@ -38,7 +38,7 @@ router.post('/update/user/:id',async function(req,res){
 router.get('/update/user/:id',async function(req,res){
     res.render('404NotFound.ejs');
 });
-router.get('/delete/user/:id',async function(req,res){
+router.post('/delete/user/:id',async function(req,res){
     const { Admin } = req.session;
     const id = Number(req.params.id);
     if(Admin){

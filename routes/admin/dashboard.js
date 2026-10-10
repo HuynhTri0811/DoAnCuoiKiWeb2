@@ -1,4 +1,4 @@
-const router = require('express').Router();
+const router = require('./utils/createRouter')();
 const { Sequelize, Op, ticket, Cinema, Cineplex, Film, CinemaTimeShow } = require('./utils/models');
 const { redirectIfNotAdmin } = require('./utils/auth');
 
@@ -91,7 +91,15 @@ router.get('/', async function(req, res) {
 router.post('/', async function(req, res) {
     if (redirectIfNotAdmin(req, res)) return;
     const { txtDateOne, txtDateTwo } = req.body;
-    await renderSalesSummary(res, txtDateOne, txtDateTwo);
+    const startDate = new Date(txtDateOne);
+    const endDate = new Date(txtDateTwo);
+    if (!txtDateOne || !txtDateTwo
+        || Number.isNaN(startDate.getTime())
+        || Number.isNaN(endDate.getTime())
+        || startDate > endDate) {
+        return res.status(400).render('404NotFound.ejs');
+    }
+    await renderSalesSummary(res, startDate, endDate);
 });
 router.get('/logout',async function(req,res){
     delete req.session.Admin;

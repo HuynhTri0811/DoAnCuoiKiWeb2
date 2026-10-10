@@ -20,7 +20,7 @@
             <td><%= cinema[i].dataValues.Cineplex.cineplex_Name %></td>
             <td><%= cinema[i].dataValues.Cineplex.cineplex_Adress %></td>  
             <td><b id="btn_update_cinema_<%= cinema[i].dataValues.cinema_ID %>">Cật nhập</b>&nbsp;&nbsp;
-            <a href="/admin/delete/cinema/<%= cinema[i].dataValues.cinema_ID %>" onclick="return confirmAction()" >Xóa</a></td>
+            <form action="/admin/delete/cinema/<%= cinema[i].dataValues.cinema_ID %>" method="POST" style="display:inline" onsubmit="return confirmAction()"><button type="submit">Xóa</button></form></td>
         </tr>
         <% } %>
     </table>
@@ -45,7 +45,7 @@
                 <label>Địa chỉ :</label>
                 <select name="txtCineplexName" id="txtCineplexName">
                     <% for(let i = 0 ; i < Adress.length ;i++  ) { %>
-                        <option value="<%= Adress[i].dataValues.cineplex_Name %>"> <%= Adress[i].dataValues.cineplex_Name %></option>
+                        <option value="<%= Adress[i].dataValues.cineplex_ID %>" <%= Adress[i].dataValues.cineplex_ID === cinema[i].dataValues.CineplexCineplexID ? 'selected' : '' %>> <%= Adress[i].dataValues.cineplex_Name %></option>
                     <% } %>
                 </select>
                 <button type="submit" value="cập nhật" class="insertbtn">

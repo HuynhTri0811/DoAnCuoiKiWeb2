@@ -1,4 +1,4 @@
-const router = require('express').Router();
+const router = require('./utils/createRouter')();
 
 router.use('/', require('./dashboard'));
 router.use('/', require('./cinemas'));
