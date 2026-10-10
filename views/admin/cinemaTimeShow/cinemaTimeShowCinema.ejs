@@ -26,7 +26,7 @@
             <td><%= timeShowCinemaIDcinema[i].dataValues.Film.film_Name %></td>
             <td>
                 <b id="btn_update_cinemaTimeShow_<%= timeShowCinemaIDcinema[i].dataValues.cinemaTimeShow_ID %>" >Cập nhật</b> &nbsp;
-                <a href="/admin/delete/cinemaTimeShow/cinema/<%= timeShowCinemaIDcinema[i].dataValues.cinemaTimeShow_ID %>" onclick="return confirmAction()">Xóa</a>
+                <form action="/admin/delete/cinemaTimeShow/cinema/<%= timeShowCinemaIDcinema[i].dataValues.cinemaTimeShow_ID %>" method="POST" style="display:inline" onsubmit="return confirmAction()"><button type="submit">Xóa</button></form>
             </td>
         </tr>
         <% } %>
