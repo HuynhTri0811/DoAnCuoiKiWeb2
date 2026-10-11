@@ -7,7 +7,7 @@ router.get('/update/user',async function(req,res){
         const userAll =  await user.findAll({
         
         });
-        res.render('admin.ejs',{userAll});
+        res.render('layouts/admin.ejs',{userAll});
     }
     else{
         res.redirect('/');
@@ -29,14 +29,14 @@ router.post('/update/user/:id',async function(req,res){
         }).then(()=>{
             res.redirect('/admin/update/user/');
         }).catch(()=>{
-            res.render('404NotFound.ejs');
+            res.render('pages/404.ejs');
         });
     }else{
         res.redirect('/');
     }
 });
 router.get('/update/user/:id',async function(req,res){
-    res.render('404NotFound.ejs');
+    res.render('pages/404.ejs');
 });
 router.post('/delete/user/:id',async function(req,res){
     const { Admin } = req.session;
@@ -49,7 +49,7 @@ router.post('/delete/user/:id',async function(req,res){
         }).then(function(){
             res.redirect('/admin/update/user/');
         }).catch(function(err){
-            res.render('404NotFound.ejs');
+            res.render('pages/404.ejs');
         });
     }else{
         res.redirect('/');

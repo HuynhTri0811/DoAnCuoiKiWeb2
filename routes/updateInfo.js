@@ -58,7 +58,7 @@ router.get('/',async function(req,res){
 
         console.log("Giá trị đọc được của all_ve:");
         console.log(all_ve);
-        res.render('infoUser.ejs',{user, totalMoney, all_ve});
+        res.render('account/profile.ejs',{user, totalMoney, all_ve});
     }
     else{
         res.redirect('/');
@@ -86,7 +86,7 @@ router.post('/name',async function(req,res){
             }).then(function(){
                 res.redirect('/updateInfo');
             }).catch(function(){
-                res.render('404NotFound.ejs');
+                res.render('pages/404.ejs');
             });
         };
     }; 
@@ -106,7 +106,7 @@ router.post('/numberphone',async function(req,res){
             }).then(function(){
                 res.redirect('/updateInfo');
             }).catch(function(){
-                res.render('404NotFound.ejs');
+                res.render('pages/404.ejs');
             });
         };
     }; 
@@ -126,7 +126,7 @@ router.post('/email',async function(req,res){
             }).then(function(){
                 res.redirect('/updateInfo');
             }).catch(function(){
-                res.render('404NotFound.ejs');
+                res.render('pages/404.ejs');
             });
         };
     }; 
@@ -147,7 +147,7 @@ router.post('/password',async function(req,res){
             }).then(function(){
                 res.redirect('/updateInfo');
             }).catch(function(){
-                res.render('404NotFound.ejs');
+                res.render('pages/404.ejs');
             });
         };
     }; 
@@ -167,7 +167,7 @@ router.post('/address',async function(req,res){
             }).then(function(){
                 res.redirect('/updateInfo');
             }).catch(function(){
-                res.render('404NotFound.ejs');
+                res.render('pages/404.ejs');
             });
         };
     }; 

@@ -9,7 +9,7 @@ const saltRounds = 10;
 
 
 router.get('/',function(req,res){
-	res.render('Login.ejs');
+	res.render('auth/login.ejs');
 });
 
 router.post('/',async function(req,res){
@@ -27,11 +27,11 @@ router.post('/',async function(req,res){
 		});
 		if (!User) {
 			console.log('password sai');
-			res.render('Login.ejs', { UserSaiPass });
+			res.render('auth/login.ejs', { UserSaiPass });
 		}
 		else if(User.accept_User === false){
 			const error = "Vui long xac nhan email!";
-			res.render('Login.ejs', {error});
+			res.render('auth/login.ejs', {error});
 		}
 		else {
 			const match = await bcrypt.compare(txtUserPassword, User.user_Password);
@@ -41,7 +41,7 @@ router.post('/',async function(req,res){
 				res.redirect('/');
 			}
 			if (match == false) {
-				res.render('Login.ejs', { UserSaiPass });
+				res.render('auth/login.ejs', { UserSaiPass });
 			}
 		}
 	}

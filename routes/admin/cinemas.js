@@ -13,7 +13,7 @@ router.get('/update/cinema',async function(req,res){
            
         });
         
-        res.render('admin.ejs',{cinema,Adress});
+        res.render('layouts/admin.ejs',{cinema,Adress});
     }
     else{
         res.redirect('/');
@@ -30,7 +30,7 @@ router.post('/delete/cinema/:id',async function(req,res){
         }).then(function(){
             res.redirect('/admin/update/cinema/');
         }).catch(function(){
-            res.render('404NotFound.ejs');
+            res.render('pages/404.ejs');
         });
     }
     else{
@@ -38,7 +38,7 @@ router.post('/delete/cinema/:id',async function(req,res){
     }
 });
 router.get('/update/cinema/:id',async function(req,res){
-    res.render('404NotFound.ejs');
+    res.render('pages/404.ejs');
 });
 router.post('/update/cinema/:id',async function(req,res){
     const { Admin } = req.session;
@@ -46,7 +46,7 @@ router.post('/update/cinema/:id',async function(req,res){
     if(Admin){
         const { txtCinemaName, txtCinemaType, txtCinemaLength, txtCinemaWidth, txtCineplexName } = req.body;
         const cineplexId = Number(txtCineplexName);
-        if (!Number.isInteger(cineplexId) || cineplexId <= 0) return res.render('404NotFound.ejs');
+        if (!Number.isInteger(cineplexId) || cineplexId <= 0) return res.render('pages/404.ejs');
 
         const cineplex = await Cineplex.findOne({ where: { cineplex_ID: cineplexId } });
         if(cineplex){
@@ -63,7 +63,7 @@ router.post('/update/cinema/:id',async function(req,res){
             }).then(function(){
                 res.redirect('/admin/update/cinema/');
             }).catch(function(){
-                res.render('404NotFound.ejs');
+                res.render('pages/404.ejs');
             });
         }else{
             res.redirect('/admin');
@@ -97,7 +97,7 @@ router.post('/create/cinema/',async function(req,res){
                 res.redirect('/admin/update/cinema');
             }).catch(function(err){
                 console.log(err);
-                res.render('404NotFound.ejs');
+                res.render('pages/404.ejs');
             });
         }else{
             res.redirect('/admin');
@@ -107,7 +107,7 @@ router.post('/create/cinema/',async function(req,res){
     }
 });
 router.get('/create/cinema/',async function(req,res){
-    res.render('404NotFound.ejs');
+    res.render('pages/404.ejs');
 });
 
 module.exports = router;

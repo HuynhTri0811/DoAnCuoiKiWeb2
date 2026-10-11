@@ -48,7 +48,7 @@ router.get('/',async function(req,res){
 	});
 	
 	const film = {  filmPublic : filmPublic , filmNoPublic : filmNoPublic, filmViewHigh : filmViewHigh } ;
-	res.render('home.ejs',{film , user});
+	res.render('layouts/home.ejs',{film , user});
 });
 
 router.get('/filmSearch',async function(req,res){
@@ -93,11 +93,11 @@ router.get('/filmSearch',async function(req,res){
 		});
 	};
 	const searchNameFilm = { searchNameFilmPublic : searchNameFilmPublic, searchNameFilmNoPublic : searchNameFilmNoPublic}
-	res.render('home.ejs',{searchNameFilm, user});
+	res.render('layouts/home.ejs',{searchNameFilm, user});
 });
 
 router.get('/forgotPassword',function(req,res){
-	res.render('forgotPassword.ejs');
+	res.render('auth/forgot-password.ejs');
 });
 
 router.get('/logout',function(req,res){
@@ -107,12 +107,12 @@ router.get('/logout',function(req,res){
 
 router.get('/support',function(req,res){
 	const support = true;
-	res.render('home.ejs',{support});
+	res.render('layouts/home.ejs',{support});
 });
 
 router.get('/intro',function(req,res){
 	const intro = true;
-	res.render('home.ejs',{intro});
+	res.render('layouts/home.ejs',{intro});
 });
 
 module.exports = router;

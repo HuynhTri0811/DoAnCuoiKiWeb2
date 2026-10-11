@@ -16,7 +16,7 @@ function Random() {
 }
 
 router.get('/',function(req,res){
-	res.render('signUp.ejs');
+	res.render('auth/sign-up.ejs');
 });
 router.post('/',async function(req,res){
 	var text = Random();
@@ -27,7 +27,7 @@ router.post('/',async function(req,res){
 		}
 	});
 	if(User){
-		res.render('signUp.ejs',{User});
+		res.render('auth/sign-up.ejs',{User});
 	}
 	else{
 		const NumberPhone = await user.findOne({
@@ -37,7 +37,7 @@ router.post('/',async function(req,res){
 		});
 		if(NumberPhone)
 		{
-			res.render('signUp.ejs',{NumberPhone});
+			res.render('auth/sign-up.ejs',{NumberPhone});
 		}
 		else{
 			const hash = await bcrypt.hash(user_Password,saltRounds);
@@ -50,7 +50,7 @@ router.post('/',async function(req,res){
 						user_Code : text ,
 					}).then(async function(user){
 						const info = await sendEmail(req.body.user_Email, 'Xác nhận tài khoản', 'Đây là email tự động, vui lòng không gửi mail qua địa chỉ này.\nMã xác nhận của bạn: ' + text	);
-						res.render('loginConfirm.ejs',{user_Email});
+						res.render('auth/sign-up-confirm.ejs',{user_Email});
 					}).catch(function(err){
 						console.log(err,req.body);
 					});
@@ -81,10 +81,10 @@ router.post('/confirm/',async function(req,res, next){
 		}
 		else
 		{
-			res.render('loginConfirm.ejs',{user_Email,codefail});
+			res.render('auth/sign-up-confirm.ejs',{user_Email,codefail});
 		}
 	}).catch(function(next){
-		res.render('loginConfirm.ejs',{user_Email,codefail});
+		res.render('auth/sign-up-confirm.ejs',{user_Email,codefail});
 	});
 });
 

@@ -59,14 +59,14 @@ router.get('/update/film/', async function(req, res) {
     if (!req.session || !req.session.Admin) return res.redirect('/');
 
     const filmAll = await Film.findAll({ order: [['film_ID', 'ASC']] });
-    res.render('admin.ejs', { filmAll });
+    res.render('layouts/admin.ejs', { filmAll });
 });
 
 router.post('/update/film/:id', async function(req, res) {
     if (!req.session || !req.session.Admin) return res.redirect('/');
 
     const id = Number(req.params.id);
-    if (!Number.isInteger(id) || id <= 0) return res.render('404NotFound.ejs');
+    if (!Number.isInteger(id) || id <= 0) return res.render('pages/404.ejs');
 
     let upload;
     let imagePath;
@@ -88,14 +88,14 @@ router.post('/update/film/:id', async function(req, res) {
         const [updatedCount] = await Film.update(updates, { where: { film_ID: id } });
         if (!updatedCount) {
             if (imagePath) await fs.promises.unlink(path.join(imageDirectory, path.basename(imagePath))).catch(() => {});
-            return res.render('404NotFound.ejs');
+            return res.render('pages/404.ejs');
         }
         return res.redirect('/admin/update/film/');
     } catch (error) {
         await removeTemporaryUpload(upload);
         if (imagePath) await fs.promises.unlink(path.join(imageDirectory, path.basename(imagePath))).catch(() => {});
         console.error('Unable to update film:', error);
-        return res.render('404NotFound.ejs');
+        return res.render('pages/404.ejs');
     }
 });
 
@@ -103,13 +103,13 @@ router.post('/delete/film/:id', async function(req, res) {
     if (!req.session || !req.session.Admin) return res.redirect('/');
 
     const id = Number(req.params.id);
-    if (!Number.isInteger(id) || id <= 0) return res.render('404NotFound.ejs');
+    if (!Number.isInteger(id) || id <= 0) return res.render('pages/404.ejs');
     try {
         await Film.destroy({ where: { film_ID: id } });
         return res.redirect('/admin/update/film/');
     } catch (error) {
         console.error('Unable to delete film:', error);
-        return res.render('404NotFound.ejs');
+        return res.render('pages/404.ejs');
     }
 });
 
@@ -142,7 +142,7 @@ router.post('/create/film/', async function(req, res) {
         await removeTemporaryUpload(upload);
         if (imagePath) await fs.promises.unlink(path.join(imageDirectory, path.basename(imagePath))).catch(() => {});
         console.error('Unable to create film:', error);
-        return res.render('404NotFound.ejs');
+        return res.render('pages/404.ejs');
     }
 });
 
