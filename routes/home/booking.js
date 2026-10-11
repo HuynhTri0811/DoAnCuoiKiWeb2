@@ -48,12 +48,12 @@ router.get('/phim/muave/:id',async function(req,res)
 			}
 			console.log("Chuỗi ghế đã đặt:")
 			console.log(ghe_da_dat);
-			res.render('users/muave.ejs',{ user, cinemaTimeShow, ticket, ghe_da_dat });
+			res.render('home/booking/select-seats.ejs',{ user, cinemaTimeShow, ticket, ghe_da_dat });
 		} else {
-			res.render('users/muave.ejs',{ user, cinemaTimeShow, ticket, ghe_da_dat });
+			res.render('home/booking/select-seats.ejs',{ user, cinemaTimeShow, ticket, ghe_da_dat });
 		}
 	} else {
-		res.render('Login.ejs');
+		res.render('auth/login.ejs');
 	}
 });
 
@@ -67,7 +67,7 @@ router.post('/phim/muave/:id',async function(req,res){
 	});
 	const id_req = String(req.params.id);
 	if (!user) {
-		res.render('Login.ejs', { UserSaiPass });
+		res.render('auth/login.ejs', { UserSaiPass });
 	}
 	else {
 		const match = await bcrypt.compare(txtUserPassword, user.user_Password);
@@ -76,7 +76,7 @@ router.post('/phim/muave/:id',async function(req,res){
 			res.redirect('/phim/muave/'+id_req);
 		}
 		else {
-			res.render('Login.ejs', { UserSaiPass });
+			res.render('auth/login.ejs', { UserSaiPass });
 		}
 	}
 });
@@ -219,7 +219,7 @@ router.post('/phim/muave/thongtinve/:id',async function(req,res){
 
 			
 
-			res.render('users/da_muave.ejs',{timeShow_Chosen, txtChair, txtChairType, txtTotalMoney, txtMave});
+			res.render('home/booking/confirmation.ejs',{timeShow_Chosen, txtChair, txtChairType, txtTotalMoney, txtMave});
 		}).catch(async function(err){
 			console.log("Lỗi bắt được là:");
 			console.log(err);

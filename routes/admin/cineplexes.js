@@ -5,7 +5,7 @@ router.get('/update/cineplex',async function(req,res){
     const { Admin } = req.session;
     if( Admin ){
         const cineplex = await Cineplex.findAll();
-        res.render('admin.ejs' ,{ cineplex });
+        res.render('layouts/admin.ejs' ,{ cineplex });
     } else {
         res.redirect('/');
     }
@@ -19,7 +19,7 @@ router.post('/delete/cineplex/:id',async function(req,res){
             return res.redirect('/admin/update/cineplex');
         } catch (error) {
             console.error('Unable to delete cineplex:', error);
-            return res.render('404NotFound.ejs');
+            return res.render('pages/404.ejs');
         }
     } else {
         res.redirect('/');
@@ -38,7 +38,7 @@ router.post('/update/cineplex/:id',async function(req,res){
             return res.redirect('/admin/update/cineplex');
         } catch (error) {
             console.error('Unable to update cineplex:', error);
-            return res.render('404NotFound.ejs');
+            return res.render('pages/404.ejs');
         }
     }else{
         res.redirect('/');
@@ -61,7 +61,7 @@ router.post('/create/cineplex/',async function(req,res){
             return res.redirect('/admin/update/cineplex');
         } catch (error) {
             console.error('Unable to create cineplex:', error);
-            return res.render('404NotFound.ejs');
+            return res.render('pages/404.ejs');
         }
     }else{
         res.redirect('/');

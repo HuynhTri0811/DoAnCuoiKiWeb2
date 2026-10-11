@@ -5,7 +5,7 @@ router.get('/update/cinemaTimeShow/cinema/:id',async function(req,res){
     const { Admin } = req.session ;
     const id = Number(req.params.id);
     if( Admin ){
-        if (!Number.isInteger(id) || id <= 0) return res.render('404NotFound.ejs');
+        if (!Number.isInteger(id) || id <= 0) return res.render('pages/404.ejs');
         req.session.cinemaTimeShowReturnPath = `/admin/update/cinemaTimeShow/cinema/${id}`;
         const loi = req.session.loi;
         delete req.session.loi;
@@ -36,7 +36,7 @@ router.get('/update/cinemaTimeShow/cinema/:id',async function(req,res){
                 film_Public : true ,
             }
         });
-        res.render('admin.ejs',{timeShowCinemaIDcinema,cinemaAll,filmCinemaTimeShow,TimeShow,loi});
+        res.render('layouts/admin.ejs',{timeShowCinemaIDcinema,cinemaAll,filmCinemaTimeShow,TimeShow,loi});
     }
     else{
         res.redirect('/');
@@ -46,7 +46,7 @@ router.get('/update/cinemaTimeShow/film/:id',async function(req,res){
     const { Admin } = req.session ;
     const id = Number(req.params.id);
     if( Admin ){
-        if (!Number.isInteger(id) || id <= 0) return res.render('404NotFound.ejs');
+        if (!Number.isInteger(id) || id <= 0) return res.render('pages/404.ejs');
         req.session.cinemaTimeShowReturnPath = `/admin/update/cinemaTimeShow/film/${id}`;
         const loi = req.session.loi;
         delete req.session.loi;
@@ -73,7 +73,7 @@ router.get('/update/cinemaTimeShow/film/:id',async function(req,res){
                 film_ID : id ,
             }
         });
-        res.render('admin.ejs',{timeShowCinemaIDcinema,cinemaAll,filmCinemaTimeShow,TimeShow,loi});
+        res.render('layouts/admin.ejs',{timeShowCinemaIDcinema,cinemaAll,filmCinemaTimeShow,TimeShow,loi});
     }
     else{
         res.redirect('/');
@@ -136,7 +136,7 @@ router.post('/delete/cinemaTimeShow/cinema/:id',async function(req,res){
     const { Admin } = req.session ;
     const id = Number(req.params.id);
     if( Admin ){
-        if (!Number.isInteger(id) || id <= 0) return res.render('404NotFound.ejs');
+        if (!Number.isInteger(id) || id <= 0) return res.render('pages/404.ejs');
         const returnPath = getShowtimeReturnPath(req);
         try {
             await CinemaTimeShow.destroy({
@@ -145,7 +145,7 @@ router.post('/delete/cinemaTimeShow/cinema/:id',async function(req,res){
             return res.redirect(returnPath);
         } catch (error) {
             console.error('Unable to delete showtime:', error);
-            return res.render('404NotFound.ejs');
+            return res.render('pages/404.ejs');
         }
     }
     else{

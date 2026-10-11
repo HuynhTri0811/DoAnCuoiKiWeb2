@@ -26,31 +26,31 @@
     </div>
     <div id="content_admin">
     <% if(typeof thuocTinhFilm !== 'undefined' && typeof thuocTinhCumRap !== 'undefined') { %>
-        <% include admin/BangDoanhThu.ejs %>
+        <% include ../admin/partials/revenue.ejs %>
     <% } %>
     <% if(typeof cinema !== 'undefined') { %>
-        <% include admin/cinema.ejs %>
+        <% include ../admin/partials/cinemas.ejs %>
     <% } %>
     <% if(typeof cinemaID !== 'undefined') { %>
-        <% include admin/update/updatecinema.ejs %>
+        <% include ../admin/legacy/update/updatecinema.ejs %>
     <% } %>
     <% if(typeof userAll !== 'undefined') { %>
-        <% include admin/userAll.ejs %>
+        <% include ../admin/partials/users.ejs %>
     <% } %>
     <% if(typeof userID !== 'undefined') { %>
-        <% include admin/update/updateuser.ejs %>
+        <% include ../admin/legacy/update/updateuser.ejs %>
     <% } %>
     <% if(typeof filmAll !== 'undefined') { %>
-        <% include admin/filmAll.ejs %>
+        <% include ../admin/partials/films.ejs %>
     <% } %>
     <% if(typeof filmID !== 'undefined') { %>
-        <% include admin/update/updatefilm.ejs %>
+        <% include ../admin/legacy/update/updatefilm.ejs %>
     <% } %>
     <% if(typeof cineplex !== 'undefined') { %>
-        <% include admin/cineplex.ejs %>
+        <% include ../admin/partials/cineplexes.ejs %>
     <% } %>
     <% if(typeof timeShowCinemaIDcinema !== 'undefined' ) { %>
-        <% include admin/cinemaTimeShow/cinemaTimeShowCinema.ejs %>
+        <% include ../admin/partials/showtimes/cinemaTimeShowCinema.ejs %>
     <% } %>
     </div>
 </body>

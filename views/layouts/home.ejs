@@ -23,9 +23,9 @@
 
         <!--Header top-->
         <% if ( typeof user !== 'undefined' ) { %>
-            <% include Header/logged.ejs %>
+            <% include ../home/partials/header/logged.ejs %>
         <% } else { %>
-            <% include Header/noLogin.ejs %>
+            <% include ../home/partials/header/guest.ejs %>
         <% } %>  
         <!--Menu header-->
         <nav class="navbar navbar-default ">
@@ -131,23 +131,23 @@
     </header>
 
     <% if (typeof support !== 'undefined') { %>
-        <% include content/support.ejs %>
+        <% include ../home/content/support.ejs %>
     <% } %>
     <% if (typeof intro !== 'undefined') { %>
-        <% include content/intro.ejs %>
+        <% include ../home/content/intro.ejs %>
     <% } %>
     <!--======================================================================================
                                             Content area
     =======================================================================================-->
 
     <% if (typeof film !== 'undefined') { %>
-        <% include content/index.ejs %>
+        <% include ../home/content/index.ejs %>
     <% } if (typeof filmID !== 'undefined') { %>
-        <% include content/filmID.ejs %>
+        <% include ../home/content/filmID.ejs %>
     <% } if (typeof searchNameFilm !== 'undefined') { %>
-        <% include content/searchNameFilm.ejs %>
+        <% include ../home/content/searchNameFilm.ejs %>
     <% } if (typeof filmChieu !== 'undefined') { %>
-        <% include content/index.ejs %>
+        <% include ../home/content/index.ejs %>
     <% } %>
 
 

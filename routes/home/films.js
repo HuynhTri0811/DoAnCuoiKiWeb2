@@ -47,7 +47,7 @@ router.get('/phim',async function(req,res){
 		]
 	});
 	const filmChieu = {  filmDangChieu : filmDangChieu , filmSapChieu : filmSapChieu, filmXemNhieu : filmXemNhieu } ;
-	res.render('home.ejs',{filmChieu , user});
+	res.render('layouts/home.ejs',{filmChieu , user});
 });
 
 router.get('/phim/:id',async function(req,res){
@@ -107,7 +107,7 @@ router.get('/phim/:id',async function(req,res){
 	});
 
 	//console.log(cinemaTimeShow);
-	res.render('home.ejs',{filmID,user,filmDangChieu2,cinemaTimeShow,cinema,cineplex});
+	res.render('layouts/home.ejs',{filmID,user,filmDangChieu2,cinemaTimeShow,cinema,cineplex});
 });
 
 

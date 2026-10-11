@@ -77,7 +77,7 @@ async function getSalesSummary(startDate, endDate) {
 }
 
 async function renderSalesSummary(res, startDate, endDate) {
-    res.render('admin.ejs', await getSalesSummary(startDate, endDate));
+    res.render('layouts/admin.ejs', await getSalesSummary(startDate, endDate));
 }
 
 router.get('/', async function(req, res) {
@@ -97,7 +97,7 @@ router.post('/', async function(req, res) {
         || Number.isNaN(startDate.getTime())
         || Number.isNaN(endDate.getTime())
         || startDate > endDate) {
-        return res.status(400).render('404NotFound.ejs');
+        return res.status(400).render('pages/404.ejs');
     }
     await renderSalesSummary(res, startDate, endDate);
 });
