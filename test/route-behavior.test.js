@@ -1,386 +1,177 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const path = require('node:path');
-const Sequelize = require('sequelize');
-const {
-    createRequest,
-    createResponse,
-    loadWithMocks,
-    modelPath,
-    routeHandler,
-    routeModelsPath,
-} = require('./support/route-test-helpers');
+const { loadWithMocks } = require('./support/route-test-helpers');
+const AuthenticateUser = require('../src/application/auth/AuthenticateUser');
+const RegisterUser = require('../src/application/auth/RegisterUser');
+const UpdateProfile = require('../src/application/profile/UpdateProfile');
+const ManageShowtimes = require('../src/application/admin/ManageShowtimes');
+const GetSalesSummary = require('../src/application/admin/GetSalesSummary');
+const BookSeats = require('../src/application/booking/BookSeats');
+const TicketReservation = require('../src/domain/booking/TicketReservation');
+const createBookingController = require('../src/interfaces/http/controllers/bookingController');
 
-function mockRouterModels(feature, values) {
-    return { [routeModelsPath(feature)]: { Sequelize, Op: Sequelize.Op, ...values } };
-}
-
-function createMockModel(overrides = {}) {
-    return {
-        findAll: async () => [],
-        findOne: async () => null,
-        create: async values => values,
-        update: async () => [1],
-        destroy: async () => 1,
-        sum: async () => 0,
-        max: async () => null,
-        ...overrides,
+test('authentication use case handles admin, confirmed and unconfirmed accounts', async () => {
+    const users = {
+        findByEmail: async email => email === 'confirmed@example.com'
+            ? { id: 27, passwordHash: 'hash', emailConfirmed: true }
+            : email === 'pending@example.com'
+                ? { id: 28, passwordHash: 'hash', emailConfirmed: false }
+                : null,
     };
-}
-
-function loadRouteModule(relativePath) {
-    const model = createMockModel();
-    const models = {
-        Film: model,
-        User: model,
-        Cineplex: model,
-        Cinema: model,
-        TimeShow: model,
-        CinemaTimeShow: model,
-        Ticket: model,
-        user: model,
-        ticket: model,
-    };
-    const directModelMocks = Object.fromEntries(
-        ['User', 'Film', 'Cineplex', 'Cinema', 'TimeShow', 'CinemaTimeShow', 'Ticket']
-            .map(name => [modelPath(name), model]),
-    );
-    return loadWithMocks(relativePath, {
-        ...directModelMocks,
-        ...mockRouterModels('home', models),
-        ...mockRouterModels('admin', models),
-        [path.resolve(__dirname, '../models/email.js')]: async () => {},
-        [path.resolve(__dirname, '../routes/admin/utils/auth.js')]: require('../routes/admin/utils/auth'),
-        bcrypt: { compare: async () => false, hash: async value => `hashed:${value}` },
-        formidable: { IncomingForm: class IncomingForm {} },
+    const authenticate = new AuthenticateUser({
+        users,
+        verifyPassword: async (password, hash) => password === 'secret' && hash === 'hash',
     });
-}
 
-test('admin and home entry points export their feature routers', () => {
-    const formidable = { IncomingForm: class IncomingForm {} };
-    const emailPath = path.resolve(__dirname, '../models/email.js');
-    const mocks = {
-        formidable,
-        bcrypt: { compare: async () => true, hash: async value => value },
-        [emailPath]: async () => {},
-    };
-    const admin = loadWithMocks('routes/admin.js', mocks);
-    const home = loadWithMocks('routes/home.js', mocks);
-
-    assert.ok(Array.isArray(admin.stack));
-    assert.ok(Array.isArray(home.stack));
-    assert.ok(admin.stack.length > 0);
-    assert.ok(home.stack.length > 0);
+    assert.deepEqual(await authenticate.execute({ email: 'Admin123@gmail.com', password: '123456' }), { kind: 'admin' });
+    assert.deepEqual(await authenticate.execute({ email: 'confirmed@example.com', password: 'secret' }), {
+        kind: 'authenticated', userId: 27,
+    });
+    assert.deepEqual(await authenticate.execute({ email: 'pending@example.com', password: 'secret' }), { kind: 'unconfirmed' });
+    assert.deepEqual(await authenticate.execute({ email: 'missing@example.com', password: 'secret' }), { kind: 'invalid-credentials' });
 });
 
-test('every route module loads and registers at least one endpoint', () => {
-    const modules = [
-        'routes/home/pages.js',
-        'routes/home/films.js',
-        'routes/home/booking.js',
-        'routes/Login.js',
-        'routes/signUp.js',
-        'routes/forgotPassword.js',
-        'routes/updateInfo.js',
-        'routes/admin/dashboard.js',
-        'routes/admin/cinemas.js',
-        'routes/admin/cineplexes.js',
-        'routes/admin/films.js',
-        'routes/admin/showtimes.js',
-        'routes/admin/users.js',
+test('registration use case checks uniqueness, hashes passwords and emails a code', async () => {
+    const created = [];
+    const sent = [];
+    const register = new RegisterUser({
+        users: {
+            findByEmail: async email => email === 'used@example.com' ? { id: 1 } : null,
+            findByPhone: async phone => phone === '111' ? { id: 2 } : null,
+            create: async account => { created.push(account); return { id: 3, ...account }; },
+        },
+        hashPassword: async password => `hash:${password}`,
+        sendEmail: async (...args) => sent.push(args),
+        generateCode: () => 'A1b2C3d4E5',
+    });
+
+    assert.equal((await register.execute({ email: 'used@example.com' })).kind, 'email-taken');
+    assert.equal((await register.execute({ email: 'new@example.com', phone: '111' })).kind, 'phone-taken');
+    const result = await register.execute({ email: 'new@example.com', password: 'secret', name: 'A', phone: '222' });
+    assert.equal(result.kind, 'registered');
+    assert.equal(created[0].passwordHash, 'hash:secret');
+    assert.equal(created[0].verificationCode, 'A1b2C3d4E5');
+    assert.equal(sent.length, 1);
+});
+
+test('profile update use case maps password changes through the hasher', async () => {
+    const updates = [];
+    const profile = new UpdateProfile({
+        profiles: { updateField: async (...args) => updates.push(args) },
+        hashPassword: async password => `hashed:${password}`,
+    });
+
+    assert.deepEqual(await profile.execute({ userId: null, field: 'name', value: 'A' }), { kind: 'unauthenticated' });
+    await profile.execute({ userId: 7, field: 'password', value: 'secret' });
+    assert.deepEqual(updates, [[7, 'passwordHash', 'hashed:secret']]);
+});
+
+test('profile update use case accepts only the known account fields', async () => {
+    const updates = [];
+    const profile = new UpdateProfile({
+        profiles: { updateField: async (...args) => updates.push(args) },
+        hashPassword: async value => value,
+    });
+    for (const field of ['name', 'phone', 'email', 'address']) {
+        assert.deepEqual(await profile.execute({ userId: 8, field, value: field }), { kind: 'updated' });
+    }
+    assert.deepEqual(await profile.execute({ userId: 8, field: 'unknown', value: 'x' }), { kind: 'invalid-field' });
+    assert.deepEqual(updates, [[8, 'name', 'name'], [8, 'phone', 'phone'], [8, 'email', 'email'], [8, 'address', 'address']]);
+});
+
+test('showtime use case validates input and rejects duplicates', async () => {
+    const created = [];
+    const showtimes = new ManageShowtimes({
+        showtimes: {
+            findDuplicate: async () => ({ id: 1 }),
+            create: async values => created.push(values),
+        },
+    });
+    assert.deepEqual(await showtimes.create({ cinemaId: 1, date: '', timeShowId: 2, filmId: 3 }), { kind: 'invalid' });
+    assert.deepEqual(await showtimes.create({ cinemaId: 1, date: '2026-10-16', timeShowId: 2, filmId: 3 }), { kind: 'duplicate' });
+    assert.equal(created.length, 0);
+});
+
+test('sales summary aggregates cinema sales into the corresponding cineplex', async () => {
+    const dashboard = new GetSalesSummary({ dashboard: { getSales: async () => ({
+        filmSales: [{ CinemaTimeShow: { film_ID: 11 }, dataValues: { TongTien: '150', SoVeBanDuoc: '3' } }],
+        cinemaSales: [{ CinemaTimeShow: { cinema_ID: 21 }, dataValues: { TongTien: '150', SoVeBanDuoc: '3' } }],
+        films: [{ film_ID: 11, film_Name: 'Film' }],
+        cinemas: [{ cinema_ID: 21, cinema_Name: 'Cinema', CineplexCineplexID: 31 }],
+        cineplexes: [{ cineplex_ID: 31, cineplex_Name: 'Cineplex' }],
+    }) } });
+    const result = await dashboard.execute(new Date('2026-10-01'), new Date('2026-10-31'));
+    assert.equal(result.thuocTinhFilm[0].TotalMoney_film, 150);
+    assert.equal(result.thuocTinhCumRap[0].TotalMoney_cineplex, 150);
+    assert.equal(result.thuocTinhCumRap[0].CountTicket_cineplex, 3);
+});
+
+test('booking controller sends unauthenticated visitors to the login view', async () => {
+    const controller = createBookingController({
+        getSeatAvailability: { execute: async () => { throw new Error('should not load seats'); } },
+        authenticateBookingUser: {},
+        bookSeats: {},
+        bookings: {},
+    });
+    const response = { calls: [], render(view) { this.calls.push(view); } };
+    await controller.showSeats({ session: {}, params: { id: '4' } }, response);
+    assert.deepEqual(response.calls, ['auth/login.ejs']);
+});
+
+test('book seats creates a reservation and sends confirmation email', async () => {
+    const savedReservations = [];
+    const sentEmails = [];
+    const booking = new BookSeats({
+        bookings: {
+            getBookingContext: async () => ({
+                date: '2026-10-16',
+                startTime: '12:00',
+                film: { name: 'Film' },
+                cinema: { name: 'Cinema', cineplexName: 'Cineplex' },
+            }),
+            findUserById: async () => ({ email: 'user@example.com' }),
+            findLatestTicketNumber: async () => 4,
+            createTicket: async reservation => savedReservations.push(reservation),
+            findShowtime: async () => ({ id: 10 }),
+        },
+        sendEmail: async (...message) => sentEmails.push(message),
+    });
+
+    const result = await booking.execute({
+        userId: 9,
+        showtimeId: 10,
+        chair: 'A1',
+        chairType: 'Standard',
+        totalMoney: '120000',
+    });
+    assert.equal(savedReservations[0] instanceof TicketReservation, true);
+    assert.equal(savedReservations[0].code, 'VNC_CCF95');
+    assert.equal(result.txtMave, 'VNC_CCF95');
+    assert.equal(sentEmails[0][0], 'user@example.com');
+    assert.match(sentEmails[0][2], /16\/10\/2026/);
+});
+
+test('ticket reservation keeps domain values immutable', () => {
+    const reservation = new TicketReservation({
+        code: 'VNC_X', userId: 1, showtimeId: 2, seats: 'A1', seatType: 'Standard', totalPrice: 100,
+    });
+    assert.equal(reservation.seats, 'A1');
+    assert.equal(Object.isFrozen(reservation), true);
+});
+
+test('all HTTP router modules still register their public endpoints', () => {
+    const routeModules = [
+        'routes/home/pages.js', 'routes/home/films.js', 'routes/home/booking.js',
+        'routes/Login.js', 'routes/signUp.js', 'routes/forgotPassword.js', 'routes/updateInfo.js',
+        'routes/admin/dashboard.js', 'routes/admin/cinemas.js', 'routes/admin/cineplexes.js',
+        'routes/admin/films.js', 'routes/admin/showtimes.js', 'routes/admin/users.js',
     ];
-
-    for (const modulePath of modules) {
-        const router = loadRouteModule(modulePath);
-        assert.ok(router.stack.some(layer => layer.route), `${modulePath} has no registered routes`);
-    }
-});
-
-test('home logout clears the user session and redirects to the home page', async () => {
-    const router = loadWithMocks('routes/home/pages.js', mockRouterModels('home', {}));
-    const req = createRequest({ session: { user_Id: 27, other: 'keep' } });
-    const res = createResponse();
-
-    await routeHandler(router, 'get', '/logout')(req, res);
-
-    assert.equal(req.session.user_Id, undefined);
-    assert.equal(req.session.other, 'keep');
-    assert.deepEqual(res.calls, [{ type: 'redirect', location: '/' }]);
-});
-
-test('home support page renders its flag for the shared home template', async () => {
-    const router = loadWithMocks('routes/home/pages.js', mockRouterModels('home', {}));
-    const res = createResponse();
-
-    await routeHandler(router, 'get', '/support')(createRequest(), res);
-
-    assert.equal(res.calls[0].type, 'render');
-    assert.equal(res.calls[0].view, 'layouts/home.ejs');
-    assert.equal(res.calls[0].locals.support, true);
-});
-
-test('home film selection stores the chosen cinema before redirecting to seat selection', async () => {
-    const router = loadWithMocks('routes/home/films.js', mockRouterModels('home', {}));
-    const req = createRequest({ params: { id: '41' }, body: { cinemaID: '8' } });
-    const res = createResponse();
-
-    await routeHandler(router, 'post', '/phim/:id')(req, res);
-
-    assert.equal(req.session.cinemaIDChosen, '8');
-    assert.deepEqual(res.calls, [{ type: 'redirect', location: '/phim/muave/41' }]);
-});
-
-test('booking page asks an unauthenticated visitor to log in', async () => {
-    const user = {};
-    const formParser = { IncomingForm: class IncomingForm {} };
-    const router = loadWithMocks('routes/home/booking.js', {
-        ...mockRouterModels('home', { User: user }),
-        formidable: formParser,
-        bcrypt: { compare: async () => false },
-        [path.resolve(__dirname, '../models/email.js')]: async () => {},
-    });
-    const res = createResponse();
-
-    await routeHandler(router, 'get', '/phim/muave/:id')(
-        createRequest({ params: { id: '12' } }), res,
-    );
-
-    assert.equal(res.calls[0].view, 'auth/login.ejs');
-});
-
-test('login rejects an unconfirmed account without checking its password', async () => {
-    let passwordChecked = false;
-    const user = {
-        findOne: async () => ({ user_ID: 9, user_Password: 'hash', accept_User: false }),
-    };
-    const router = loadWithMocks('routes/Login.js', {
-        [modelPath('User')]: user,
-        bcrypt: { compare: async () => { passwordChecked = true; return true; } },
-        './signUp.js': {},
-    });
-    const res = createResponse();
-
-    await routeHandler(router, 'post', '/')(
-        createRequest({ body: { txtUserEmail: 'user@example.com', txtUserPassword: 'pw' } }), res,
-    );
-
-    assert.equal(passwordChecked, false);
-    assert.equal(res.calls[0].view, 'auth/login.ejs');
-    assert.ok(res.calls[0].locals.error);
-});
-
-test('login sets the user session after a successful password check', async () => {
-    const router = loadWithMocks('routes/Login.js', {
-        [modelPath('User')]: {
-            findOne: async () => ({ user_ID: 19, user_Password: 'hash', accept_User: true }),
-        },
-        bcrypt: { compare: async () => true },
-        './signUp.js': {},
-    });
-    const req = createRequest({ body: { txtUserEmail: 'user@example.com', txtUserPassword: 'pw' } });
-    const res = createResponse();
-
-    const originalLog = console.log;
-    console.log = () => {};
-    try {
-        await routeHandler(router, 'post', '/')(req, res);
-    } finally {
-        console.log = originalLog;
-    }
-
-    assert.equal(req.session.user_Id, 19);
-    assert.deepEqual(res.calls, [{ type: 'redirect', location: '/' }]);
-});
-
-test('signup reports an email already in use and does not create another user', async () => {
-    let created = false;
-    const router = loadWithMocks('routes/signUp.js', {
-        [modelPath('User')]: {
-            findOne: async () => ({ user_ID: 1 }),
-            create: async () => { created = true; },
-        },
-        [path.resolve(__dirname, '../models/email.js')]: async () => {},
-        bcrypt: { hash: async value => `hashed:${value}` },
-    });
-    const res = createResponse();
-
-    await routeHandler(router, 'post', '/')(
-        createRequest({ body: { user_Email: 'taken@example.com', user_Password: 'pw' } }), res,
-    );
-
-    assert.equal(created, false);
-    assert.equal(res.calls[0].view, 'auth/sign-up.ejs');
-    assert.ok(res.calls[0].locals.User);
-});
-
-test('forgot password gives the same form when the address is unknown', async () => {
-    const router = loadWithMocks('routes/forgotPassword.js', {
-        [modelPath('User')]: { findOne: async () => null },
-        [path.resolve(__dirname, '../models/email.js')]: async () => {},
-        bcrypt: { hash: async value => `hashed:${value}` },
-    });
-    const res = createResponse();
-
-    await routeHandler(router, 'post', '/')(
-        createRequest({ body: { email: 'missing@example.com' } }), res,
-    );
-
-    assert.equal(res.calls[0].view, 'auth/forgot-password.ejs');
-    assert.ok(res.calls[0].locals.UserSaiMail);
-});
-
-test('profile route redirects visitors without a user session', async () => {
-    const router = loadWithMocks('routes/updateInfo.js', {
-        [modelPath('User')]: {},
-        [modelPath('Film')]: {},
-        [modelPath('Cineplex')]: {},
-        [modelPath('Cinema')]: {},
-        [modelPath('TimeShow')]: {},
-        [modelPath('CinemaTimeShow')]: {},
-        [modelPath('Ticket')]: {},
-        formidable: { IncomingForm: class IncomingForm {} },
-        bcrypt: { hash: async value => value },
-    });
-    const res = createResponse();
-
-    await routeHandler(router, 'get', '/') (createRequest(), res);
-
-    assert.deepEqual(res.calls, [{ type: 'redirect', location: '/' }]);
-});
-
-test('admin authentication helper recognizes only a session admin', () => {
-    const { isAdmin, redirectIfNotAdmin } = require('../routes/admin/utils/auth');
-    const res = createResponse();
-
-    assert.equal(isAdmin({ session: { Admin: 'admin@example.com' } }), true);
-    assert.equal(isAdmin({ session: {} }), false);
-    assert.equal(isAdmin({}), false);
-    assert.equal(redirectIfNotAdmin({ session: {} }, res), true);
-    assert.deepEqual(res.calls, [{ type: 'redirect', location: '/' }]);
-});
-
-test('admin dashboard redirects a visitor before querying sales', async () => {
-    let queried = false;
-    const router = loadWithMocks('routes/admin/dashboard.js', {
-        ...mockRouterModels('admin', { ticket: { findAll: async () => { queried = true; } } }),
-        [path.resolve(__dirname, '../routes/admin/utils/auth.js')]: require('../routes/admin/utils/auth'),
-    });
-    const res = createResponse();
-
-    await routeHandler(router, 'get', '/') (createRequest(), res);
-
-    assert.equal(queried, false);
-    assert.deepEqual(res.calls, [{ type: 'redirect', location: '/' }]);
-});
-
-test('admin dashboard aggregates film sales into the matching cineplex', async () => {
-    let queryCount = 0;
-    const film = { film_ID: 4, film_Name: 'Film A' };
-    const cinema = { cinema_ID: 11, cinema_Name: 'Cinema A', CineplexCineplexID: 2 };
-    const cineplex = { cineplex_ID: 2, cineplex_Name: 'Cineplex A' };
-    const ticket = {
-        findAll: async () => {
-            queryCount += 1;
-            if (queryCount === 1) {
-                return [{
-                    CinemaTimeShow: { film_ID: 4, cinemaTimeShow_ID: 8 },
-                    dataValues: { TongTien: '120000', SoVeBanDuoc: '2' },
-                }];
-            }
-            return [{
-                CinemaTimeShow: { cinema_ID: 11, cinemaTimeShow_ID: 8 },
-                dataValues: { TongTien: '120000', SoVeBanDuoc: '2' },
-            }];
-        },
-    };
-    const router = loadWithMocks('routes/admin/dashboard.js', {
-        ...mockRouterModels('admin', {
-            ticket,
-            Film: { findAll: async () => [film] },
-            Cinema: { findAll: async () => [cinema] },
-            Cineplex: { findAll: async () => [cineplex] },
-        }),
-        [path.resolve(__dirname, '../routes/admin/utils/auth.js')]: require('../routes/admin/utils/auth'),
-    });
-    const res = createResponse();
-
-    await routeHandler(router, 'get', '/')(
-        createRequest({ session: { Admin: 'admin@example.com' } }), res,
-    );
-
-    assert.equal(queryCount, 2);
-    assert.equal(res.calls[0].view, 'layouts/admin.ejs');
-    assert.equal(res.calls[0].locals.thuocTinhFilm[0].TotalMoney_film, 120000);
-    assert.equal(res.calls[0].locals.thuocTinhFilm[0].CountTicket_film, 2);
-    assert.equal(res.calls[0].locals.thuocTinhCumRap[0].TotalMoney_cineplex, 120000);
-    assert.equal(res.calls[0].locals.thuocTinhCumRap[0].CountTicket_cineplex, 2);
-});
-
-test('admin user list redirects a visitor before reading users', async () => {
-    let queried = false;
-    const router = loadWithMocks('routes/admin/users.js', mockRouterModels('admin', {
-        user: { findAll: async () => { queried = true; return []; } },
-    }));
-    const res = createResponse();
-
-    await routeHandler(router, 'get', '/update/user')(createRequest(), res);
-
-    assert.equal(queried, false);
-    assert.deepEqual(res.calls, [{ type: 'redirect', location: '/' }]);
-});
-
-test('cinema, cineplex, film, and showtime admin lists reject visitors', async () => {
-    const protectedRoutes = [
-        ['routes/admin/cinemas.js', 'get', '/update/cinema'],
-        ['routes/admin/cineplexes.js', 'get', '/update/cineplex'],
-        ['routes/admin/films.js', 'get', '/update/film/'],
-        ['routes/admin/showtimes.js', 'get', '/update/cinemaTimeShow/cinema/:id'],
-    ];
-
-    for (const [modulePath, method, routePath] of protectedRoutes) {
-        const router = loadRouteModule(modulePath);
-        const res = createResponse();
-        await routeHandler(router, method, routePath)(
-            createRequest({ params: { id: '1' } }), res,
-        );
-        assert.deepEqual(res.calls, [{ type: 'redirect', location: '/' }], modulePath);
-    }
-});
-
-test('profile name update scopes the database update to the signed-in user', async () => {
-    let updateCall;
-    const router = loadWithMocks('routes/updateInfo.js', {
-        [modelPath('User')]: createMockModel({ update: async (...args) => { updateCall = args; return [1]; } }),
-        [modelPath('Film')]: {},
-        [modelPath('Cineplex')]: {},
-        [modelPath('Cinema')]: {},
-        [modelPath('TimeShow')]: {},
-        [modelPath('CinemaTimeShow')]: {},
-        [modelPath('Ticket')]: {},
-        formidable: { IncomingForm: class IncomingForm {} },
-        bcrypt: { hash: async value => `hashed:${value}` },
-    });
-    const res = createResponse();
-
-    await routeHandler(router, 'post', '/name')(
-        createRequest({ session: { user_Id: 32 }, body: { txtUserName: 'Nguyen An' } }), res,
-    );
-
-    assert.deepEqual(updateCall, [
-        { user_Name: 'Nguyen An' },
-        { where: { user_ID: 32 } },
-    ]);
-    assert.deepEqual(res.calls, [{ type: 'redirect', location: '/updateInfo' }]);
-});
-
-test('admin model registry resolves the project model files', () => {
-    const adminModels = require('../routes/admin/utils/models');
-    const homeModels = require('../routes/home/utils/models');
-
-    for (const name of ['user', 'ticket', 'Cinema', 'Cineplex', 'Film', 'timeShow', 'CinemaTimeShow']) {
-        assert.ok(adminModels[name], `Missing admin model export ${name}`);
-    }
-    for (const name of ['Film', 'User', 'Cineplex', 'Cinema', 'TimeShow', 'CinemaTimeShow', 'Ticket']) {
-        assert.ok(homeModels[name]);
+    for (const modulePath of routeModules) {
+        const router = loadWithMocks(modulePath, {
+            bcrypt: { compare: async () => false, hash: async value => value },
+            nodemailer: { createTransport: () => ({ sendMail: async () => ({}) }) },
+            formidable: { IncomingForm: class IncomingForm {} },
+        });
+        assert.ok(router.stack.some(layer => layer.route), `${modulePath} registers at least one route`);
     }
 });

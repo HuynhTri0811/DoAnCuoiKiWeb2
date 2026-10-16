@@ -1,79 +1,16 @@
-const router = require('./utils/createRouter')();
-const { Cineplex } = require('./utils/models');
+const router = require('../../src/interfaces/http/createRouter')();
+const requireAdmin = require('../../src/interfaces/http/middleware/requireAdmin');
+const { adminCatalog: controller } = require('../../src/container');
 
-router.get('/update/cineplex',async function(req,res){
-    const { Admin } = req.session;
-    if( Admin ){
-        const cineplex = await Cineplex.findAll();
-        res.render('layouts/admin.ejs' ,{ cineplex });
-    } else {
-        res.redirect('/');
-    }
+router.get('/update/cineplex', requireAdmin, controller.listCineplexes);
+router.post('/delete/cineplex/:id', requireAdmin, controller.deleteCineplex);
+router.post('/update/cineplex/:id', requireAdmin, controller.updateCineplex);
+router.get('/update/cineplex/:id', requireAdmin, function(req, res) {
+    return res.redirect('/admin/update/cineplex');
 });
-router.post('/delete/cineplex/:id',async function(req,res){
-    const { Admin } =req.session;
-    const id =Number(req.params.id);
-    if(Admin){
-        try {
-            await Cineplex.destroy({ where: { cineplex_ID: id } });
-            return res.redirect('/admin/update/cineplex');
-        } catch (error) {
-            console.error('Unable to delete cineplex:', error);
-            return res.render('pages/404.ejs');
-        }
-    } else {
-        res.redirect('/');
-    }
-});
-router.post('/update/cineplex/:id',async function(req,res){
-    const { Admin } = req.session;
-    const id = Number(req.params.id);
-    if(Admin){
-        var { txtCineplexName , txtCineplexAdress} = req.body ;
-        try {
-            await Cineplex.update({
-                cineplex_Name: txtCineplexName,
-                cineplex_Adress: txtCineplexAdress,
-            }, { where: { cineplex_ID: id } });
-            return res.redirect('/admin/update/cineplex');
-        } catch (error) {
-            console.error('Unable to update cineplex:', error);
-            return res.render('pages/404.ejs');
-        }
-    }else{
-        res.redirect('/');
-    }
-});
-router.get('/update/cineplex/:id',async function(req,res){
-    const { Admin } = req.session;
-    if(Admin){
-        res.redirect('/admin/update/cineplex');
-    }else{
-        res.redirect('/');
-    }
-});
-router.post('/create/cineplex/',async function(req,res){
-    const { Admin } = req.session ;
-    if(Admin){
-        const { cineplex_Name, cineplex_Adress } = req.body;
-        try {
-            await Cineplex.create({ cineplex_Name, cineplex_Adress });
-            return res.redirect('/admin/update/cineplex');
-        } catch (error) {
-            console.error('Unable to create cineplex:', error);
-            return res.render('pages/404.ejs');
-        }
-    }else{
-        res.redirect('/');
-    }
-});
-router.get('/create/cineplex/',async function(req,res){
-    const { Admin } = req.session ;
-    if(Admin){
-        res.redirect('/admin/update/cineplex');
-    }else{
-        res.redirect('/');
-    }
+router.post('/create/cineplex/', requireAdmin, controller.createCineplex);
+router.get('/create/cineplex/', requireAdmin, function(req, res) {
+    return res.redirect('/admin/update/cineplex');
 });
 
 module.exports = router;
