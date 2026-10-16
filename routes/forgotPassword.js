@@ -4,20 +4,13 @@ const sendEmail  = require('../models/email.js');
 const user = require('../models/User.js');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-function Random() {
-	var text = "";
-	var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-	for (var i = 0; i < 10; i++)
-	  text += possible.charAt(Math.floor(Math.random() * possible.length));
-	return text;
-  }
+const generateVerificationCode = require('./utils/verificationCode');
 
 router.get('/', function (req, res) {
 	res.render('auth/forgot-password.ejs');
   });
 router.post('/', async function (req, res) {
-	var macode =Random();
+	var macode = generateVerificationCode();
 	var UserSaiMail = 'abc';
 	const mail = req.body.email;
 	var User;

@@ -4,22 +4,14 @@ const user = require('../models/User.js');
 const sendEmail  = require('../models/email.js');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const generateVerificationCode = require('./utils/verificationCode');
 const router = new Router();
-
-function Random() {
-	var text = "";
-	var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  
-	for (var i = 0; i < 10; i++)
-	  text += possible.charAt(Math.floor(Math.random() * possible.length));
-	return text;
-}
 
 router.get('/',function(req,res){
 	res.render('auth/sign-up.ejs');
 });
 router.post('/',async function(req,res){
-	var text = Random();
+	var text = generateVerificationCode();
 	var {user_Email ,user_Password ,user_Name,user_NumberPhone } = req.body ;
 	const User =  await user.findOne({
 		where : {
