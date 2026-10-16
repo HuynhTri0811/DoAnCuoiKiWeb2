@@ -14,7 +14,7 @@ function createRouter() {
                 }
 
                 return function(req, res, next) {
-                    Promise.resolve(handler(req, res, next)).catch(next);
+                    return Promise.resolve(handler(req, res, next)).catch(next);
                 };
             });
 
