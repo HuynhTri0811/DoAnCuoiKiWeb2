@@ -1,4 +1,4 @@
-const router = require('./utils/createRouter')();
+const router = require('../../src/interfaces/http/createRouter')();
 
 router.use('/', require('./dashboard'));
 router.use('/', require('./cinemas'));

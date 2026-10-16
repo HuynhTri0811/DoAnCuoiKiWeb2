@@ -1,59 +1,12 @@
-const router = require('./utils/createRouter')();
-const { user } = require('./utils/models');
+const router = require('../../src/interfaces/http/createRouter')();
+const requireAdmin = require('../../src/interfaces/http/middleware/requireAdmin');
+const { adminCatalog: controller } = require('../../src/container');
 
-router.get('/update/user',async function(req,res){
-    const { Admin } = req.session;
-    if(Admin){
-        const userAll =  await user.findAll({
-        
-        });
-        res.render('layouts/admin.ejs',{userAll});
-    }
-    else{
-        res.redirect('/');
-    }
+router.get('/update/user', requireAdmin, controller.listUsers);
+router.post('/update/user/:id', requireAdmin, controller.updateUser);
+router.get('/update/user/:id', function(req, res) {
+    return res.render('pages/404.ejs');
 });
-router.post('/update/user/:id',async function(req,res){
-    const { Admin } = req.session ;
-    const id = Number(req.params.id);
-    if( Admin ){
-        var {txtUserEmail, txtUserName ,txtUserNumberPhone} =req.body;
-        await user.update({
-            user_Email : txtUserEmail , 
-            user_Name : txtUserName , 
-            user_NumberPhone : txtUserNumberPhone ,
-            },{
-                where :{
-                    user_ID : id ,
-                },
-        }).then(()=>{
-            res.redirect('/admin/update/user/');
-        }).catch(()=>{
-            res.render('pages/404.ejs');
-        });
-    }else{
-        res.redirect('/');
-    }
-});
-router.get('/update/user/:id',async function(req,res){
-    res.render('pages/404.ejs');
-});
-router.post('/delete/user/:id',async function(req,res){
-    const { Admin } = req.session;
-    const id = Number(req.params.id);
-    if(Admin){
-        await user.destroy({
-            where  :{
-                user_ID : id,
-            }
-        }).then(function(){
-            res.redirect('/admin/update/user/');
-        }).catch(function(err){
-            res.render('pages/404.ejs');
-        });
-    }else{
-        res.redirect('/');
-    }
-});
+router.post('/delete/user/:id', requireAdmin, controller.deleteUser);
 
 module.exports = router;
