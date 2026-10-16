@@ -1,7 +1,4 @@
 const Router = require('express').Router;
-const fs = require('fs');
-const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
 const User = require('../models/User.js');
 const Film = require('../models/Film.js');
 const Cineplex = require('../models/Cineplex.js');
@@ -10,9 +7,9 @@ const TimeShow = require('../models/TimeShow.js');
 const CinemaTimeShow = require('../models/CinemaTimeShow.js');
 const Ticket = require('../models/Ticket.js');
 
-var formidable = require('formidable'); 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const registerProfileUpdateRoutes = require('./utils/profileUpdates');
 
 
 const router = new Router();
@@ -71,106 +68,9 @@ router.post('/pagedf',async function(req,res){
 	res.redirect('/');
 });
 
-router.post('/name',async function(req,res){
-    const {user_Id} = req.session;
-    var form = new formidable.IncomingForm();
-    var {txtUserName} = req.body;
-    if(form){
-        if(user_Id){
-            await User.update({
-                user_Name : txtUserName ,
-                },
-                { where : {
-                    user_ID : user_Id,
-                    },
-            }).then(function(){
-                res.redirect('/updateInfo');
-            }).catch(function(){
-                res.render('pages/404.ejs');
-            });
-        };
-    }; 
-});
-router.post('/numberphone',async function(req,res){
-    const {user_Id} = req.session;
-    var form = new formidable.IncomingForm();
-    var {txtUserNumberPhone} = req.body;
-    if(form){
-        if(user_Id){
-            await User.update({
-                user_NumberPhone : txtUserNumberPhone ,
-                },
-                { where : {
-                    user_ID : user_Id,
-                    },
-            }).then(function(){
-                res.redirect('/updateInfo');
-            }).catch(function(){
-                res.render('pages/404.ejs');
-            });
-        };
-    }; 
-});
-router.post('/email',async function(req,res){
-    const {user_Id} = req.session;
-    var form = new formidable.IncomingForm();
-    var {txtUserEmail} = req.body;
-    if(form){
-        if(user_Id){
-            await User.update({
-                user_Email : txtUserEmail ,
-                },
-                { where : {
-                    user_ID : user_Id,
-                    },
-            }).then(function(){
-                res.redirect('/updateInfo');
-            }).catch(function(){
-                res.render('pages/404.ejs');
-            });
-        };
-    }; 
-});
-router.post('/password',async function(req,res){
-    const {user_Id} = req.session;
-    var form = new formidable.IncomingForm();
-    var {txtUserPassword} = req.body;
-    if(form){
-        if(user_Id){
-            const hash_pass = await bcrypt.hash(txtUserPassword,saltRounds);
-            await User.update({
-                user_Password : hash_pass ,
-                },
-                { where : {
-                    user_ID : user_Id,
-                    },
-            }).then(function(){
-                res.redirect('/updateInfo');
-            }).catch(function(){
-                res.render('pages/404.ejs');
-            });
-        };
-    }; 
-});
-router.post('/address',async function(req,res){
-    const {user_Id} = req.session;
-    var form = new formidable.IncomingForm();
-    var {txtUserAddress} = req.body;
-    if(form){
-        if(user_Id){
-            await User.update({
-                user_Address : txtUserAddress ,
-                },
-                { where : {
-                    user_ID : user_Id,
-                    },
-            }).then(function(){
-                res.redirect('/updateInfo');
-            }).catch(function(){
-                res.render('pages/404.ejs');
-            });
-        };
-    }; 
+registerProfileUpdateRoutes(router, {
+    User,
+    hashPassword: password => bcrypt.hash(password, saltRounds),
 });
 
 
