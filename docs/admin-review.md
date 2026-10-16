@@ -2,6 +2,8 @@
 
 Ngày: 2026-10-10
 
+> Cập nhật kiến trúc ngày 2026-10-16: router admin khai báo URL và gắn controller; use case nằm trong `src/application/admin/`, truy vấn Sequelize trong `src/infrastructure/persistence/sequelize/`, kết nối phụ thuộc ở `src/container.js`. Báo cáo bên dưới ghi lại lỗi lịch sử, không mô tả vị trí triển khai mới của từng handler.
+
 ## Phạm vi
 
 Đã rà soát các route quản trị trong `routes/admin/`, các file làm điểm vào tương thích `routes/admin.js` và `routes/home.js`, cùng các biểu mẫu EJS được những route quản trị sử dụng.
@@ -32,7 +34,7 @@ Ngày: 2026-10-10
    - Đã đổi route xóa phim, người dùng, rạp, cụm rạp và suất chiếu sang POST; các liên kết EJS tương ứng được đổi thành biểu mẫu.
 
 6. **Lỗi từ route bất đồng bộ chưa được chuyển nhất quán cho Express.**
-   - Đã thêm `routes/admin/utils/createRouter.js` để chuyển các promise bị reject từ handler bất đồng bộ tới cơ chế xử lý lỗi của Express.
+   - Route admin hiện dùng `src/interfaces/http/createRouter.js` để chuyển promise bị reject từ controller tới cơ chế xử lý lỗi Express.
 
 7. **Cập nhật rạp tìm cụm rạp theo một phần tên.**
    - Biểu mẫu sửa rạp hiện gửi ID cụm rạp và route tra cứu chính xác theo ID.
@@ -44,11 +46,11 @@ Ngày: 2026-10-10
 
 Các yêu cầu xóa hiện dùng POST, nhưng ứng dụng chưa tạo hoặc kiểm tra CSRF token. Chỉ đổi sang POST chưa đủ để bảo vệ hoàn toàn khỏi CSRF; cần tích hợp token vào middleware và các biểu mẫu của ứng dụng.
 
-## Các bước kiểm tra đã thực hiện
+## Các bước kiểm tra trong đợt rà soát ban đầu
 
 - Kiểm tra cú pháp JavaScript cho các file điểm vào và module route.
 - Biên dịch các template EJS quản trị đã chỉnh sửa.
 - Kiểm tra tĩnh để xác nhận các đường dẫn import tương đối tồn tại.
 - Chạy `git diff --check`.
 
-Chưa thể tải toàn bộ router trong workspace này vì `formidable` chưa có trong `node_modules`, dù package đã được khai báo trong `package.json`.
+Tại thời điểm rà soát ban đầu, chưa thể tải toàn bộ router trong workspace vì `formidable` chưa có trong `node_modules`, dù package đã được khai báo trong `package.json`. Bài test route hiện kiểm tra đăng ký endpoint với adapter bên thứ ba được mock.

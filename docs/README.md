@@ -29,7 +29,7 @@ VNCinema là ứng dụng đặt vé xem phim. Người dùng có thể xem và 
 
 ### Khởi động
 
-`package.json` hiện không định nghĩa script `start` hoặc test có thể chạy. Khởi động ứng dụng bằng:
+Khởi động ứng dụng bằng:
 
 ```sh
 npm install
@@ -53,13 +53,17 @@ node app.js
 
 ```text
 .
-├── app.js                 # Khởi tạo Express, middleware, mount route và kết nối DB
-├── models/                # Sequelize models, kết nối DB và gửi email
-├── routes/                # Route đăng nhập, đăng ký, hồ sơ và route theo tính năng
-│   ├── admin/             # Dashboard và quản lý dữ liệu dành cho admin
-│   │   └── utils/         # Tiện ích router, quyền admin và import model
-│   └── home/              # Trang phim, tìm kiếm và đặt vé
-│       └── utils/         # Import model dùng chung cho route home
+├── app.js                 # Bootstrap database và HTTP server
+├── src/
+│   ├── domain/            # Entity và quy tắc nghiệp vụ độc lập
+│   ├── application/       # Use case theo chức năng
+│   ├── infrastructure/   # Sequelize repository, email, upload và bảo mật
+│   ├── interfaces/http/   # Express controller, router helper và middleware
+│   └── container.js      # Composition root, nối use case với adapter
+├── models/                # Sequelize models và kết nối database
+├── routes/                # Khai báo URL và gắn controller/middleware
+│   ├── admin/             # Router theo tính năng quản trị
+│   └── home/              # Router phim, tìm kiếm và đặt vé
 ├── views/                 # EJS templates, chia theo khu vực chức năng
 │   ├── layouts/           # Khung trang home và admin
 │   ├── auth/              # Đăng nhập, đăng ký, xác nhận và đặt lại mật khẩu
@@ -73,7 +77,7 @@ node app.js
 └── package-lock.json      # Khóa phiên bản dependencies
 ```
 
-`routes/admin.js` và `routes/home.js` là điểm vào tương thích với `app.js`; chúng chuyển tiếp đến `routes/admin/index.js` và `routes/home/index.js`. Các route theo tính năng được đăng ký tại file `index.js` tương ứng.
+`routes/admin.js` và `routes/home.js` là điểm vào tương thích với `app.js`; chúng chuyển tiếp đến `routes/admin/index.js` và `routes/home/index.js`. Router chỉ khai báo URL. Controller chuyển đổi request/response, use case giữ luồng nghiệp vụ, repository thực hiện truy vấn. `src/container.js` là nơi tạo và kết nối các phụ thuộc cụ thể.
 
 ## Luồng request và route
 
@@ -103,7 +107,7 @@ node app.js
 - `routes/admin/showtimes.js`: xem suất chiếu theo rạp/phim, tạo và xóa suất chiếu.
 - `routes/admin/users.js`: danh sách, cập nhật và xóa người dùng.
 
-Các thao tác xóa quản trị hiện dùng POST. Quyền quản trị được nhận diện qua `req.session.Admin`; phần lớn route kiểm tra session trực tiếp, dashboard dùng `routes/admin/utils/auth.js`.
+Các thao tác xóa quản trị hiện dùng POST. Quyền quản trị được kiểm tra bởi middleware `src/interfaces/http/middleware/requireAdmin.js`, dựa trên `req.session.Admin`.
 
 ## Mô hình dữ liệu
 
@@ -138,13 +142,14 @@ Quan hệ chính: một suất chiếu `CinemaTimeShow` trỏ tới một rạp,
 | Biến | Công dụng | Mặc định trong code |
 | --- | --- | --- |
 | `PORT` | Cổng HTTP | `3000` |
+| `SESSION_SECRET` | Secret ký session | `keyboard cat` (fallback phát triển; cần cấu hình riêng khi triển khai) |
 | `DATABASE_URL` | URL PostgreSQL cho Sequelize | `postgres://admin:admin@localhost:5432/Web2` |
 
-Cấu hình gửi email hiện nằm trực tiếp trong `models/email.js`, không lấy từ biến môi trường. Trước khi triển khai hoặc chia sẻ mã nguồn, cần chuyển thông tin xác thực sang secret/environment variables và thay thông tin xác thực có thể đã từng được commit. Các rủi ro cấu hình khác được ghi trong [Các vấn đề và lưu ý vận hành](security-and-known-issues.md).
+Cấu hình gửi email nằm trong adapter `src/infrastructure/messaging/sendEmail.js`, hiện vẫn chứa thông tin SMTP cố định thay vì đọc biến môi trường. Trước khi triển khai hoặc chia sẻ mã nguồn, cần chuyển thông tin xác thực sang secret/environment variables và thay thông tin xác thực có thể đã từng được commit. Các rủi ro cấu hình khác được ghi trong [Các vấn đề và lưu ý vận hành](security-and-known-issues.md).
 
 ## Kiểm tra và tài liệu liên quan
 
-- `npm test` hiện chỉ chạy thông báo placeholder và kết thúc lỗi; chưa có test suite được khai báo.
+- `npm test` chạy các bài test use case, adapter và hợp đồng view/model hiện có.
 - Báo cáo các route quản trị: [admin-review.md](admin-review.md).
 - Các vấn đề cấu hình và bảo mật được phát hiện khi rà soát: [security-and-known-issues.md](security-and-known-issues.md).
 
