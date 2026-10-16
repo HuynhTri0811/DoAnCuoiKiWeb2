@@ -115,7 +115,7 @@ test('home support page renders its flag for the shared home template', async ()
     await routeHandler(router, 'get', '/support')(createRequest(), res);
 
     assert.equal(res.calls[0].type, 'render');
-    assert.equal(res.calls[0].view, 'home.ejs');
+    assert.equal(res.calls[0].view, 'layouts/home.ejs');
     assert.equal(res.calls[0].locals.support, true);
 });
 
@@ -145,7 +145,7 @@ test('booking page asks an unauthenticated visitor to log in', async () => {
         createRequest({ params: { id: '12' } }), res,
     );
 
-    assert.equal(res.calls[0].view, 'Login.ejs');
+    assert.equal(res.calls[0].view, 'auth/login.ejs');
 });
 
 test('login rejects an unconfirmed account without checking its password', async () => {
@@ -165,7 +165,7 @@ test('login rejects an unconfirmed account without checking its password', async
     );
 
     assert.equal(passwordChecked, false);
-    assert.equal(res.calls[0].view, 'Login.ejs');
+    assert.equal(res.calls[0].view, 'auth/login.ejs');
     assert.ok(res.calls[0].locals.error);
 });
 
@@ -209,7 +209,7 @@ test('signup reports an email already in use and does not create another user', 
     );
 
     assert.equal(created, false);
-    assert.equal(res.calls[0].view, 'signUp.ejs');
+    assert.equal(res.calls[0].view, 'auth/sign-up.ejs');
     assert.ok(res.calls[0].locals.User);
 });
 
@@ -225,7 +225,7 @@ test('forgot password gives the same form when the address is unknown', async ()
         createRequest({ body: { email: 'missing@example.com' } }), res,
     );
 
-    assert.equal(res.calls[0].view, 'forgotPassword.ejs');
+    assert.equal(res.calls[0].view, 'auth/forgot-password.ejs');
     assert.ok(res.calls[0].locals.UserSaiMail);
 });
 
@@ -309,7 +309,7 @@ test('admin dashboard aggregates film sales into the matching cineplex', async (
     );
 
     assert.equal(queryCount, 2);
-    assert.equal(res.calls[0].view, 'admin.ejs');
+    assert.equal(res.calls[0].view, 'layouts/admin.ejs');
     assert.equal(res.calls[0].locals.thuocTinhFilm[0].TotalMoney_film, 120000);
     assert.equal(res.calls[0].locals.thuocTinhFilm[0].CountTicket_film, 2);
     assert.equal(res.calls[0].locals.thuocTinhCumRap[0].TotalMoney_cineplex, 120000);
