@@ -47,7 +47,7 @@ node app.js
 
 ### Database
 
-`models/db.js` đọc `DATABASE_URL`; nếu không có biến này, code dùng URL PostgreSQL mặc định `postgres://admin:admin@localhost:5432/Web2`. Không nên dùng cấu hình mặc định này bên ngoài máy phát triển. `db.sync()` tạo các bảng còn thiếu theo model; dự án chưa có thư mục migration hoặc quy trình migration được khai báo.
+`src/infrastructure/persistence/sequelize/models/db.js` đọc `DATABASE_URL`; nếu không có biến này, code dùng URL PostgreSQL mặc định `postgres://admin:admin@localhost:5432/Web2`. Không nên dùng cấu hình mặc định này bên ngoài máy phát triển. `db.sync()` tạo các bảng còn thiếu theo model; dự án chưa có thư mục migration hoặc quy trình migration được khai báo.
 
 ## Cấu trúc mã nguồn
 
