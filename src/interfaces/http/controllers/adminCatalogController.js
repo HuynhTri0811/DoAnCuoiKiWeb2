@@ -1,8 +1,11 @@
+/** Tạo handler quản lý người dùng, rạp và cụm rạp. */
 function createAdminCatalogController({ catalog }) {
     return {
+        /** Hiển thị danh sách tài khoản người dùng. */
         async listUsers(req, res) {
             return res.render('layouts/admin.ejs', { userAll: await catalog.listUsers() });
         },
+        /** Cập nhật thông tin tài khoản theo mã. */
         async updateUser(req, res) {
             try {
                 await catalog.updateUser(Number(req.params.id), {
@@ -15,6 +18,7 @@ function createAdminCatalogController({ catalog }) {
                 return res.render('pages/404.ejs');
             }
         },
+        /** Xóa tài khoản theo mã. */
         async deleteUser(req, res) {
             try {
                 await catalog.deleteUser(Number(req.params.id));
@@ -23,9 +27,11 @@ function createAdminCatalogController({ catalog }) {
                 return res.render('pages/404.ejs');
             }
         },
+        /** Hiển thị danh sách rạp cùng thông tin cụm rạp. */
         async listCinemas(req, res) {
             return res.render('layouts/admin.ejs', await catalog.listCinemas());
         },
+        /** Cập nhật thông tin rạp và cụm rạp trực thuộc. */
         async updateCinema(req, res) {
             const id = Number(req.params.id);
             const cineplexId = Number(req.body.txtCineplexName);
@@ -47,6 +53,7 @@ function createAdminCatalogController({ catalog }) {
                 return res.render('pages/404.ejs');
             }
         },
+        /** Tạo rạp mới trong cụm rạp được chọn. */
         async createCinema(req, res) {
             try {
                 const cineplexId = Number(req.body.txtCineplexName);
@@ -64,6 +71,7 @@ function createAdminCatalogController({ catalog }) {
                 return res.render('pages/404.ejs');
             }
         },
+        /** Xóa rạp theo mã. */
         async deleteCinema(req, res) {
             try {
                 await catalog.deleteCinema(Number(req.params.id));
@@ -72,9 +80,11 @@ function createAdminCatalogController({ catalog }) {
                 return res.render('pages/404.ejs');
             }
         },
+        /** Hiển thị danh sách cụm rạp. */
         async listCineplexes(req, res) {
             return res.render('layouts/admin.ejs', { cineplex: await catalog.listCineplexes() });
         },
+        /** Tạo cụm rạp mới. */
         async createCineplex(req, res) {
             try {
                 await catalog.createCineplex({
@@ -86,6 +96,7 @@ function createAdminCatalogController({ catalog }) {
                 return res.render('pages/404.ejs');
             }
         },
+        /** Cập nhật tên và địa chỉ cụm rạp. */
         async updateCineplex(req, res) {
             try {
                 await catalog.updateCineplex(Number(req.params.id), {
@@ -97,6 +108,7 @@ function createAdminCatalogController({ catalog }) {
                 return res.render('pages/404.ejs');
             }
         },
+        /** Xóa cụm rạp theo mã. */
         async deleteCineplex(req, res) {
             try {
                 await catalog.deleteCineplex(Number(req.params.id));

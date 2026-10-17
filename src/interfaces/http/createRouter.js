@@ -2,6 +2,7 @@ const express = require('express');
 const asyncHandler = require('./asyncHandler');
 const routeMethods = ['get', 'post', 'put', 'patch', 'delete', 'all'];
 
+/** Tạo router hỗ trợ đăng ký các phương thức HTTP dùng trong ứng dụng. */
 function createRouter() {
     const router = express.Router();
     routeMethods.forEach(method => {

@@ -1,4 +1,6 @@
+/** Tạo handler quản lý suất chiếu trong trang quản trị. */
 function createAdminShowtimeController({ showtimes }) {
+    /** Xác định đường dẫn quay lại hợp lệ sau thao tác suất chiếu. */
     function getReturnPath(req, fallbackCinemaId) {
         const returnPath = req.session.cinemaTimeShowReturnPath;
         if (/^\/admin\/update\/cinemaTimeShow\/(cinema|film)\/\d+$/.test(returnPath || '')) return returnPath;
@@ -9,6 +11,7 @@ function createAdminShowtimeController({ showtimes }) {
     }
 
     return {
+        /** Hiển thị các suất chiếu thuộc một rạp. */
         async listByCinema(req, res) {
             const id = Number(req.params.id);
             if (!Number.isInteger(id) || id <= 0) return res.render('pages/404.ejs');
@@ -18,6 +21,7 @@ function createAdminShowtimeController({ showtimes }) {
             return res.render('layouts/admin.ejs', { ...await showtimes.listForCinema(id), loi });
         },
 
+        /** Hiển thị các suất chiếu thuộc một phim. */
         async listByFilm(req, res) {
             const id = Number(req.params.id);
             if (!Number.isInteger(id) || id <= 0) return res.render('pages/404.ejs');
@@ -27,6 +31,7 @@ function createAdminShowtimeController({ showtimes }) {
             return res.render('layouts/admin.ejs', { ...await showtimes.listForFilm(id), loi });
         },
 
+        /** Tạo suất chiếu và trả kết quả về trang quản lý phù hợp. */
         async create(req, res) {
             const cinemaId = Number(req.body.txtcinema_ID);
             const returnPath = getReturnPath(req, cinemaId);
@@ -47,10 +52,12 @@ function createAdminShowtimeController({ showtimes }) {
             return res.redirect(returnPath);
         },
 
+        /** Hiển thị biểu mẫu tạo suất chiếu. */
         createPage(req, res) {
             return res.redirect('/admin/update/cinemaTimeShow/');
         },
 
+        /** Xóa suất chiếu theo mã. */
         async delete(req, res) {
             const id = Number(req.params.id);
             if (!Number.isInteger(id) || id <= 0) return res.render('pages/404.ejs');

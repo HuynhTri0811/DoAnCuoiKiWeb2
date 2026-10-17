@@ -3,12 +3,14 @@ const path = require('path');
 const crypto = require('crypto');
 
 class FilmImageStorage {
+    /** Cấu hình thư mục lưu ảnh và bộ phân tích biểu mẫu tải lên. */
     constructor(directory, Formidable) {
         this.directory = directory || path.join(process.cwd(), 'public/image');
         this.Formidable = Formidable;
         this.allowedExtensions = new Set(['.jpg', '.jpeg', '.png', '.gif', '.webp']);
     }
 
+    /** Phân tích multipart form và thu dọn tệp tạm nếu phát sinh lỗi. */
     async parseForm(req) {
         await fs.promises.mkdir(this.directory, { recursive: true });
         return new Promise((resolve, reject) => {
@@ -30,6 +32,7 @@ class FilmImageStorage {
         });
     }
 
+    /** Kiểm tra loại ảnh và chuyển ảnh tải lên vào thư mục công khai. */
     async save(upload) {
         if (!upload || !upload.path || !upload.name) throw new Error('A film image is required.');
         const extension = path.extname(upload.name).toLowerCase();
@@ -40,10 +43,12 @@ class FilmImageStorage {
         return `/public/image/${filename}`;
     }
 
+    /** Xóa tệp tải lên tạm sau khi không còn cần dùng. */
     async remove(upload) {
         if (upload && upload.path) await fs.promises.unlink(upload.path).catch(() => {});
     }
 
+    /** Xóa ảnh đã lưu dựa trên đường dẫn công khai của ảnh. */
     async removeSaved(publicPath) {
         if (!publicPath) return;
         const filename = path.basename(publicPath);

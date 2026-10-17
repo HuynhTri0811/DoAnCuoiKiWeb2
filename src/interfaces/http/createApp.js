@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const path = require('path');
 
+/** Khởi tạo ứng dụng Express cùng middleware và router chính. */
 function createApp() {
     const app = express();
     const projectRoot = path.resolve(__dirname, '../../..');

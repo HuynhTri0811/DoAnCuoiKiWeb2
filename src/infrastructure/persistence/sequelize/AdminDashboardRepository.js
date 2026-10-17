@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const { toPlainRecord, toPlainRecords } = require('./toPlainRecord');
 
+/** Chuẩn hóa các hàng thống kê doanh thu để tầng ứng dụng xử lý. */
 function toSalesRows(rows) {
     return (rows || []).map(row => ({
         CinemaTimeShow: toPlainRecord(row.CinemaTimeShow),
@@ -9,10 +10,12 @@ function toSalesRows(rows) {
 }
 
 class AdminDashboardRepository {
+    /** Nhận các model cần thiết để truy vấn dữ liệu doanh thu. */
     constructor({ Ticket, Cinema, Cineplex, Film, CinemaTimeShow }) {
         Object.assign(this, { Ticket, Cinema, Cineplex, Film, CinemaTimeShow });
     }
 
+    /** Tổng hợp doanh thu và số vé trong khoảng ngày đã chọn. */
     async getSales(startDate, endDate) {
         const dateFilter = { [Sequelize.Op.between]: [startDate, endDate] };
         const [filmSales, cinemaSales, films, cinemas, cineplexes] = await Promise.all([
