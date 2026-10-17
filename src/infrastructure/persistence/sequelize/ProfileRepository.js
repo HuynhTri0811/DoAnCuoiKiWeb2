@@ -5,14 +5,17 @@ class ProfileRepository {
         Object.assign(this, { User, Ticket, CinemaTimeShow, TimeShow, Film, Cinema, Cineplex });
     }
 
+    /** Tìm tài khoản theo mã để hiển thị hồ sơ. */
     findUserById(id) {
         return this.User.findOne({ where: { user_ID: id } }).then(toPlainRecord);
     }
 
+    /** Cập nhật các thuộc tính hồ sơ được cho phép. */
     updateUser(id, attributes) {
         return this.User.update(attributes, { where: { user_ID: id } });
     }
 
+    /** Cập nhật riêng một trường hồ sơ sau khi ánh xạ tên trường. */
     updateField(userId, field, value) {
         const modelFields = {
             name: 'user_Name',
@@ -26,6 +29,7 @@ class ProfileRepository {
         return this.updateUser(userId, { [modelField]: value });
     }
 
+    /** Lấy vé của người dùng cùng dữ liệu phim, rạp và suất chiếu. */
     async getTicketSummary(userId) {
         const [totalMoney, tickets] = await Promise.all([
             this.Ticket.sum('ticket_TotalMoney', { where: { user_ID: userId } }),
