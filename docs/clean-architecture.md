@@ -36,3 +36,21 @@ application → repository → src/infrastructure/persistence/sequelize/models
 3. Controller chuyển dữ liệu HTTP thành input của use case và chuyển kết quả thành response/view.
 4. Đăng ký các phụ thuộc cụ thể trong `src/container.js`.
 5. Giữ URL và cấu trúc dữ liệu view ổn định khi chỉ thay đổi kiến trúc nội bộ.
+
+## Lỗi ở repository đặt vé
+
+`BookingRepository` ném `BookingRepositoryError` với thuộc tính `code` để phân biệt lỗi đầu vào, dữ liệu thiếu và lỗi persistence. Khi bọc lỗi Sequelize, lỗi gốc được giữ trong `cause`.
+
+| Mã lỗi | Trường hợp |
+| --- | --- |
+| `INVALID_ID` | ID user hoặc suất chiếu không phải số nguyên dương. |
+| `SHOWTIME_NOT_FOUND` | Không có suất chiếu tương ứng để tạo ngữ cảnh đặt vé. |
+| `BOOKING_CONTEXT_INCOMPLETE` | Thiếu Cinema, Cineplex, Film, TimeShow hoặc trường bắt buộc của chúng. |
+| `SHOWTIME_LOOKUP_FAILED` | Truy vấn suất chiếu thất bại. |
+| `TICKET_LOOKUP_FAILED` / `TICKET_NUMBER_LOOKUP_FAILED` | Không đọc được vé hoặc số vé gần nhất. |
+| `INVALID_TICKET_NUMBER` | Database trả về số vé gần nhất không hợp lệ. |
+| `INVALID_RESERVATION` | Reservation thiếu mã, ghế, loại ghế hoặc giá hợp lệ. |
+| `TICKET_CODE_CONFLICT` | Mã vé bị trùng khóa duy nhất. |
+| `TICKET_CREATE_FAILED` | Lưu reservation thất bại vì lỗi persistence khác. |
+
+Các lỗi này dành cho xử lý và chẩn đoán ở tầng ứng dụng. Không đưa thông tin nội bộ từ `cause` trực tiếp ra response HTTP.
