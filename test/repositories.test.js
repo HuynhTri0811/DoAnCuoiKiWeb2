@@ -5,6 +5,7 @@ const FilmRepository = require('../src/infrastructure/persistence/sequelize/Film
 const ProfileRepository = require('../src/infrastructure/persistence/sequelize/ProfileRepository');
 const ShowtimeRepository = require('../src/infrastructure/persistence/sequelize/ShowtimeRepository');
 const BookingRepository = require('../src/infrastructure/persistence/sequelize/BookingRepository');
+const { BookingRepositoryError } = BookingRepository;
 const AdminCatalogRepository = require('../src/infrastructure/persistence/sequelize/AdminCatalogRepository');
 const AdminDashboardRepository = require('../src/infrastructure/persistence/sequelize/AdminDashboardRepository');
 const HomeRepository = require('../src/infrastructure/persistence/sequelize/HomeRepository');
@@ -13,7 +14,11 @@ function model(overrides = {}) {
     const calls = [];
     const instance = {};
     for (const method of ['findAll', 'findOne', 'create', 'update', 'destroy', 'sum', 'max', 'increment']) {
-        instance[method] = async (...args) => { calls.push([method, ...args]); return overrides[method] ?? []; };
+        instance[method] = async (...args) => {
+            calls.push([method, ...args]);
+            if (typeof overrides[method] === 'function') return overrides[method](...args);
+            return Object.prototype.hasOwnProperty.call(overrides, method) ? overrides[method] : [];
+        };
     }
     instance.calls = calls;
     return instance;
@@ -88,4 +93,67 @@ test('home and dashboard repositories execute their query groups', async () => {
     const result = await dashboard.getSales(new Date(0), new Date());
     assert.deepEqual(Object.keys(result), ['filmSales', 'cinemaSales', 'films', 'cinemas', 'cineplexes']);
     assert.equal(Ticket.calls.length, 2);
+});
+
+test('booking repository reports invalid IDs, missing booking data, and persistence errors', async () => {
+    const empty = model({ findOne: () => null, findAll: [], max: null });
+    const repository = new BookingRepository({
+        User: empty, Cinema: {}, Cineplex: {}, TimeShow: {}, Film: {}, CinemaTimeShow: empty, Ticket: empty,
+    });
+
+    assert.throws(() => repository.findShowtime(0), error => error instanceof BookingRepositoryError
+        && error.code === 'INVALID_ID');
+    await assert.rejects(repository.getBookingContext(999), error => error.code === 'SHOWTIME_NOT_FOUND');
+    assert.throws(() => repository.findTicketsForShowtime(-1), error => error.code === 'INVALID_ID');
+    assert.throws(() => repository.findLatestTicketNumber('abc'), error => error.code === 'INVALID_ID');
+    assert.throws(() => repository.createTicket(null), error => error.code === 'INVALID_RESERVATION');
+    assert.throws(() => repository.createTicket({ userId: 1, showtimeId: 1 }), error => error.code === 'INVALID_RESERVATION');
+    assert.throws(() => repository.createTicket({
+        code: 'VNC_X', userId: 1, showtimeId: 1, seats: 'A1', seatType: 'Standard', totalPrice: 'invalid',
+    }), error => error.code === 'INVALID_RESERVATION');
+
+    const incomplete = model({ findOne: { cinemaTimeShow_ID: 7 } });
+    const incompleteRepository = new BookingRepository({
+        User: empty, Cinema: {}, Cineplex: {}, TimeShow: {}, Film: {}, CinemaTimeShow: incomplete, Ticket: empty,
+    });
+    await assert.rejects(incompleteRepository.getBookingContext(7), error => error.code === 'BOOKING_CONTEXT_INCOMPLETE');
+    const missingField = model({ findOne: {
+        cinemaTimeShow_ID: 8,
+        cinemaTimeShow_Date: '2026-10-17',
+        Cinema: { cinema_Name: 'Cinema', Cineplex: { cineplex_Name: 'Cineplex' } },
+        Film: { film_ID: 2, film_Name: ' ' },
+        TimeShow: { timeShow_Start: '12:00' },
+    } });
+    const missingFieldRepository = new BookingRepository({
+        User: empty, Cinema: {}, Cineplex: {}, TimeShow: {}, Film: {}, CinemaTimeShow: missingField, Ticket: empty,
+    });
+    await assert.rejects(missingFieldRepository.getBookingContext(8), error => error.code === 'BOOKING_CONTEXT_INCOMPLETE'
+        && /film_Name/.test(error.message));
+
+    const brokenTickets = model({ findAll: async () => { throw new Error('database unavailable'); } });
+    const brokenRepository = new BookingRepository({
+        User: empty, Cinema: {}, Cineplex: {}, TimeShow: {}, Film: {}, CinemaTimeShow: empty, Ticket: brokenTickets,
+    });
+    await assert.rejects(brokenRepository.findTicketsForShowtime(1), error => error.code === 'TICKET_LOOKUP_FAILED'
+        && error.cause.message === 'database unavailable');
+    const brokenNumberRepository = new BookingRepository({
+        User: empty, Cinema: {}, Cineplex: {}, TimeShow: {}, Film: {}, CinemaTimeShow: empty,
+        Ticket: model({ max: async () => { throw new Error('database unavailable'); } }),
+    });
+    await assert.rejects(brokenNumberRepository.findLatestTicketNumber(1), error => error.code === 'TICKET_NUMBER_LOOKUP_FAILED'
+        && error.cause.message === 'database unavailable');
+    const brokenCreateRepository = new BookingRepository({
+        User: empty, Cinema: {}, Cineplex: {}, TimeShow: {}, Film: {}, CinemaTimeShow: empty,
+        Ticket: model({ create: async () => { throw new Error('write failed'); } }),
+    });
+    await assert.rejects(brokenCreateRepository.createTicket({
+        code: 'VNC_X', userId: 1, showtimeId: 2, seats: 'A1', seatType: 'Standard', totalPrice: '120000',
+    }), error => error.code === 'TICKET_CREATE_FAILED');
+    const duplicateRepository = new BookingRepository({
+        User: empty, Cinema: {}, Cineplex: {}, TimeShow: {}, Film: {}, CinemaTimeShow: empty,
+        Ticket: model({ create: async () => { throw Object.assign(new Error('duplicate'), { name: 'SequelizeUniqueConstraintError' }); } }),
+    });
+    await assert.rejects(duplicateRepository.createTicket({
+        code: 'VNC_X', userId: 1, showtimeId: 2, seats: 'A1', seatType: 'Standard', totalPrice: 120000,
+    }), error => error.code === 'TICKET_CODE_CONFLICT');
 });
