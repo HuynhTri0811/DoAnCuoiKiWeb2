@@ -1,12 +1,12 @@
 const bcrypt = require('bcrypt');
 
-const User = require('../models/User');
-const Ticket = require('../models/Ticket');
-const Cinema = require('../models/Cinema');
-const Cineplex = require('../models/Cineplex');
-const Film = require('../models/Film');
-const TimeShow = require('../models/TimeShow');
-const CinemaTimeShow = require('../models/CinemaTimeShow');
+const User = require('./infrastructure/persistence/sequelize/models/User');
+const Ticket = require('./infrastructure/persistence/sequelize/models/Ticket');
+const Cinema = require('./infrastructure/persistence/sequelize/models/Cinema');
+const Cineplex = require('./infrastructure/persistence/sequelize/models/Cineplex');
+const Film = require('./infrastructure/persistence/sequelize/models/Film');
+const TimeShow = require('./infrastructure/persistence/sequelize/models/TimeShow');
+const CinemaTimeShow = require('./infrastructure/persistence/sequelize/models/CinemaTimeShow');
 const sendEmail = require('./infrastructure/messaging/sendEmail');
 const generateCode = require('./infrastructure/security/generateVerificationCode');
 
