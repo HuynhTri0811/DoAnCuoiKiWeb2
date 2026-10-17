@@ -1,4 +1,6 @@
+/** Tạo handler quản lý phim và ảnh phim trong khu vực quản trị. */
 function createAdminFilmController({ films, imageStorage }) {
+    /** Đọc biểu mẫu, lưu ảnh tải lên và chuẩn hóa dữ liệu phim. */
     async function parseFilmInput(req) {
         const { fields, files } = await imageStorage.parseForm(req);
         const first = value => Array.isArray(value) ? value[0] : value;
@@ -11,10 +13,12 @@ function createAdminFilmController({ films, imageStorage }) {
     }
 
     return {
+        /** Hiển thị danh sách phim hiện có. */
         async list(req, res) {
             return res.render('layouts/admin.ejs', { filmAll: await films.list() });
         },
 
+        /** Cập nhật thông tin phim và thay ảnh nếu có ảnh mới. */
         async update(req, res) {
             try {
                 await films.update(Number(req.params.id), await parseFilmInput(req));
@@ -25,6 +29,7 @@ function createAdminFilmController({ films, imageStorage }) {
             }
         },
 
+        /** Tạo phim mới từ dữ liệu biểu mẫu quản trị. */
         async create(req, res) {
             try {
                 await films.create(await parseFilmInput(req));
@@ -35,6 +40,7 @@ function createAdminFilmController({ films, imageStorage }) {
             }
         },
 
+        /** Xóa phim theo mã được gửi trong yêu cầu. */
         async delete(req, res) {
             try {
                 await films.delete(Number(req.params.id));
@@ -45,6 +51,7 @@ function createAdminFilmController({ films, imageStorage }) {
             }
         },
 
+        /** Hiển thị biểu mẫu thêm phim. */
         createForm(req, res) {
             return res.redirect('/admin/update/film/');
         },
