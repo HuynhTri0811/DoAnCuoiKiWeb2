@@ -1,11 +1,13 @@
 function createProfileController({ getProfile, updateProfile }) {
     return {
+        /** Tải hồ sơ của người dùng đang đăng nhập. */
         async show(req, res) {
             const profile = await getProfile.execute(req.session.user_Id);
             if (!profile) return res.redirect('/');
             return res.render('account/profile.ejs', profile);
         },
 
+        /** Cập nhật trường hồ sơ được gửi từ biểu mẫu. */
         async update(req, res) {
             const requestFields = {
                 name: 'txtUserName',
@@ -27,6 +29,7 @@ function createProfileController({ getProfile, updateProfile }) {
             }
         },
 
+        /** Điều hướng người dùng từ trang hồ sơ về trang chủ. */
         backToHome(req, res) {
             req.session.user_Id = req.session.user_Id;
             return res.redirect('/');
