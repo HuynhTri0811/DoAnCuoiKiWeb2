@@ -1,7 +1,9 @@
 const UserRepository = require('./UserRepository');
 const { toPlainRecord, toPlainRecords } = require('./toPlainRecord');
 
+/** Lỗi persistence đặt vé có mã ổn định để tầng gọi xử lý theo từng trường hợp. */
 class BookingRepositoryError extends Error {
+    /** Tạo lỗi repository và lưu lỗi gốc nếu lỗi được bọc từ Sequelize. */
     constructor(code, message, cause) {
         super(message);
         this.name = 'BookingRepositoryError';
@@ -10,6 +12,7 @@ class BookingRepositoryError extends Error {
     }
 }
 
+/** Kiểm tra và chuẩn hóa ID trước khi dùng trong truy vấn đặt vé. */
 function requireId(id, fieldName) {
     if (!Number.isInteger(Number(id)) || Number(id) <= 0) {
         throw new BookingRepositoryError('INVALID_ID', `${fieldName} must be a positive integer.`);
@@ -17,6 +20,7 @@ function requireId(id, fieldName) {
     return Number(id);
 }
 
+/** Lấy quan hệ đã được Sequelize nạp; báo lỗi rõ nếu thiếu quan hệ bắt buộc. */
 function getRelatedRecord(record, relationName, showtimeId) {
     const related = record && record[relationName];
     if (!related || typeof related !== 'object') {
@@ -28,6 +32,7 @@ function getRelatedRecord(record, relationName, showtimeId) {
     return related.dataValues || related;
 }
 
+/** Đọc trường bắt buộc trong booking context và báo lỗi nếu dữ liệu rỗng. */
 function requireContextField(record, fieldName, showtimeId) {
     const value = record[fieldName];
     if (value == null || (typeof value === 'string' && !value.trim())) {
@@ -40,14 +45,19 @@ function requireContextField(record, fieldName, showtimeId) {
 }
 
 class BookingRepository {
+    /** Khởi tạo repository từ các Sequelize model dùng trong luồng đặt vé. */
     constructor({ User, Cinema, Cineplex, TimeShow, Film, CinemaTimeShow, Ticket }) {
         Object.assign(this, { User, Cinema, Cineplex, TimeShow, Film, CinemaTimeShow, Ticket });
         this.users = new UserRepository(User);
     }
 
+    /** Tìm tài khoản theo ID và ánh xạ kết quả thành Account entity. */
     findUserById(id) { return this.users.findById(id); }
+
+    /** Tìm tài khoản theo email và ánh xạ kết quả thành Account entity. */
     findUserByEmail(email) { return this.users.findByEmail(email); }
 
+    /** Tìm suất chiếu cùng phim, giờ chiếu, rạp và cụm rạp; trả null nếu không tồn tại. */
     findShowtime(id) {
         const showtimeId = requireId(id, 'showtimeId');
         return this.CinemaTimeShow.findOne({
@@ -62,6 +72,7 @@ class BookingRepository {
         });
     }
 
+    /** Tạo dữ liệu tối thiểu để đặt vé; báo lỗi nếu suất chiếu hoặc quan hệ bị thiếu. */
     async getBookingContext(id) {
         const showtimeId = requireId(id, 'showtimeId');
         const showtime = await this.findShowtime(showtimeId);
@@ -88,6 +99,7 @@ class BookingRepository {
         };
     }
 
+    /** Lấy danh sách vé của suất chiếu, sắp xếp theo ghế và trả về plain records. */
     findTicketsForShowtime(id) {
         const showtimeId = requireId(id, 'showtimeId');
         return this.Ticket.findAll({
@@ -105,6 +117,7 @@ class BookingRepository {
         });
     }
 
+    /** Lấy số vé tự tăng mới nhất của user; trả null nếu user chưa có vé. */
     findLatestTicketNumber(userId) {
         const accountId = requireId(userId, 'userId');
         return this.Ticket.max('ticket_Num', { where: { user_ID: accountId } }).then(value => {
@@ -120,6 +133,7 @@ class BookingRepository {
         });
     }
 
+    /** Kiểm tra reservation, lưu vé và phân loại lỗi trùng mã hoặc lỗi ghi database. */
     createTicket(reservation) {
         if (!reservation || typeof reservation !== 'object') {
             throw new BookingRepositoryError('INVALID_RESERVATION', 'A ticket reservation is required.');
