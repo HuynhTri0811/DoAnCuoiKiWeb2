@@ -1,5 +1,5 @@
 const createApp = require('./src/interfaces/http/createApp');
-const db = require('./models/db');
+const db = require('./src/infrastructure/persistence/sequelize/models/db');
 
 const app = createApp();
 const port = process.env.PORT || 3000;

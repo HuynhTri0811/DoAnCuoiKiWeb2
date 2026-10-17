@@ -54,7 +54,7 @@ test('every literal route render target exists under views', () => {
 });
 
 test('film model exposes the fields used by the application', () => {
-    const Film = require('../models/Film');
+    const Film = require('../src/infrastructure/persistence/sequelize/models/Film');
     for (const field of [
         'film_ID', 'film_Name', 'film_DatePublic', 'film_Image',
         'film_Time', 'film_ViewCount', 'film_Public', 'film_Content',
@@ -64,7 +64,7 @@ test('film model exposes the fields used by the application', () => {
 });
 
 test('user model requires a unique email and stores account confirmation state', () => {
-    const User = require('../models/User');
+    const User = require('../src/infrastructure/persistence/sequelize/models/User');
 
     assert.equal(User.rawAttributes.user_Email.allowNull, false);
     assert.equal(User.rawAttributes.user_Email.unique, true);
@@ -74,10 +74,10 @@ test('user model requires a unique email and stores account confirmation state',
 });
 
 test('showtime and cinema models expose their scheduling fields', () => {
-    const Cinema = require('../models/Cinema');
-    const Cineplex = require('../models/Cineplex');
-    const TimeShow = require('../models/TimeShow');
-    const CinemaTimeShow = require('../models/CinemaTimeShow');
+    const Cinema = require('../src/infrastructure/persistence/sequelize/models/Cinema');
+    const Cineplex = require('../src/infrastructure/persistence/sequelize/models/Cineplex');
+    const TimeShow = require('../src/infrastructure/persistence/sequelize/models/TimeShow');
+    const CinemaTimeShow = require('../src/infrastructure/persistence/sequelize/models/CinemaTimeShow');
 
     for (const field of ['cinema_ID', 'cinema_Name', 'cinema_Type', 'cinema_Length', 'cinema_Width']) {
         assert.ok(Cinema.rawAttributes[field], `Missing cinema field ${field}`);
@@ -94,7 +94,7 @@ test('showtime and cinema models expose their scheduling fields', () => {
 });
 
 test('ticket model exposes booking, seat, and price fields', () => {
-    const Ticket = require('../models/Ticket');
+    const Ticket = require('../src/infrastructure/persistence/sequelize/models/Ticket');
     for (const field of ['ticket_ID', 'ticket_Num', 'ticket_ChairType', 'ticket_Chair', 'ticket_TotalMoney']) {
         assert.ok(Ticket.rawAttributes[field], `Missing ticket field ${field}`);
     }
@@ -114,7 +114,7 @@ test('email service sends the requested message through its configured transport
             };
         },
     };
-    const sendEmail = loadWithMocks('models/email.js', { nodemailer });
+    const sendEmail = loadWithMocks('src/infrastructure/messaging/sendEmail.js', { nodemailer });
 
     const result = await sendEmail('person@example.com', 'Subject', 'Plain text', '<p>HTML</p>');
 
@@ -127,9 +127,9 @@ test('email service sends the requested message through its configured transport
 });
 
 test('ticket and schedule models retain their declared associations', () => {
-    const Cinema = require('../models/Cinema');
-    const CinemaTimeShow = require('../models/CinemaTimeShow');
-    const Ticket = require('../models/Ticket');
+    const Cinema = require('../src/infrastructure/persistence/sequelize/models/Cinema');
+    const CinemaTimeShow = require('../src/infrastructure/persistence/sequelize/models/CinemaTimeShow');
+    const Ticket = require('../src/infrastructure/persistence/sequelize/models/Ticket');
 
     assert.ok(Cinema.associations.Cineplex);
     assert.ok(CinemaTimeShow.associations.Cinema);

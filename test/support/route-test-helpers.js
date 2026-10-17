@@ -66,7 +66,7 @@ function createResponse() {
 }
 
 function modelPath(name) {
-    return path.join(projectRoot, 'models', `${name}.js`);
+    return path.join(projectRoot, 'src', 'infrastructure', 'persistence', 'sequelize', 'models', `${name}.js`);
 }
 
 function routeModelsPath(feature) {

@@ -8,7 +8,7 @@ Tài liệu này ghi lại những điểm được quan sát trong source khi r
 2. **Thông tin SMTP vẫn viết trực tiếp trong mã nguồn.** Adapter `src/infrastructure/messaging/sendEmail.js` chứa thông tin xác thực SMTP trong cấu hình Nodemailer. Hãy thu hồi/thay thông tin đã lộ, lưu secret ngoài repository và đọc qua `process.env`.
 3. **Session còn secret fallback cố định.** `src/interfaces/http/createApp.js` ưu tiên `SESSION_SECRET`, nhưng fallback vẫn là `keyboard cat`; middleware cũng chưa cấu hình rõ các thuộc tính cookie như `secure`, `sameSite` hoặc thời hạn và dùng MemoryStore mặc định. `express-session` bật `httpOnly` mặc định. Cần đặt secret riêng, store phù hợp và cấu hình cookie theo HTTPS/deployment.
 4. **Thông tin admin mẫu trong luồng đăng nhập.** `src/application/auth/AuthenticateUser.js` vẫn so sánh email và mật khẩu admin trực tiếp. Không dùng thông tin này khi triển khai; chuyển sang tài khoản/role được lưu an toàn và bỏ credential khỏi source.
-5. **Cấu hình database mặc định có thông tin đăng nhập tĩnh.** `models/db.js` có URL fallback với user/password cố định. Chỉ dùng giá trị cấu hình qua môi trường; giới hạn quyền database của tài khoản ứng dụng.
+5. **Cấu hình database mặc định có thông tin đăng nhập tĩnh.** `src/infrastructure/persistence/sequelize/models/db.js` có URL fallback với user/password cố định. Chỉ dùng giá trị cấu hình qua môi trường; giới hạn quyền database của tài khoản ứng dụng.
 
 ## Luồng xác thực và dữ liệu
 
@@ -20,7 +20,7 @@ Tài liệu này ghi lại những điểm được quan sát trong source khi r
 
 ## Hành vi cần xác nhận
 
-- `models/Film.js` định nghĩa getter cho `film_ViewCount` luôn trả `0` và getter `film_Public` luôn trả `false`. Các giá trị đọc từ Sequelize instance có thể vì thế khác dữ liệu trong database; cần kiểm tra và bỏ getter nếu không chủ ý.
+- `src/infrastructure/persistence/sequelize/models/Film.js` định nghĩa getter cho `film_ViewCount` luôn trả `0` và getter `film_Public` luôn trả `false`. Các giá trị đọc từ Sequelize instance có thể vì thế khác dữ liệu trong database; cần kiểm tra và bỏ getter nếu không chủ ý.
 - `src/application/home/GetFilmDetails.js` tăng lượt xem trước khi xác nhận phim tồn tại/công khai. Repository dùng phép tăng nguyên tử; cần cân nhắc chỉ tăng cho phim công khai hợp lệ.
 - `src/infrastructure/persistence/sequelize/HomeRepository.js` lọc phim theo `film_Public: true`, nhưng một số view đặt tên biến tương ứng “phim sắp chiếu/không công khai”; cần xác nhận logic nghiệp vụ mong muốn.
 - `src/application/booking/BookSeats.js` dựng mã vé từ thông tin phim/rạp và số vé tối đa theo người dùng. Cần ràng buộc unique và cấp mã an toàn khi có đặt vé đồng thời.

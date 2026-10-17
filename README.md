@@ -11,7 +11,7 @@ npm install
 DATABASE_URL='postgres://user:password@localhost:5432/database' node app.js
 ```
 
-Có thể đặt `PORT` để đổi cổng (mặc định `3000`). `DATABASE_URL` là URL kết nối PostgreSQL; nếu bỏ trống, ứng dụng dùng cấu hình mặc định trong `models/db.js`. `package.json` hiện chưa khai báo script `start` hoặc test suite.
+Có thể đặt `PORT` để đổi cổng (mặc định `3000`). `DATABASE_URL` là URL kết nối PostgreSQL; nếu bỏ trống, ứng dụng dùng cấu hình mặc định trong `src/infrastructure/persistence/sequelize/models/db.js`. Chạy bộ test bằng `npm test`.
 
 ## Tài liệu
 
