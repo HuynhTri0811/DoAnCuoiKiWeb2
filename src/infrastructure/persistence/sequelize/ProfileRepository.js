@@ -1,10 +1,12 @@
+const { toPlainRecord, toPlainRecords } = require('./toPlainRecord');
+
 class ProfileRepository {
     constructor({ User, Ticket, CinemaTimeShow, TimeShow, Film, Cinema, Cineplex }) {
         Object.assign(this, { User, Ticket, CinemaTimeShow, TimeShow, Film, Cinema, Cineplex });
     }
 
     findUserById(id) {
-        return this.User.findOne({ where: { user_ID: id } });
+        return this.User.findOne({ where: { user_ID: id } }).then(toPlainRecord);
     }
 
     updateUser(id, attributes) {
@@ -37,7 +39,7 @@ class ProfileRepository {
                         { model: this.Cinema, include: [{ model: this.Cineplex }] },
                     ],
                 }],
-            }),
+            }).then(toPlainRecords),
         ]);
         return { totalMoney, tickets };
     }
