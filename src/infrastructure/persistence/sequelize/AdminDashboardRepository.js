@@ -1,4 +1,12 @@
 const Sequelize = require('sequelize');
+const { toPlainRecord, toPlainRecords } = require('./toPlainRecord');
+
+function toSalesRows(rows) {
+    return (rows || []).map(row => ({
+        CinemaTimeShow: toPlainRecord(row.CinemaTimeShow),
+        dataValues: toPlainRecord(row.dataValues || row),
+    }));
+}
 
 class AdminDashboardRepository {
     constructor({ Ticket, Cinema, Cineplex, Film, CinemaTimeShow }) {
@@ -30,7 +38,13 @@ class AdminDashboardRepository {
             this.Cinema.findAll(),
             this.Cineplex.findAll(),
         ]);
-        return { filmSales, cinemaSales, films, cinemas, cineplexes };
+        return {
+            filmSales: toSalesRows(filmSales),
+            cinemaSales: toSalesRows(cinemaSales),
+            films: toPlainRecords(films),
+            cinemas: toPlainRecords(cinemas),
+            cineplexes: toPlainRecords(cineplexes),
+        };
     }
 }
 
