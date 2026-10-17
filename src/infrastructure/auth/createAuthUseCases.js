@@ -6,6 +6,7 @@ const RequestPasswordReset = require('../../application/auth/RequestPasswordRese
 const VerifyPasswordResetCode = require('../../application/auth/VerifyPasswordResetCode');
 const ResetPassword = require('../../application/auth/ResetPassword');
 
+/** Khởi tạo các use case xác thực từ model và dịch vụ được cung cấp. */
 function createAuthUseCases({ User, comparePassword, hashPassword, sendEmail, generateCode }) {
     const users = new UserRepository(User);
 

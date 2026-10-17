@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 
+/** Gửi email với nội dung văn bản và HTML qua dịch vụ thư đã cấu hình. */
 async function sendEmail(to, subject, text, html) {
     const transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
