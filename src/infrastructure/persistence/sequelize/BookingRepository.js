@@ -1,4 +1,5 @@
 const UserRepository = require('./UserRepository');
+const { toPlainRecord, toPlainRecords } = require('./toPlainRecord');
 
 class BookingRepository {
     constructor({ User, Cinema, Cineplex, TimeShow, Film, CinemaTimeShow, Ticket }) {
@@ -17,7 +18,7 @@ class BookingRepository {
                 { model: this.TimeShow },
                 { model: this.Cinema, include: [{ model: this.Cineplex }] },
             ],
-        });
+        }).then(toPlainRecord);
     }
 
     async getBookingContext(id) {
@@ -42,7 +43,7 @@ class BookingRepository {
             where: { cinemaTimeShow_ID: id },
             include: [{ model: this.CinemaTimeShow }],
             order: [['ticket_Chair', 'ASC']],
-        });
+        }).then(toPlainRecords);
     }
 
     findLatestTicketNumber(userId) {
@@ -57,7 +58,7 @@ class BookingRepository {
             ticket_TotalMoney: reservation.totalPrice,
             cinemaTimeShow_ID: reservation.showtimeId,
             user_ID: reservation.userId,
-        });
+        }).then(toPlainRecord);
     }
 }
 
